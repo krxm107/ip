@@ -9,7 +9,7 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
     private final int id;
     private final String commandName;
 
-    public Task (final String baseObjective, final String commandName) {
+    private Task (final String baseObjective, final String commandName) {
         this.id = Task.nextFreeID;
         this.baseObjective = baseObjective;
         this.commandName = commandName;
@@ -42,7 +42,7 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
     @Override
     public String toString() {
         if (this.baseLogMessage == null) {
-            this.baseLogMessage = String.format("%d. [%c][%c] %s", this.id,
+            this.baseLogMessage = String.format("[%c][%c] %s",
                     Character.toUpperCase(this.commandName.charAt(0)),
                     (this.isDone ? 'X' : ' '),
                     this.baseObjective);
