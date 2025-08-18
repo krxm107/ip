@@ -1,5 +1,8 @@
 package brobot;
 
+import brobot.brobotexceptions.commandexceptions.BrobotCommandException;
+import brobot.brobotexceptions.commandexceptions.EmptyCommandException;
+import brobot.brobotexceptions.commandexceptions.NoSuchCommandNameException;
 import brobot.task.Task;
 
 import java.util.ArrayList;
@@ -35,127 +38,22 @@ public final class BroBot {
     private static final Pattern positiveIntegerPattern = Pattern.compile("^[1-9]\\d*$");
 
     private static boolean processCommand() {
-        final String command = inputReader.nextLine().strip().replaceAll("\\s+", " ");
-        final String[] commandTokens = command.split(" ");
-
-        if (command.equalsIgnoreCase("bye")) {
-            BroBot.delimit();
-            System.out.println("Bye. Hope to see you again soon!");
-            BroBot.delimit();
-            return false;
-        }
-
-        if (command.equalsIgnoreCase("list")) {
-            BroBot.delimit();
-            if (BroBot.taskList.isEmpty()) {
-                System.out.println("Enjoy your empty task list!");
-                BroBot.delimit();
-                return true;
+        // TODO: Rethink the way I process commands using this method. Take into account exceptions by catching them all here.
+        try {
+            final String commandText = inputReader.nextLine().strip().replaceAll("\\s+", " ");
+            if (commandText.isEmpty()) {
+                throw new EmptyCommandException();
             }
 
-            for (int idx = 1; idx <= BroBot.taskList.size(); idx++) {
-                System.out.println(BroBot.getNumberedTask(idx));
-            }
-
+            final String[] commandTokens = commandText.split(" ");
+        } catch (final BrobotCommandException brobotCommandException) {
+            BroBot.delimit();
+            System.out.println(brobotCommandException.getMessage());
             BroBot.delimit();
             return true;
         }
 
-        if (commandTokens.length == 2 && commandTokens[0].equalsIgnoreCase("mark")) {
-            if (positiveIntegerPattern.matcher(commandTokens[1]).matches()) {
-                int taskIndex = Integer.parseInt(commandTokens[1]) - 1;
-
-                if (0 <= taskIndex && taskIndex < taskList.size()) {
-                    BroBot.delimit();
-
-                    BroBot.taskList.get(taskIndex).mark();
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println(BroBot.fourSpacesIndent + BroBot.getNumberedTask(taskIndex + 1));
-
-                    BroBot.delimit();
-                    return true;
-                } else {
-                    BroBot.delimit();
-                    BroBot.delimit();
-                    return false;
-                }
-            } else {
-                BroBot.delimit();
-                BroBot.delimit();
-                return false;
-            }
-        }
-
-        if (commandTokens.length == 2 && commandTokens[0].equalsIgnoreCase("unmark")) {
-            if (positiveIntegerPattern.matcher(commandTokens[1]).matches()) {
-                int taskIndex = Integer.parseInt(commandTokens[1]) - 1;
-
-                if (0 <= taskIndex && taskIndex < taskList.size()) {
-                    BroBot.delimit();
-
-                    BroBot.taskList.get(taskIndex).unmark();
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println(BroBot.fourSpacesIndent + BroBot.getNumberedTask(taskIndex + 1));
-
-                    BroBot.delimit();
-
-                    return true;
-                } else {
-                    BroBot.delimit();
-                    BroBot.delimit();
-                    return false;
-                }
-            } else {
-                BroBot.delimit();
-                BroBot.delimit();
-                return false;
-            }
-        }
-
-        if (commandTokens.length == 2 && commandTokens[0].equalsIgnoreCase("delete")) {
-            if (positiveIntegerPattern.matcher(commandTokens[1]).matches()) {
-                int taskIndex = Integer.parseInt(commandTokens[1]) - 1;
-
-                if (0 <= taskIndex && taskIndex < taskList.size()) {
-                    BroBot.delimit();
-
-                    System.out.println("Noted. I've removed this task:");
-                    System.out.println(BroBot.fourSpacesIndent + BroBot.getNumberedTask(taskIndex + 1));
-                    BroBot.taskList.remove(taskIndex);
-                    System.out.printf("Now you have %d tasks in the list.\n", BroBot.taskList.size());
-
-                    BroBot.delimit();
-
-                    return true;
-                } else {
-                    BroBot.delimit();
-                    BroBot.delimit();
-                    return false;
-                }
-            } else {
-                BroBot.delimit();
-                BroBot.delimit();
-                return false;
-            }
-        }
-
-        if (commandTokens[0].equalsIgnoreCase("todo") ||
-                commandTokens[0].equalsIgnoreCase("event") ||
-            commandTokens[0].equalsIgnoreCase("deadline")) {
-            BroBot.delimit();
-            BroBot.taskList.add(Task.createTask(commandTokens));
-
-            System.out.println("Got it. I've added this task:");
-            System.out.println(BroBot.fourSpacesIndent + BroBot.getNumberedTask(BroBot.taskList.size()) );
-            System.out.printf("Now you have %d tasks in the list.\n", BroBot.taskList.size());
-
-            BroBot.delimit();
-            return true;
-        }
-
-        BroBot.delimit();
-        BroBot.delimit();
-        return false;
+        return true;
     }
 
     public static void main (final String[] args) {
