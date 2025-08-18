@@ -135,7 +135,6 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
             return String.join(" ", slice);
         };
 
-        // TODO: Implement Factory task creator createTask.
         if (commandTokens[0].equalsIgnoreCase("todo")) {
             return new Task.ToDo(stringJoiner.apply(1, commandTokens.length), "ToDo");
         }
