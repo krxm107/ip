@@ -1,5 +1,10 @@
 package brobot.tasks;
 
+import brobot.brobotexceptions.InvalidDeadlineFormatException;
+import brobot.brobotexceptions.InvalidEventFormatException;
+import brobot.brobotexceptions.InvalidTODOFormatException;
+import brobot.brobotexceptions.InvalidTaskFormatException;
+
 import java.util.function.BiFunction;
 
 public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  {
@@ -125,7 +130,7 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
         }
     }
 
-    public static final Task createTask (final String[] commandTokens) {
+    public static final Task createTask (final String[] commandTokens) throws InvalidTaskFormatException {
         final BiFunction<Integer, Integer, String> stringJoiner = (final Integer startIdx, final Integer endIdx) -> {
             final String[] slice = new String[endIdx - startIdx];
             for (int i = startIdx; i < endIdx; i++) {
@@ -136,15 +141,24 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
         };
 
         if (commandTokens[0].equalsIgnoreCase("todo")) {
+            if (commandTokens.length == 1) {
+                throw InvalidTODOFormatException.newInvalidTODOFormatException();
+            }
+
             return new Task.ToDo(stringJoiner.apply(1, commandTokens.length), "ToDo");
         }
 
         if (commandTokens[0].equalsIgnoreCase("deadline")) {
-            int firstByIndex = 1;
-            for (firstByIndex = 1; firstByIndex < commandTokens.length; firstByIndex++) {
-                if (commandTokens[firstByIndex].equalsIgnoreCase("by")) {
+            int firstByIndex = -1;
+            for (int i = 1; i < commandTokens.length; i++) {
+                if (commandTokens[i].equalsIgnoreCase("by")) {
+                    firstByIndex = i;
                     break;
                 }
+            }
+
+            if (firstByIndex <= 0) {
+                throw InvalidDeadlineFormatException.newInvalidDeadlineFormatException();
             }
 
             final String description = stringJoiner.apply(1, firstByIndex);
@@ -153,18 +167,28 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
             return new Task.Deadline(description, "Deadline", deadline);
         }
 
-        int firstFromIndex = 1;
-        for (firstFromIndex = 1; firstFromIndex < commandTokens.length; firstFromIndex++) {
-            if (commandTokens[firstFromIndex].equalsIgnoreCase("from")) {
+        int firstFromIndex = -1;
+        for (int i = 1; i < commandTokens.length; i++) {
+            if (commandTokens[i].equalsIgnoreCase("from")) {
+                firstFromIndex = i;
                 break;
             }
         }
 
-        int firstToIndex = firstFromIndex + 1;
-        for (firstToIndex = firstFromIndex + 1; firstToIndex < commandTokens.length; firstToIndex++) {
-            if (commandTokens[firstToIndex].equalsIgnoreCase("to")) {
+        if (firstFromIndex <= 0) {
+            throw InvalidEventFormatException.newInvalidEventFormatException();
+        }
+
+        int firstToIndex = firstFromIndex - 1;
+        for (int i = firstFromIndex + 1; i < commandTokens.length; i++) {
+            if (commandTokens[i].equalsIgnoreCase("to")) {
+                firstToIndex = i;
                 break;
             }
+        }
+
+        if (firstToIndex <= firstFromIndex) {
+            throw InvalidEventFormatException.newInvalidEventFormatException();
         }
 
         final String description = stringJoiner.apply(1, firstFromIndex);

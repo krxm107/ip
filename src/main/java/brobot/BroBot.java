@@ -1,7 +1,6 @@
 package brobot;
 
-import brobot.brobotexceptions.BrobotCommandException;
-import brobot.brobotexceptions.EmptyCommandException;
+import brobot.brobotexceptions.*;
 import brobot.tasks.Task;
 
 import java.util.ArrayList;
@@ -17,6 +16,10 @@ public final class BroBot {
     public static final String chatBotName = "BroBot";
 
     private static final ArrayList<Task> taskList = new ArrayList<>();
+    public static int getTaskListSize() {
+        return BroBot.taskList.size();
+    }
+
     private static String getNumberedTask (final int number) {
         return String.format("%d. %s", number, BroBot.taskList.get(number - 1));
     }
@@ -45,14 +48,132 @@ public final class BroBot {
             }
 
             final String[] commandTokens = commandText.split(" ");
+            final Command command = Command.fromNameIgnoreCase(commandTokens[0]);
+
+            switch (command) {
+                case BYE: {
+                    if (commandTokens.length != 1) {
+                        throw SomeArgsLeftException.fromCommandName(command.getName());
+                    }
+
+                    BroBot.delimit();
+                    System.out.println("Bye. Hope to see you again soon!");
+                    BroBot.delimit();
+
+                    return false;
+                }
+
+                case LIST: {
+                    if (commandTokens.length != 1) {
+                        throw SomeArgsLeftException.fromCommandName(command.getName());
+                    }
+
+                    if (BroBot.taskList.isEmpty()) {
+                        BroBot.delimit();
+                        System.out.println("Enjoy your empty task list!");
+                        BroBot.delimit();
+                        return true;
+                    }
+
+                    BroBot.delimit();
+                    for (int idx = 1; idx <= BroBot.taskList.size(); idx++) {
+                        System.out.println(BroBot.getNumberedTask(idx));
+                    }
+                    BroBot.delimit();
+
+                    return true;
+                }
+
+                case MARK: {
+                    if (commandTokens.length != 2) {
+                        throw MissingNumberException.fromCommandName(commandTokens[0]);
+                    }
+
+                    final int taskIndex = Integer.parseInt(commandTokens[1]);
+                    if (1 <= taskIndex && taskIndex <= taskList.size()) {
+                        BroBot.delimit();
+
+                        BroBot.taskList.get(taskIndex - 1).mark();
+                        System.out.println("Nice! I've marked this task as done:");
+                        System.out.println(BroBot.fourSpacesIndent + BroBot.getNumberedTask(taskIndex));
+
+                        BroBot.delimit();
+                        return true;
+                    } else {
+                        BroBot.delimit();
+                        BroBot.delimit();
+                        return true;
+                    }
+                }
+
+                case UNMARK: {
+                    if (commandTokens.length != 2) {
+                        throw MissingNumberException.fromCommandName(commandTokens[0]);
+                    }
+
+                    final int taskIndex = Integer.parseInt(commandTokens[1]);
+                    if (1 <= taskIndex && taskIndex <= taskList.size()) {
+                        BroBot.delimit();
+
+                        BroBot.taskList.get(taskIndex - 1).unmark();
+                        System.out.println("OK, I've marked this task as not done yet:");
+                        System.out.println(BroBot.fourSpacesIndent + BroBot.getNumberedTask(taskIndex));
+
+                        BroBot.delimit();
+                        return true;
+                    } else {
+                        BroBot.delimit();
+                        BroBot.delimit();
+                        return true;
+                    }
+                }
+
+                case DELETE: {
+                    if (commandTokens.length != 2) {
+                        throw MissingNumberException.fromCommandName(commandTokens[0]);
+                    }
+
+                    final int taskIndex = Integer.parseInt(commandTokens[1]);
+                    if (1 <= taskIndex && taskIndex <= taskList.size()) {
+                        BroBot.delimit();
+
+                        System.out.println("Noted. I've removed this task:");
+                        System.out.println(BroBot.fourSpacesIndent + BroBot.getNumberedTask(taskIndex));
+                        BroBot.taskList.remove(taskIndex - 1);
+                        System.out.printf("Now you have %d tasks in the list.\n", BroBot.taskList.size());
+
+                        BroBot.delimit();
+                        return true;
+                    } else {
+                        BroBot.delimit();
+                        BroBot.delimit();
+                        return true;
+                    }
+                }
+
+                case TODO, EVENT, DEADLINE: {
+                    BroBot.delimit();
+                    BroBot.taskList.add(Task.createTask(commandTokens));
+
+                    System.out.println("Got it. I've added this task:");
+                    System.out.println(BroBot.fourSpacesIndent + BroBot.getNumberedTask(BroBot.taskList.size()) );
+                    System.out.printf("Now you have %d tasks in the list.\n", BroBot.taskList.size());
+
+                    BroBot.delimit();
+                    return true;
+                }
+
+                default: {
+                    throw NoSuchCommandNameException.newInstancefromCommandName(String.valueOf(command));
+                }
+            }
+
         } catch (final BrobotCommandException brobotCommandException) {
             BroBot.delimit();
             System.out.println(brobotCommandException.getMessage());
             BroBot.delimit();
             return true;
         }
-
-        return true;
     }
 
     public static void main (final String[] args) {

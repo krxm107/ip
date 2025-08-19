@@ -5,11 +5,8 @@ if not exist ..\bin mkdir ..\bin
 
 REM delete output from previous run
 
-REM compile task first
-javac -Xlint:none -d ..\bin ..\src\main\java\brobot\task\*.java
-
-REM compile brobot, with classpath
-javac -cp ..\bin -Xlint:none -d ..\bin ..\src\main\java\brobot\*.java
+REM compile starting from main class; sourcepath points at the source root
+javac -Xlint:none -d ..\bin -sourcepath ..\src\main\java ..\src\main\java\brobot\BroBot.java
 
 IF ERRORLEVEL 1 (
     echo ********** BUILD FAILURE **********
