@@ -1,6 +1,4 @@
-package brobot.brobotexceptions.commandexceptions;
-
-import brobot.brobotexceptions.BrobotCheckedException;
+package brobot.brobotexceptions;
 
 public abstract class BrobotCommandException extends BrobotCheckedException {
     private static final String invalidInputWarning = String.format("Sorry, this input is invalid!");

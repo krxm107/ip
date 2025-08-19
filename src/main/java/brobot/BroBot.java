@@ -1,9 +1,8 @@
 package brobot;
 
-import brobot.brobotexceptions.commandexceptions.BrobotCommandException;
-import brobot.brobotexceptions.commandexceptions.EmptyCommandException;
-import brobot.brobotexceptions.commandexceptions.NoSuchCommandNameException;
-import brobot.task.Task;
+import brobot.brobotexceptions.BrobotCommandException;
+import brobot.brobotexceptions.EmptyCommandException;
+import brobot.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Scanner;

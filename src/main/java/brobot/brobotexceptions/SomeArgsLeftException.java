@@ -1,4 +1,4 @@
-package brobot.brobotexceptions.commandexceptions;
+package brobot.brobotexceptions;
 
 public final class SomeArgsLeftException extends BrobotCommandException {
     private SomeArgsLeftException(final String mainMessage) {

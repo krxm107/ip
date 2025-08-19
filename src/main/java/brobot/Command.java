@@ -1,4 +1,6 @@
-import brobot.brobotexceptions.commandexceptions.NoSuchCommandNameException;
+package brobot;
+
+import brobot.brobotexceptions.NoSuchCommandNameException;
 
 public enum Command {
     BYE, LIST,

@@ -1,4 +1,4 @@
-package brobot.brobotexceptions.commandexceptions;
+package brobot.brobotexceptions;
 
 public final class NoSuchCommandNameException extends BrobotCommandException {
     private NoSuchCommandNameException (final String mainMessage) {
