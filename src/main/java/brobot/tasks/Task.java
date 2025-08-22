@@ -34,12 +34,12 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
     private String baseLogMessage = null;
 
     private boolean isDone = false;
-    public void mark() {
+    void mark() {
         this.isDone = true;
         this.baseLogMessage = null;
     }
 
-    public void unmark() {
+    void unmark() {
         this.isDone = false;
         this.baseLogMessage = null;
     }
@@ -56,6 +56,57 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
         return this.baseLogMessage;
     }
 
+    String toFileReport() {
+        return String.format("%s\n%s\n%s\n\n",
+                            this.commandName,
+                            this.isDone,
+                            this.baseObjective);
+
+    }
+
+    static final Task fromFileReport (final String fileReport) {
+        final String[] fileReportLines = fileReport.substring(0, fileReport.length() - 2).split("\n");
+
+        switch (fileReportLines.length) {
+            case 3: {
+                final Task ans = new Task.ToDo(fileReportLines[2], fileReportLines[0]);
+                if (Boolean.parseBoolean(fileReportLines[1])) {
+                    ans.mark();
+                } else {
+                    ans.unmark();
+                }
+
+                return ans;
+            }
+
+            case 4: {
+                final Task ans = new Task.Deadline(fileReportLines[2], fileReportLines[0], fileReportLines[3]);
+                if (Boolean.parseBoolean(fileReportLines[1])) {
+                    ans.mark();
+                } else {
+                    ans.unmark();
+                }
+
+                return ans;
+            }
+
+            case 5: {
+                final Task ans = new Task.Event(fileReportLines[2], fileReportLines[0], fileReportLines[3], fileReportLines[4]);
+                if (Boolean.parseBoolean(fileReportLines[1])) {
+                    ans.mark();
+                } else {
+                    ans.unmark();
+                }
+
+                return ans;
+            }
+
+            default: {
+                return null;
+            }
+        }
+    }
+
     static final class ToDo extends Task {
         private ToDo (final String description, final String commandName) {
             super(description, commandName);
@@ -64,6 +115,11 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
         @Override
         public String toString() {
             return super.toString();
+        }
+
+        @Override
+        String toFileReport() {
+            return super.toFileReport();
         }
     }
 
@@ -77,13 +133,13 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
         private String deadlineLogMessage = null;
 
         @Override
-        public void mark() {
+        void mark() {
             super.mark();
             this.deadlineLogMessage = null;
         }
 
         @Override
-        public void unmark() {
+        void unmark() {
             super.unmark();
             this.deadlineLogMessage = null;
         }
@@ -95,6 +151,12 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
             }
 
             return this.deadlineLogMessage;
+        }
+
+        @Override
+        String toFileReport() {
+            return String.format("%s\n%s\n\n", super.toFileReport().substring(0, super.toFileReport().length() - 2),
+                                                this.deadline);
         }
     }
 
@@ -109,13 +171,13 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
 
         private String eventlogMessage = null;
         @Override
-        public void mark() {
+        void mark() {
             super.mark();
             this.eventlogMessage = null;
         }
 
         @Override
-        public void unmark() {
+        void unmark() {
             super.unmark();
             this.eventlogMessage = null;
         }
@@ -127,6 +189,14 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
             }
 
             return this.eventlogMessage;
+        }
+
+        @Override
+        String toFileReport() {
+            return String.format("%s\n%s\n%s\n\n",
+                                 super.toFileReport().substring(0, super.toFileReport().length() - 2),
+                                 this.startDate,
+                                 this.endDate);
         }
     }
 
