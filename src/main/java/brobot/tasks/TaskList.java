@@ -2,6 +2,7 @@ package brobot.tasks;
 
 import brobot.BroBot;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,26 +10,48 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// TODO: Figure out how to READ from the file and print the saved tasks.
-// TODO: Fix the bugs and make sure the mutator methods actually write to the file properly.
 public final class TaskList {
-    private final String pathName;
+    private final Path taskSavePath;
+
     private final ArrayList<Task> taskArrayList = new ArrayList<>();
 
     private static final TaskList taskListSingleton = new TaskList("./data/brobot tasks.txt");
 
+
+    public static String printFormattedNumberedTask (final int number) {
+        return String.format("%d. %s", number, TaskList.getTask(number));
+    }
+
+    private static void printSavedTasks() {
+        if (TaskList.isEmpty()) {
+            BroBot.delimit();
+            System.out.println("You do not have any tasks saved from previous sessions.");
+            BroBot.delimit();
+            return;
+        }
+
+        BroBot.delimit();
+
+        System.out.println("Here are the tasks saved from previous sessions.");
+        for (int i = 1; i <= TaskList.size(); i++) {
+            TaskList.printFormattedNumberedTask(i);
+        }
+
+        BroBot.delimit();
+    }
+
     private TaskList (final String pathName) {
-        this.pathName = pathName;
+        this.taskSavePath = Paths.get(pathName);
+        if (!Files.exists(this.taskSavePath)) {
+            TaskList.printSavedTasks();
+            return;
+        }
+
         Scanner fileReader = null;
         boolean mustEnd = false;
 
         try {
-            final Path filePath = Paths.get(this.pathName);
-            if (!Files.exists(filePath)) {
-                Files.createFile(filePath);
-            }
-
-            fileReader = new Scanner(filePath);
+            fileReader = new Scanner(this.taskSavePath);
             final StringBuilder taskStringBuilder = new StringBuilder();
 
             while (fileReader.hasNextLine()) {
@@ -50,12 +73,15 @@ public final class TaskList {
             if (fileReader != null) {
                 fileReader.close();
             }
+
+            if (mustEnd) {
+                System.exit(1);
+            }
         }
 
-        if (mustEnd) {
-            System.exit(1);
-        }
+        TaskList.printSavedTasks();
     }
+
 
     public static int size() {
         return TaskList.taskListSingleton.taskArrayList.size();
@@ -69,9 +95,18 @@ public final class TaskList {
         return TaskList.taskListSingleton.taskArrayList.isEmpty();
     }
 
-    // TODO: Save tasks to the file.
     private static void saveToFile() {
-
+        try (final BufferedWriter fileSaveWriter = Files.newBufferedWriter(TaskList.taskListSingleton.taskSavePath)) {
+            for (int i = 1; i <= TaskList.size(); i++) {
+                fileSaveWriter.write(TaskList.getTask(i).toFileReport());
+            }
+        } catch (final IOException ioException) {
+            BroBot.delimit();
+            System.out.println("Oh no, the system has a problem writing the tasks to the hard disk.");
+            System.out.println("Terminating program immediately");
+            BroBot.delimit();
+            System.exit(1);
+        }
     }
 
     // Mutator method, must save to file.
