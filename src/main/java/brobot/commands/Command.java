@@ -1,4 +1,4 @@
-package brobot;
+package brobot.commands;
 
 import brobot.brobotexceptions.NoSuchCommandNameException;
 

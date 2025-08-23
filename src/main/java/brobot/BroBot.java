@@ -1,9 +1,10 @@
 package brobot;
 
 import brobot.brobotexceptions.*;
+import brobot.commands.Command;
 import brobot.tasks.Task;
+import brobot.tasks.TaskList;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -15,15 +16,6 @@ public final class BroBot {
 
     public static final String chatBotName = "BroBot";
 
-    private static final ArrayList<Task> taskList = new ArrayList<>();
-    public static int getTaskListSize() {
-        return BroBot.taskList.size();
-    }
-
-    private static String getNumberedTask (final int number) {
-        return String.format("%d. %s", number, BroBot.taskList.get(number - 1));
-    }
-
     private static final String fourSpacesIndent = String.valueOf(new char[]{' ', ' ', ' ', ' '});
     
     private static void greet() {
@@ -32,7 +24,7 @@ public final class BroBot {
         BroBot.delimit();
     }
 
-    private static void delimit() {
+    public static void delimit() {
         System.out.println("____________________________________________________________");
     }
 
@@ -40,7 +32,6 @@ public final class BroBot {
     private static final Pattern positiveIntegerPattern = Pattern.compile("^[1-9]\\d*$");
 
     private static boolean processCommand() {
-        // TODO: Rethink the way I process commands using this method. Take into account exceptions by catching them all here.
         try {
             final String commandText = inputReader.nextLine().strip().replaceAll("\\s+", " ");
             if (commandText.isEmpty()) {
@@ -68,7 +59,7 @@ public final class BroBot {
                         throw SomeArgsLeftException.fromCommandName(command.getName());
                     }
 
-                    if (BroBot.taskList.isEmpty()) {
+                    if (TaskList.isEmpty()) {
                         BroBot.delimit();
                         System.out.println("Enjoy your empty task list!");
                         BroBot.delimit();
@@ -76,8 +67,8 @@ public final class BroBot {
                     }
 
                     BroBot.delimit();
-                    for (int idx = 1; idx <= BroBot.taskList.size(); idx++) {
-                        System.out.println(BroBot.getNumberedTask(idx));
+                    for (int idx = 1; idx <= TaskList.size(); idx++) {
+                        System.out.println(TaskList.printFormattedNumberedTask(idx));
                     }
                     BroBot.delimit();
 
@@ -90,12 +81,13 @@ public final class BroBot {
                     }
 
                     final int taskIndex = Integer.parseInt(commandTokens[1]);
-                    if (1 <= taskIndex && taskIndex <= taskList.size()) {
+                    if (1 <= taskIndex && taskIndex <= TaskList.size()) {
                         BroBot.delimit();
 
-                        BroBot.taskList.get(taskIndex - 1).mark();
+                        TaskList.markTask(taskIndex);
+
                         System.out.println("Nice! I've marked this task as done:");
-                        System.out.println(BroBot.fourSpacesIndent + BroBot.getNumberedTask(taskIndex));
+                        System.out.println(BroBot.fourSpacesIndent + TaskList.printFormattedNumberedTask(taskIndex));
 
                         BroBot.delimit();
                         return true;
@@ -112,12 +104,12 @@ public final class BroBot {
                     }
 
                     final int taskIndex = Integer.parseInt(commandTokens[1]);
-                    if (1 <= taskIndex && taskIndex <= taskList.size()) {
+                    if (1 <= taskIndex && taskIndex <= TaskList.size()) {
                         BroBot.delimit();
 
-                        BroBot.taskList.get(taskIndex - 1).unmark();
+                        TaskList.unmarkTask(taskIndex);
                         System.out.println("OK, I've marked this task as not done yet:");
-                        System.out.println(BroBot.fourSpacesIndent + BroBot.getNumberedTask(taskIndex));
+                        System.out.println(BroBot.fourSpacesIndent + TaskList.printFormattedNumberedTask(taskIndex));
 
                         BroBot.delimit();
                         return true;
@@ -134,13 +126,13 @@ public final class BroBot {
                     }
 
                     final int taskIndex = Integer.parseInt(commandTokens[1]);
-                    if (1 <= taskIndex && taskIndex <= taskList.size()) {
+                    if (1 <= taskIndex && taskIndex <= TaskList.size()) {
                         BroBot.delimit();
 
                         System.out.println("Noted. I've removed this task:");
-                        System.out.println(BroBot.fourSpacesIndent + BroBot.getNumberedTask(taskIndex));
-                        BroBot.taskList.remove(taskIndex - 1);
-                        System.out.printf("Now you have %d tasks in the list.\n", BroBot.taskList.size());
+                        System.out.println(BroBot.fourSpacesIndent + TaskList.printFormattedNumberedTask(taskIndex));
+                        TaskList.remove(taskIndex);
+                        System.out.printf("Now you have %d tasks in the list.\n", TaskList.size());
 
                         BroBot.delimit();
                         return true;
@@ -153,11 +145,11 @@ public final class BroBot {
 
                 case TODO, EVENT, DEADLINE: {
                     BroBot.delimit();
-                    BroBot.taskList.add(Task.createTask(commandTokens));
+                    TaskList.add(Task.createTask(commandTokens));
 
                     System.out.println("Got it. I've added this task:");
-                    System.out.println(BroBot.fourSpacesIndent + BroBot.getNumberedTask(BroBot.taskList.size()) );
-                    System.out.printf("Now you have %d tasks in the list.\n", BroBot.taskList.size());
+                    System.out.println(BroBot.fourSpacesIndent + TaskList.printFormattedNumberedTask(TaskList.size()) );
+                    System.out.printf("Now you have %d tasks in the list.\n", TaskList.size());
 
                     BroBot.delimit();
                     return true;
