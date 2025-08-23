@@ -15,35 +15,23 @@ public final class TaskList {
 
     private final ArrayList<Task> taskArrayList = new ArrayList<>();
 
-    private static final TaskList taskListSingleton = new TaskList("./data/brobot tasks.txt");
-
+    private static TaskList taskListSingleton = null;
+    public static void initializeTaskList() {
+        if (TaskList.taskListSingleton == null) {
+            TaskList.taskListSingleton = new TaskList("./data/brobot tasks.txt");
+        }
+    }
 
     public static String printFormattedNumberedTask (final int number) {
         return String.format("%d. %s", number, TaskList.getTask(number));
     }
 
-    private static void printSavedTasks() {
-        if (TaskList.isEmpty()) {
-            BroBot.delimit();
-            System.out.println("You do not have any tasks saved from previous sessions.");
-            BroBot.delimit();
-            return;
-        }
-
-        BroBot.delimit();
-
-        System.out.println("Here are the tasks saved from previous sessions.");
-        for (int i = 1; i <= TaskList.size(); i++) {
-            TaskList.printFormattedNumberedTask(i);
-        }
-
-        BroBot.delimit();
-    }
-
     private TaskList (final String pathName) {
         this.taskSavePath = Paths.get(pathName);
         if (!Files.exists(this.taskSavePath)) {
-            TaskList.printSavedTasks();
+            BroBot.delimit();
+            System.out.println("You do not have any tasks saved from previous sessions.");
+            BroBot.delimit();
             return;
         }
 
@@ -79,7 +67,18 @@ public final class TaskList {
             }
         }
 
-        TaskList.printSavedTasks();
+        BroBot.delimit();
+        if (this.taskArrayList.isEmpty()) {
+            System.out.println("You do not have any tasks saved from previous sessions.");
+            BroBot.delimit();
+            return;
+        }
+
+        System.out.println("Here are the tasks saved from previous sessions.");
+        for (int i = 1; i <= this.taskArrayList.size(); i++) {
+            TaskList.printFormattedNumberedTask(i);
+        }
+        BroBot.delimit();
     }
 
 

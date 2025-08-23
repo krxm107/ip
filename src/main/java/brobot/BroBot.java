@@ -8,7 +8,6 @@ import brobot.tasks.TaskList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-// Finished Level-0 to Level-4, as well as A-TextUiTesting.
 public final class BroBot {
     private BroBot() {
 
@@ -22,6 +21,8 @@ public final class BroBot {
         BroBot.delimit();
         System.out.printf("Hello, I'm %s! What can I do for you?\n", BroBot.chatBotName);
         BroBot.delimit();
+
+        TaskList.initializeTaskList();
     }
 
     public static void delimit() {

@@ -5,16 +5,18 @@ import brobot.brobotexceptions.InvalidEventFormatException;
 import brobot.brobotexceptions.InvalidTODOFormatException;
 import brobot.brobotexceptions.InvalidTaskFormatException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.function.BiFunction;
 
-public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  {
+public sealed abstract class Task permits ToDo, Deadline, Event  {
     private static int nextFreeID = 1;
 
     private final String baseObjective;
     private final int id;
     private final String commandName;
 
-    private Task (final String baseObjective, final String commandName) {
+    Task (final String baseObjective, final String commandName) {
         this.id = Task.nextFreeID;
         this.baseObjective = baseObjective;
         this.commandName = commandName;
@@ -69,7 +71,7 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
 
         switch (fileReportLines.length) {
             case 3: {
-                final Task ans = new Task.ToDo(fileReportLines[2], fileReportLines[0]);
+                    final Task ans = new ToDo(fileReportLines[2], fileReportLines[0]);
                 if (Boolean.parseBoolean(fileReportLines[1])) {
                     ans.mark();
                 } else {
@@ -80,7 +82,7 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
             }
 
             case 4: {
-                final Task ans = new Task.Deadline(fileReportLines[2], fileReportLines[0], fileReportLines[3]);
+                final Task ans = new Deadline(fileReportLines[2], fileReportLines[0], fileReportLines[3]);
                 if (Boolean.parseBoolean(fileReportLines[1])) {
                     ans.mark();
                 } else {
@@ -91,7 +93,7 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
             }
 
             case 5: {
-                final Task ans = new Task.Event(fileReportLines[2], fileReportLines[0], fileReportLines[3], fileReportLines[4]);
+                final Task ans = new Event(fileReportLines[2], fileReportLines[0], fileReportLines[3], fileReportLines[4]);
                 if (Boolean.parseBoolean(fileReportLines[1])) {
                     ans.mark();
                 } else {
@@ -104,99 +106,6 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
             default: {
                 return null;
             }
-        }
-    }
-
-    static final class ToDo extends Task {
-        private ToDo (final String description, final String commandName) {
-            super(description, commandName);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString();
-        }
-
-        @Override
-        String toFileReport() {
-            return super.toFileReport();
-        }
-    }
-
-    static final class Deadline extends Task {
-        private final String deadline;
-        private Deadline (final String description, final String commandName, final String deadline) {
-            super(description, commandName);
-            this.deadline = deadline;
-        }
-
-        private String deadlineLogMessage = null;
-
-        @Override
-        void mark() {
-            super.mark();
-            this.deadlineLogMessage = null;
-        }
-
-        @Override
-        void unmark() {
-            super.unmark();
-            this.deadlineLogMessage = null;
-        }
-
-        @Override
-        public String toString() {
-            if (this.deadlineLogMessage == null) {
-                this.deadlineLogMessage = String.format("%s (by: %s)", super.toString(), this.deadline);
-            }
-
-            return this.deadlineLogMessage;
-        }
-
-        @Override
-        String toFileReport() {
-            return String.format("%s\n%s\n\n", super.toFileReport().substring(0, super.toFileReport().length() - 2),
-                                                this.deadline);
-        }
-    }
-
-    static final class Event extends Task {
-        private final String startDate, endDate;
-        private Event (final String description, final String commandName,
-                       final String startDate, final String endDate) {
-            super(description, commandName);
-            this.startDate = startDate;
-            this.endDate = endDate;
-        }
-
-        private String eventlogMessage = null;
-        @Override
-        void mark() {
-            super.mark();
-            this.eventlogMessage = null;
-        }
-
-        @Override
-        void unmark() {
-            super.unmark();
-            this.eventlogMessage = null;
-        }
-
-        @Override
-        public String toString() {
-            if (this.eventlogMessage == null) {
-                this.eventlogMessage = String.format("%s (from: %s to: %s)", super.toString(), this.startDate, this.endDate);
-            }
-
-            return this.eventlogMessage;
-        }
-
-        @Override
-        String toFileReport() {
-            return String.format("%s\n%s\n%s\n\n",
-                                 super.toFileReport().substring(0, super.toFileReport().length() - 2),
-                                 this.startDate,
-                                 this.endDate);
         }
     }
 
@@ -215,7 +124,7 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
                 throw InvalidTODOFormatException.newInvalidTODOFormatException();
             }
 
-            return new Task.ToDo(stringJoiner.apply(1, commandTokens.length), "ToDo");
+            return new ToDo(stringJoiner.apply(1, commandTokens.length), "ToDo");
         }
 
         if (commandTokens[0].equalsIgnoreCase("deadline")) {
@@ -234,7 +143,7 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
             final String description = stringJoiner.apply(1, firstByIndex);
             final String deadline = stringJoiner.apply(firstByIndex + 1, commandTokens.length);
 
-            return new Task.Deadline(description, "Deadline", deadline);
+            return new Deadline(description, "Deadline", deadline);
         }
 
         int firstFromIndex = -1;
@@ -265,6 +174,16 @@ public sealed abstract class Task permits Task.ToDo, Task.Deadline, Task.Event  
         final String fromDate = stringJoiner.apply(firstFromIndex + 1, firstToIndex);
         final String toDate = stringJoiner.apply(firstToIndex + 1, commandTokens.length);
 
-        return new Task.Event(description, "Event", fromDate, toDate);
+        return new Event(description, "Event", fromDate, toDate);
+    }
+
+    private static final DateTimeFormatter INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final LocalDate toInputDate (final String inputDateString) {
+        return LocalDate.parse(inputDateString, Task.INPUT_DATE_FORMAT);
+    }
+
+    private static final DateTimeFormatter OUTPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
+    private static final String datePrinter (final LocalDate outputLocalDate) {
+        return outputLocalDate.format(Task.OUTPUT_DATE_FORMAT);
     }
 }
