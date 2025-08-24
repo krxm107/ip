@@ -12,6 +12,14 @@ public final class BroBot {
 
     }
 
+    private static final void printNextMessage (final Runnable action) {
+        BroBot.delimit();
+
+        action.run();
+
+        BroBot.delimit();
+    }
+
     public static final String chatBotName = "BroBot";
 
     private static final String fourSpacesIndent = String.valueOf(new char[]{' ', ' ', ' ', ' '});
@@ -24,6 +32,7 @@ public final class BroBot {
         TaskList.initializeTaskList();
     }
 
+    // TODO: Make this method private if possible. Decide on the most appropriate access modifier for this helper method.
     public static void delimit() {
         System.out.println("____________________________________________________________");
     }
