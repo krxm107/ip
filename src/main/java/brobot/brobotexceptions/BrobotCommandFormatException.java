@@ -1,17 +1,17 @@
 package brobot.brobotexceptions;
 
-public abstract class BrobotCommandException extends BrobotCheckedException {
+public abstract class BrobotCommandFormatException extends BrobotCheckedException {
     private static final String invalidInputWarning = String.format("Sorry, this input is invalid!");
     private static final String anotherChanceOffering = String.format("Please enter a different input.\nProgram resumed.");
 
     private static final String getFullMessage (final String mainMessage) {
         return String.join("\n",
-                            BrobotCommandException.invalidInputWarning,
+                            BrobotCommandFormatException.invalidInputWarning,
                             mainMessage,
-                            BrobotCommandException.anotherChanceOffering);
+                            BrobotCommandFormatException.anotherChanceOffering);
     }
 
-    protected BrobotCommandException (final String mainMessage) {
-        super(BrobotCommandException.getFullMessage(mainMessage));
+    protected BrobotCommandFormatException(final String mainMessage) {
+        super(BrobotCommandFormatException.getFullMessage(mainMessage));
     }
 }

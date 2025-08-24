@@ -1,12 +1,7 @@
 package brobot.tasks;
 
-import brobot.brobotexceptions.InvalidDeadlineFormatException;
-import brobot.brobotexceptions.InvalidEventFormatException;
-import brobot.brobotexceptions.InvalidTODOFormatException;
-import brobot.brobotexceptions.InvalidTaskFormatException;
+import brobot.brobotexceptions.*;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.function.BiFunction;
 
 public sealed abstract class Task permits ToDo, Deadline, Event  {
@@ -67,49 +62,53 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
     }
 
     static final Task fromFileReport (final String fileReport) {
-        final String[] fileReportLines = fileReport.substring(0, fileReport.length() - 2).split("\n");
+        final String[] fileReportLines = fileReport.split("\n");
 
-        switch (fileReportLines.length) {
-            case 3: {
+        try {
+            switch (fileReportLines.length) {
+                case 3: {
                     final Task ans = new ToDo(fileReportLines[2], fileReportLines[0]);
-                if (Boolean.parseBoolean(fileReportLines[1])) {
-                    ans.mark();
-                } else {
-                    ans.unmark();
+                    if (Boolean.parseBoolean(fileReportLines[1])) {
+                        ans.mark();
+                    } else {
+                        ans.unmark();
+                    }
+
+                    return ans;
                 }
 
-                return ans;
-            }
+                case 4: {
+                    final Task ans = new Deadline(fileReportLines[2], fileReportLines[0], fileReportLines[3]);
+                    if (Boolean.parseBoolean(fileReportLines[1])) {
+                        ans.mark();
+                    } else {
+                        ans.unmark();
+                    }
 
-            case 4: {
-                final Task ans = new Deadline(fileReportLines[2], fileReportLines[0], fileReportLines[3]);
-                if (Boolean.parseBoolean(fileReportLines[1])) {
-                    ans.mark();
-                } else {
-                    ans.unmark();
+                    return ans;
                 }
 
-                return ans;
-            }
+                case 5: {
+                    final Task ans = new Event(fileReportLines[2], fileReportLines[0], fileReportLines[3], fileReportLines[4]);
+                    if (Boolean.parseBoolean(fileReportLines[1])) {
+                        ans.mark();
+                    } else {
+                        ans.unmark();
+                    }
 
-            case 5: {
-                final Task ans = new Event(fileReportLines[2], fileReportLines[0], fileReportLines[3], fileReportLines[4]);
-                if (Boolean.parseBoolean(fileReportLines[1])) {
-                    ans.mark();
-                } else {
-                    ans.unmark();
+                    return ans;
                 }
 
-                return ans;
+                default: {
+                    return null;
+                }
             }
-
-            default: {
-                return null;
-            }
+        } catch (final BrobotDateFormatException brobotDateFormatException) {
+            return null;
         }
     }
 
-    public static final Task createTask (final String[] commandTokens) throws InvalidTaskFormatException {
+    public static final Task createTask (final String[] commandTokens) throws InvalidTaskFormatException, BrobotDateFormatException {
         final BiFunction<Integer, Integer, String> stringJoiner = (final Integer startIdx, final Integer endIdx) -> {
             final String[] slice = new String[endIdx - startIdx];
             for (int i = startIdx; i < endIdx; i++) {
@@ -175,15 +174,5 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
         final String toDate = stringJoiner.apply(firstToIndex + 1, commandTokens.length);
 
         return new Event(description, "Event", fromDate, toDate);
-    }
-
-    private static final DateTimeFormatter INPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final LocalDate toInputDate (final String inputDateString) {
-        return LocalDate.parse(inputDateString, Task.INPUT_DATE_FORMAT);
-    }
-
-    private static final DateTimeFormatter OUTPUT_DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd yyyy");
-    private static final String datePrinter (final LocalDate outputLocalDate) {
-        return outputLocalDate.format(Task.OUTPUT_DATE_FORMAT);
     }
 }

@@ -23,7 +23,11 @@ public final class TaskList {
     }
 
     public static String printFormattedNumberedTask (final int number) {
-        return String.format("%d. %s", number, TaskList.getTask(number));
+        return TaskList.printFormattedNumberedTask(number, TaskList.getTask(number));
+    }
+
+    private static String printFormattedNumberedTask (final int number, final Task task) {
+        return String.format("%d. %s", number, task);
     }
 
     private TaskList (final String pathName) {
@@ -47,6 +51,9 @@ public final class TaskList {
                 if (taskLine.isEmpty()) {
                     final String taskString = taskStringBuilder.deleteCharAt(taskStringBuilder.length() - 1).toString();
                     this.taskArrayList.add(Task.fromFileReport(taskString));
+                    while (taskStringBuilder.length() > 0) {
+                        taskStringBuilder.deleteCharAt(taskStringBuilder.length() - 1);
+                    }
                 } else {
                     taskStringBuilder.append(taskLine + "\n");
                 }
@@ -76,7 +83,7 @@ public final class TaskList {
 
         System.out.println("Here are the tasks saved from previous sessions.");
         for (int i = 1; i <= this.taskArrayList.size(); i++) {
-            TaskList.printFormattedNumberedTask(i);
+            System.out.println( TaskList.printFormattedNumberedTask(i, this.taskArrayList.get(i - 1)) );
         }
         BroBot.delimit();
     }

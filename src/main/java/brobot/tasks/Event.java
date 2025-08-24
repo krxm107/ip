@@ -1,12 +1,15 @@
 package brobot.tasks;
 
+import brobot.brobotexceptions.BrobotDateFormatException;
+import brobot.datesandtimes.BrobotDate;
+
 final class Event extends Task {
-    private final String startDate, endDate;
+    private final BrobotDate startDate, endDate;
     Event (final String description, final String commandName,
-                   final String startDate, final String endDate) {
+                   final String startDate, final String endDate) throws BrobotDateFormatException {
         super(description, commandName);
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = BrobotDate.fromString(startDate);
+        this.endDate = BrobotDate.fromString(endDate);
     }
 
     private String eventlogMessage = null;

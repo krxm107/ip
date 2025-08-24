@@ -1,6 +1,6 @@
 package brobot.brobotexceptions;
 
-public final class SomeArgsLeftException extends BrobotCommandException {
+public final class SomeArgsLeftException extends BrobotCommandFormatException {
     private SomeArgsLeftException(final String mainMessage) {
         super(mainMessage);
     }

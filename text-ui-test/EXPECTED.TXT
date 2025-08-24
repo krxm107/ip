@@ -11,22 +11,22 @@ Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-    2. [D][ ] return book (by: Sunday)
+    2. [D][ ] return book (by: 15 Feb 2024)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-    3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+    3. [E][ ] project meeting (from: 23 Apr 2025 to: 12 May 2025)
 Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 1. [T][ ] borrow book
-2. [D][ ] return book (by: Sunday)
-3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+2. [D][ ] return book (by: 15 Feb 2024)
+3. [E][ ] project meeting (from: 23 Apr 2025 to: 12 May 2025)
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
-    2. [D][X] return book (by: Sunday)
+    2. [D][X] return book (by: 15 Feb 2024)
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
@@ -34,12 +34,12 @@ Nice! I've marked this task as done:
 ____________________________________________________________
 ____________________________________________________________
 1. [T][X] borrow book
-2. [D][X] return book (by: Sunday)
-3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+2. [D][X] return book (by: 15 Feb 2024)
+3. [E][ ] project meeting (from: 23 Apr 2025 to: 12 May 2025)
 ____________________________________________________________
 ____________________________________________________________
 OK, I've marked this task as not done yet:
-    2. [D][ ] return book (by: Sunday)
+    2. [D][ ] return book (by: 15 Feb 2024)
 ____________________________________________________________
 ____________________________________________________________
 OK, I've marked this task as not done yet:
@@ -47,17 +47,17 @@ OK, I've marked this task as not done yet:
 ____________________________________________________________
 ____________________________________________________________
 1. [T][ ] borrow book
-2. [D][ ] return book (by: Sunday)
-3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+2. [D][ ] return book (by: 15 Feb 2024)
+3. [E][ ] project meeting (from: 23 Apr 2025 to: 12 May 2025)
 ____________________________________________________________
 ____________________________________________________________
 Noted. I've removed this task:
-    2. [D][ ] return book (by: Sunday)
+    2. [D][ ] return book (by: 15 Feb 2024)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 1. [T][ ] borrow book
-2. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+2. [E][ ] project meeting (from: 23 Apr 2025 to: 12 May 2025)
 ____________________________________________________________
 ____________________________________________________________
 Noted. I've removed this task:
@@ -65,18 +65,18 @@ Noted. I've removed this task:
 Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-1. [E][ ] project meeting (from: Mon 2pm to: 4pm)
+1. [E][ ] project meeting (from: 23 Apr 2025 to: 12 May 2025)
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
-    1. [E][X] project meeting (from: Mon 2pm to: 4pm)
+    1. [E][X] project meeting (from: 23 Apr 2025 to: 12 May 2025)
 ____________________________________________________________
 ____________________________________________________________
-1. [E][X] project meeting (from: Mon 2pm to: 4pm)
+1. [E][X] project meeting (from: 23 Apr 2025 to: 12 May 2025)
 ____________________________________________________________
 ____________________________________________________________
 Noted. I've removed this task:
-    1. [E][X] project meeting (from: Mon 2pm to: 4pm)
+    1. [E][X] project meeting (from: 23 Apr 2025 to: 12 May 2025)
 Now you have 0 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________

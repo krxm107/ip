@@ -1,10 +1,13 @@
 package brobot.tasks;
 
+import brobot.brobotexceptions.BrobotDateFormatException;
+import brobot.datesandtimes.BrobotDate;
+
 final class Deadline extends Task {
-    private final String deadline;
-    Deadline (final String description, final String commandName, final String deadline) {
+    private final BrobotDate deadline;
+    Deadline (final String description, final String commandName, final String deadline) throws BrobotDateFormatException {
         super(description, commandName);
-        this.deadline = deadline;
+        this.deadline = BrobotDate.fromString(deadline);
     }
 
     private String deadlineLogMessage = null;
