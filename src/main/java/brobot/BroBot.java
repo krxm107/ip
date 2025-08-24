@@ -8,7 +8,6 @@ import brobot.tasks.TaskList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-// Finished Level-0 to Level-4, as well as A-TextUiTesting.
 public final class BroBot {
     private BroBot() {
 
@@ -22,6 +21,8 @@ public final class BroBot {
         BroBot.delimit();
         System.out.printf("Hello, I'm %s! What can I do for you?\n", BroBot.chatBotName);
         BroBot.delimit();
+
+        TaskList.initializeTaskList();
     }
 
     public static void delimit() {
@@ -81,6 +82,13 @@ public final class BroBot {
                     }
 
                     final int taskIndex = Integer.parseInt(commandTokens[1]);
+                    if (TaskList.isEmpty()) {
+                        BroBot.delimit();
+                        System.out.println("Enjoy your empty task list!");
+                        BroBot.delimit();
+                        return true;
+                    }
+
                     if (1 <= taskIndex && taskIndex <= TaskList.size()) {
                         BroBot.delimit();
 
@@ -92,9 +100,7 @@ public final class BroBot {
                         BroBot.delimit();
                         return true;
                     } else {
-                        BroBot.delimit();
-                        BroBot.delimit();
-                        return true;
+                        throw TaskIndexOutOfBoundsException.fromBadIndex(taskIndex);
                     }
                 }
 
@@ -104,6 +110,13 @@ public final class BroBot {
                     }
 
                     final int taskIndex = Integer.parseInt(commandTokens[1]);
+                    if (TaskList.isEmpty()) {
+                        BroBot.delimit();
+                        System.out.println("Enjoy your empty task list!");
+                        BroBot.delimit();
+                        return true;
+                    }
+
                     if (1 <= taskIndex && taskIndex <= TaskList.size()) {
                         BroBot.delimit();
 
@@ -114,9 +127,7 @@ public final class BroBot {
                         BroBot.delimit();
                         return true;
                     } else {
-                        BroBot.delimit();
-                        BroBot.delimit();
-                        return true;
+                        throw TaskIndexOutOfBoundsException.fromBadIndex(taskIndex);
                     }
                 }
 
@@ -126,6 +137,13 @@ public final class BroBot {
                     }
 
                     final int taskIndex = Integer.parseInt(commandTokens[1]);
+                    if (TaskList.isEmpty()) {
+                        BroBot.delimit();
+                        System.out.println("Enjoy your empty task list!");
+                        BroBot.delimit();
+                        return true;
+                    }
+
                     if (1 <= taskIndex && taskIndex <= TaskList.size()) {
                         BroBot.delimit();
 
@@ -137,15 +155,13 @@ public final class BroBot {
                         BroBot.delimit();
                         return true;
                     } else {
-                        BroBot.delimit();
-                        BroBot.delimit();
-                        return true;
+                        throw TaskIndexOutOfBoundsException.fromBadIndex(taskIndex);
                     }
                 }
 
                 case TODO, EVENT, DEADLINE: {
-                    BroBot.delimit();
                     TaskList.add(Task.createTask(commandTokens));
+                    BroBot.delimit();
 
                     System.out.println("Got it. I've added this task:");
                     System.out.println(BroBot.fourSpacesIndent + TaskList.printFormattedNumberedTask(TaskList.size()) );
@@ -160,9 +176,9 @@ public final class BroBot {
                 }
             }
 
-        } catch (final BrobotCommandException brobotCommandException) {
+        } catch (final BrobotCommandFormatException brobotCommandFormatException) {
             BroBot.delimit();
-            System.out.println(brobotCommandException.getMessage());
+            System.out.println(brobotCommandFormatException.getMessage());
             BroBot.delimit();
             return true;
         }

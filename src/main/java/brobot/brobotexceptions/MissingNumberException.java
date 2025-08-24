@@ -1,6 +1,6 @@
 package brobot.brobotexceptions;
 
-public final class MissingNumberException extends BrobotCommandException {
+public final class MissingNumberException extends BrobotCommandFormatException {
     private MissingNumberException (final String message) {
         super(message);
     }
