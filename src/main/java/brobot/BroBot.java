@@ -6,7 +6,6 @@ import brobot.tasks.Task;
 import brobot.tasks.TaskList;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public final class BroBot {
     private BroBot() {
@@ -30,7 +29,6 @@ public final class BroBot {
     }
 
     private static final Scanner inputReader = new Scanner(System.in);
-    private static final Pattern positiveIntegerPattern = Pattern.compile("^[1-9]\\d*$");
 
     private static boolean processCommand() {
         try {
