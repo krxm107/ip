@@ -12,6 +12,10 @@ public final class BroBot {
 
     }
 
+    /*
+        TODO: The Runnable addition and the printNextMessage are very useful. They are to make it to the next refactorings.
+        TODO: Do not anyhow throw them away unless there's a good reason to do so.
+     */
     private static final void printNextMessage (final Runnable action) {
         BroBot.delimit();
 
