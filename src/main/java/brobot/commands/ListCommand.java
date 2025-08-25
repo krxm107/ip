@@ -1,5 +1,6 @@
 package brobot.commands;
 
+import brobot.brobotexceptions.SomeArgsLeftException;
 import brobot.tasks.TaskList;
 
 final class ListCommand extends Command {
@@ -13,11 +14,19 @@ final class ListCommand extends Command {
         System.out.println(TaskList.getSingleton());
     }
 
-    public static ListCommand getSingleton() {
+    private static ListCommand getSingleton() {
         if (ListCommand.listCommandSingleton == null) {
             ListCommand.listCommandSingleton = new ListCommand();
         }
 
         return ListCommand.listCommandSingleton;
+    }
+
+    static ListCommand makeCommand (final String commandName, final String... commandArgs) throws SomeArgsLeftException {
+        if (commandArgs.length != 0) {
+            throw SomeArgsLeftException.fromCommandName(commandName);
+        }
+
+        return ListCommand.getSingleton();
     }
 }

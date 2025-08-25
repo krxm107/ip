@@ -5,7 +5,7 @@ sealed abstract class Command implements Runnable
 
     private final String commandName;
     Command (final String commandName) {
-        this.commandName = commandName;
+        this.commandName = commandName.strip().toLowerCase();
     }
 
     @Override

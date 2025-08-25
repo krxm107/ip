@@ -14,13 +14,13 @@ final class Event extends Task {
 
     private String eventlogMessage = null;
     @Override
-    void mark() {
+    public void mark() {
         super.mark();
         this.eventlogMessage = null;
     }
 
     @Override
-    void unmark() {
+    public void unmark() {
         super.unmark();
         this.eventlogMessage = null;
     }

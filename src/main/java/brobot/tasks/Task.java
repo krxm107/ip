@@ -31,12 +31,12 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
     private String baseLogMessage = null;
 
     private boolean isDone = false;
-    void mark() {
+    public void mark() {
         this.isDone = true;
         this.baseLogMessage = null;
     }
 
-    void unmark() {
+    public void unmark() {
         this.isDone = false;
         this.baseLogMessage = null;
     }
@@ -108,7 +108,7 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
         }
     }
 
-    public static final Task createTask (final String[] commandTokens) throws InvalidTaskFormatException, BrobotDateFormatException {
+    public static final Task createTask (final String[] commandTokens) throws BrobotDateFormatException {
         final BiFunction<Integer, Integer, String> stringJoiner = (final Integer startIdx, final Integer endIdx) -> {
             final String[] slice = new String[endIdx - startIdx];
             for (int i = startIdx; i < endIdx; i++) {
@@ -119,10 +119,6 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
         };
 
         if (commandTokens[0].equalsIgnoreCase("todo")) {
-            if (commandTokens.length == 1) {
-                throw InvalidTODOFormatException.newInvalidTODOFormatException();
-            }
-
             return new ToDo(stringJoiner.apply(1, commandTokens.length), "ToDo");
         }
 
@@ -133,10 +129,6 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
                     firstByIndex = i;
                     break;
                 }
-            }
-
-            if (firstByIndex <= 0) {
-                throw InvalidDeadlineFormatException.newInvalidDeadlineFormatException();
             }
 
             final String description = stringJoiner.apply(1, firstByIndex);
@@ -153,20 +145,12 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
             }
         }
 
-        if (firstFromIndex <= 0) {
-            throw InvalidEventFormatException.newInvalidEventFormatException();
-        }
-
         int firstToIndex = firstFromIndex - 1;
         for (int i = firstFromIndex + 1; i < commandTokens.length; i++) {
             if (commandTokens[i].equalsIgnoreCase("to")) {
                 firstToIndex = i;
                 break;
             }
-        }
-
-        if (firstToIndex <= firstFromIndex) {
-            throw InvalidEventFormatException.newInvalidEventFormatException();
         }
 
         final String description = stringJoiner.apply(1, firstFromIndex);

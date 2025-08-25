@@ -53,14 +53,18 @@ public final class TaskList {
         this.getTask(taskNumber).unmark();
     }
 
-    public static String getEmptyTaskListCheer() {
-        return "Enjoy your empty task list!";
+    public void noTaskCheerOrElse (final Runnable orElse) {
+        if (this.isEmpty()) {
+            System.out.print(this);
+        } else {
+            orElse.run();
+        }
     }
 
     @Override
     public String toString() {
         if (this.taskArrayList.isEmpty()) {
-            return TaskList.getEmptyTaskListCheer();
+            return "Enjoy your empty task list!\n";
         } else {
             final StringBuilder ans = new StringBuilder();
             for (int i = 1; i <= this.size(); i++) {
