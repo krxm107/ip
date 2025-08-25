@@ -29,9 +29,7 @@ public final class BroBot {
     private static final String fourSpacesIndent = String.valueOf(new char[]{' ', ' ', ' ', ' '});
     
     private static void greet() {
-        BroBot.delimit();
-        System.out.printf("Hello, I'm %s! What can I do for you?\n", BroBot.chatBotName);
-        BroBot.delimit();
+        BroBot.printNextMessage(() -> System.out.printf("Hello, I'm %s! What can I do for you?\n", BroBot.chatBotName));
 
         TaskList.initializeTaskList();
     }

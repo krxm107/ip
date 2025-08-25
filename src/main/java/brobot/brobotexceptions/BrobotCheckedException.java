@@ -1,12 +1,7 @@
 package brobot.brobotexceptions;
 
-public abstract class BrobotCheckedException extends Exception implements Runnable {
+public abstract class BrobotCheckedException extends Exception {
     protected BrobotCheckedException (final String fullMessage) {
         super(fullMessage);
-    }
-
-    @Override
-    public final void run() {
-        System.out.println(this.getMessage());
     }
 }
