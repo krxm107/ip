@@ -1,30 +1,13 @@
 package brobot.commands;
 
-import brobot.brobotexceptions.NoSuchCommandNameException;
+sealed abstract class Command implements Runnable
+    permits ByeCommand, ListCommand, MarkCommand, UnmarkCommand, DeleteCommand, ToDoCommand, DeadlineCommand, EventCommand {
 
-public enum Command {
-    BYE, LIST,
-    MARK, UNMARK, DELETE,
-    TODO, EVENT, DEADLINE;
-
-    public static final Command fromNameIgnoreCase (final String name) throws NoSuchCommandNameException {
-        if (name == null) {
-            throw NoSuchCommandNameException.newInstancefromCommandName(name);
-        }
-
-        try {
-            return Command.valueOf(name.toUpperCase());
-        } catch (final IllegalArgumentException illegalName) {
-            throw NoSuchCommandNameException.newInstancefromCommandName(name);
-        }
-    }
-
-    public String getName() {
-        return this.name();
+    private final String commandName;
+    Command (final String commandName) {
+        this.commandName = commandName;
     }
 
     @Override
-    public String toString() {
-        return this.getName();
-    }
+    public abstract void run();
 }
