@@ -1,7 +1,5 @@
 package brobot.tasks;
 
-import brobot.Action;
-
 import java.util.ArrayList;
 
 public final class TaskList {
@@ -39,28 +37,40 @@ public final class TaskList {
         return this.taskArrayList.isEmpty();
     }
 
+    // TaskList mutator method, need to write to file.
     public void add (final Task task) {
         this.taskArrayList.add(task);
+        Storage.getSingleton().writeToFile();
     }
 
+    // TaskList mutator method, need to write to file.
     public void remove (final int taskNumber) {
         this.taskArrayList.remove(taskNumber - 1);
+        Storage.getSingleton().writeToFile();
     }
 
+    // TaskList mutator method, need to write to file.
     public void markTask (final int taskNumber) {
         this.getTask(taskNumber).mark();
+        Storage.getSingleton().writeToFile();
     }
 
+    // TaskList mutator method, need to write to file.
     public void unmarkTask (final int taskNumber) {
         this.getTask(taskNumber).unmark();
+        Storage.getSingleton().writeToFile();
+    }
+
+    public void displayMessage (final Runnable emptyMessage, final Runnable nonEmptyMessage) {
+        if (this.isEmpty()) {
+            emptyMessage.run();
+        } else {
+            nonEmptyMessage.run();
+        }
     }
 
     public void noTaskCheerOrElse (final Runnable orElse) {
-        if (this.isEmpty()) {
-            System.out.print(this);
-        } else {
-            orElse.run();
-        }
+        this.displayMessage(() -> System.out.print(this), orElse);
     }
 
     @Override

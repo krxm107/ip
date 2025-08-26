@@ -20,7 +20,7 @@ final class UnmarkCommand extends Command {
     @Override
     public Runnable getAction() {
         return () -> TaskList.getSingleton().noTaskCheerOrElse(() -> {
-            TaskList.getSingleton().getTask(this.unmarkIndex).unmark();
+            TaskList.getSingleton().unmarkTask(this.unmarkIndex);
             System.out.println("OK, I've marked this task as not done yet:");
             System.out.println(UI.fourSpacesIndent + TaskList.getSingleton().printFormattedNumberedTask(this.unmarkIndex));
         });

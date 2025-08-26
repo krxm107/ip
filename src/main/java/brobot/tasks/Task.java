@@ -31,12 +31,12 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
     private String baseLogMessage = null;
 
     private boolean isDone = false;
-    public void mark() {
+    void mark() {
         this.isDone = true;
         this.baseLogMessage = null;
     }
 
-    public void unmark() {
+    void unmark() {
         this.isDone = false;
         this.baseLogMessage = null;
     }

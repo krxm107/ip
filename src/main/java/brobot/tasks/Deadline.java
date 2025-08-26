@@ -13,13 +13,13 @@ final class Deadline extends Task {
     private String deadlineLogMessage = null;
 
     @Override
-    public void mark() {
+    void mark() {
         super.mark();
         this.deadlineLogMessage = null;
     }
 
     @Override
-    public void unmark() {
+    void unmark() {
         super.unmark();
         this.deadlineLogMessage = null;
     }
