@@ -2,9 +2,10 @@ package brobot.tasks;
 
 import brobot.UI;
 
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -26,7 +27,15 @@ public final class Storage {
     }
 
     public void readFromFile() {
-        try (final Scanner fileReader = new Scanner(this.taskSavePath)) {
+        Scanner fileReader = null;
+        boolean mustExit = false;
+
+        try {
+            if (!Files.exists(this.taskSavePath.getParent())) {
+                Files.createDirectories(this.taskSavePath.getParent());
+            }
+
+            fileReader = new Scanner(this.taskSavePath);
 
             final StringBuilder taskStringBuilder = new StringBuilder();
             while (fileReader.hasNextLine()) {
@@ -48,15 +57,30 @@ public final class Storage {
                         System.out.print(TaskList.getSingleton());
                     });
 
-        } catch (final FileNotFoundException fnf) {
-            UI.sendMessage(() -> System.out.println("You do not have any tasks saved from previous sessions."));
+        } catch (final NoSuchFileException noFileYet) {
+            TaskList.getSingleton().displayMessage(() -> {
+                System.out.println("You do not have any tasks saved from previous sessions.");
+            }, () -> {
+                System.out.println("You do not have any tasks saved from previous sessions.");
+            });
         } catch (final IOException ioException) {
-            UI.sendMessage(() -> {
+            TaskList.getSingleton().displayMessage(() -> {
+                System.out.println("Oh no, the system had a problem reading the file where your tasks were saved.");
+                System.out.println("Terminating program immediately.");
+            }, () -> {
                 System.out.println("Oh no, the system had a problem reading the file where your tasks were saved.");
                 System.out.println("Terminating program immediately.");
             });
 
-            System.exit(1);
+            mustExit = true;
+        } finally {
+            if (fileReader != null) {
+                fileReader.close();
+            }
+
+            if (mustExit) {
+                System.exit(1);
+            }
         }
     }
 
@@ -66,7 +90,7 @@ public final class Storage {
                 fileSaveWriter.write(TaskList.getSingleton().getTask(i).toFileReport());
             }
         } catch (final IOException ioException) {
-            UI.sendMessage(() -> {
+            UI.sendPrintMessage(() -> {
                 System.out.println("Oh no, the system has a problem writing the tasks to the hard disk.");
                 System.out.println("Terminating program immediately.");
             });

@@ -108,7 +108,17 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
         }
     }
 
-    public static final Task createTask (final String... commandTokens) throws BrobotDateFormatException {
+    public static final Task createTask (final String commandName, final String... commandTokens) throws BrobotCommandFormatException {
+        final String[] ans = new String[commandTokens.length + 1];
+        ans[0] = commandName;
+        for (int i = 0; i < commandTokens.length; i++) {
+            ans[i + 1] = commandTokens[i];
+        }
+
+        return Task.createTask(ans);
+    }
+
+    private static final Task createTask (final String... commandTokens) throws BrobotDateFormatException {
         final BiFunction<Integer, Integer, String> stringJoiner = (final Integer startIdx, final Integer endIdx) -> {
             final String[] slice = new String[endIdx - startIdx];
             for (int i = startIdx; i < endIdx; i++) {

@@ -2,13 +2,13 @@ package brobot.commands;
 
 import brobot.brobotexceptions.SomeArgsLeftException;
 
-final class ByeCommand extends Command {
+public final class ByeCommand extends Command {
     private static ByeCommand byeCommandSingleton = null;
     private ByeCommand() {
         super("bye");
     }
 
-    private static ByeCommand getSingleton() {
+    public static ByeCommand getSingleton() {
         if (ByeCommand.byeCommandSingleton == null) {
             ByeCommand.byeCommandSingleton = new ByeCommand();
         }
