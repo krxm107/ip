@@ -108,7 +108,7 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
         }
     }
 
-    public static final Task createTask (final String[] commandTokens) throws BrobotDateFormatException {
+    public static final Task createTask (final String... commandTokens) throws BrobotDateFormatException {
         final BiFunction<Integer, Integer, String> stringJoiner = (final Integer startIdx, final Integer endIdx) -> {
             final String[] slice = new String[endIdx - startIdx];
             for (int i = startIdx; i < endIdx; i++) {

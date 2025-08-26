@@ -10,8 +10,8 @@ final class ListCommand extends Command {
     }
 
     @Override
-    public void run() {
-        System.out.println(TaskList.getSingleton());
+    public Runnable getAction() {
+        return () -> System.out.println(TaskList.getSingleton());
     }
 
     private static ListCommand getSingleton() {

@@ -1,5 +1,7 @@
 package brobot.tasks;
 
+import brobot.Action;
+
 import java.util.ArrayList;
 
 public final class TaskList {

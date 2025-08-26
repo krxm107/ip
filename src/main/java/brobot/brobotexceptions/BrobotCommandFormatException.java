@@ -1,6 +1,8 @@
 package brobot.brobotexceptions;
 
-public abstract class BrobotCommandFormatException extends BrobotCheckedException implements Runnable {
+import brobot.Action;
+
+public abstract class BrobotCommandFormatException extends BrobotCheckedException implements Action {
     private static final String invalidInputWarning = String.format("Sorry, this input is invalid!");
     private static final String anotherChanceOffering = String.format("Please enter a different input.\nProgram resumed.");
 
@@ -15,8 +17,7 @@ public abstract class BrobotCommandFormatException extends BrobotCheckedExceptio
         super(BrobotCommandFormatException.getFullMessage(mainMessage));
     }
 
-    @Override
-    public final void run() {
-        System.out.println(this.getMessage());
+    public final Runnable getAction() {
+        return () -> System.out.println(this.getMessage());
     }
 }

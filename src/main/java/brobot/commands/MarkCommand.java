@@ -17,9 +17,11 @@ final class MarkCommand extends Command {
     }
 
     @Override
-    public void run() {
-        TaskList.getSingleton().getTask(markIndex).mark();
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(UI.fourSpacesIndent + TaskList.getSingleton().printFormattedNumberedTask(markIndex));
+    public Runnable getAction() {
+        return () -> TaskList.getSingleton().noTaskCheerOrElse(() -> {
+            TaskList.getSingleton().getTask(markIndex).mark();
+            System.out.println("Nice! I've marked this task as done:");
+            System.out.println(UI.fourSpacesIndent + TaskList.getSingleton().printFormattedNumberedTask(markIndex));
+        });
     }
 }

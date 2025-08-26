@@ -1,7 +1,9 @@
 package brobot.commands;
 
-sealed abstract class Command implements Runnable
-    permits ByeCommand, ListCommand, MarkCommand, UnmarkCommand, DeleteCommand, ToDoCommand, DeadlineCommand, EventCommand {
+import brobot.Action;
+
+sealed abstract class Command implements Action
+    permits ByeCommand, ListCommand, MarkCommand, UnmarkCommand, DeleteCommand, AddTaskCommand {
 
     private final String commandName;
     Command (final String commandName) {
@@ -9,5 +11,5 @@ sealed abstract class Command implements Runnable
     }
 
     @Override
-    public abstract void run();
+    public abstract Runnable getAction();
 }
