@@ -11,7 +11,7 @@ final class ToDo extends Task {
     }
 
     @Override
-    String toFileReport() {
+    public String toFileReport() {
         return super.toFileReport();
     }
 }

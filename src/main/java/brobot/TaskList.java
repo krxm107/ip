@@ -1,4 +1,6 @@
-package brobot.tasks;
+package brobot;
+
+import brobot.tasks.Task;
 
 import java.util.ArrayList;
 
@@ -18,10 +20,10 @@ public final class TaskList {
     }
 
     public String printFormattedNumberedTask (final int number) {
-        return this.printFormattedNumberedTask(number, this.getTask(number));
+        return TaskList.printFormattedNumberedTask(number, this.getTask(number));
     }
 
-    private String printFormattedNumberedTask (final int number, final Task task) {
+    public static String printFormattedNumberedTask (final int number, final Task task) {
         return String.format("%d. %s", number, task);
     }
 

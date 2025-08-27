@@ -3,7 +3,7 @@ package brobot.commands;
 import brobot.BroBot;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.tasks.Task;
-import brobot.tasks.TaskList;
+import brobot.TaskList;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public final class AddTaskCommand extends Command {
         this.commandTokens = List.of(commandTokens);
     }
 
-    static AddTaskCommand makeCommand (final String commandName, final String... commandTokens) {
+    public static AddTaskCommand makeCommand (final String commandName, final String... commandTokens) {
         return new AddTaskCommand(commandName, commandTokens);
     }
 
@@ -28,18 +28,16 @@ public final class AddTaskCommand extends Command {
     }
 
     @Override
-    public Runnable getAction() {
-        return () -> {
-            try {
-                System.out.println("Got it. I've added this task:");
+    public void run() {
+        try {
+            System.out.println("Got it. I've added this task:");
 
-                TaskList.getSingleton().add(this.makeTask());
-                System.out.println(BroBot.fourSpacesIndent + TaskList.getSingleton().printFormattedNumberedTask(TaskList.getSingleton().size()));
+            TaskList.getSingleton().add(this.makeTask());
+            System.out.println(BroBot.fourSpacesIndent + TaskList.getSingleton().printFormattedNumberedTask(TaskList.getSingleton().size()));
 
-                System.out.printf("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
-            } catch (final BrobotCommandFormatException badTaskCommand) {
-                BroBot.performPrintAction(badTaskCommand);
-            }
-        };
+            System.out.printf("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
+        } catch (final BrobotCommandFormatException badTaskCommand) {
+            BroBot.sendPrintMessage(badTaskCommand);
+        }
     }
 }

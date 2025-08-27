@@ -6,8 +6,6 @@ import brobot.commands.Command;
 
 import java.util.Scanner;
 import java.util.function.Supplier;
-import brobot.commands.Parser;
-import brobot.tasks.Storage;
 
 // JAR Ready
 public final class BroBot {
@@ -27,10 +25,6 @@ public final class BroBot {
         message.run();
 
         BroBot.delimit();
-    }
-
-    public static void performPrintAction (final Action action) {
-        BroBot.sendPrintMessage(action.getAction());
     }
 
     private static void greet() {
@@ -53,9 +47,9 @@ public final class BroBot {
 
                 final String inputLine = inputLineReader.get();
                 currCommand = Parser.parseCommand(inputLine);
-                BroBot.performPrintAction(currCommand);
+                BroBot.sendPrintMessage(currCommand);
             } catch (final BrobotCommandFormatException badCommandFormat) {
-                BroBot.performPrintAction(badCommandFormat);
+                BroBot.sendPrintMessage(badCommandFormat);
             }
         }
     }

@@ -16,7 +16,7 @@ public final class ByeCommand extends Command {
         return ByeCommand.byeCommandSingleton;
     }
 
-    static ByeCommand makeCommand (final String commandName, final String... commandArgs) throws SomeArgsLeftException {
+    public static ByeCommand makeCommand (final String commandName, final String... commandArgs) throws SomeArgsLeftException {
         if (commandArgs.length != 0) {
             throw SomeArgsLeftException.fromCommandName(commandName);
         }
@@ -25,7 +25,7 @@ public final class ByeCommand extends Command {
     }
 
     @Override
-    public Runnable getAction() {
-        return () -> System.out.println("Bye. Hope to see you again soon!");
+    public void run() {
+        System.out.println("Bye. Hope to see you again soon!");
     }
 }
