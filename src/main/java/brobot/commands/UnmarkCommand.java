@@ -22,7 +22,7 @@ final class UnmarkCommand extends Command {
         return () -> TaskList.getSingleton().noTaskCheerOrElse(() -> {
             TaskList.getSingleton().unmarkTask(this.unmarkIndex);
             System.out.println("OK, I've marked this task as not done yet:");
-            System.out.println(BroBot.fourSpacesIndent + TaskList.getSingleton().printFormattedNumberedTask(this.unmarkIndex));
+            System.out.println(BroBot.FOUR_SPACES_INDENT + TaskList.getSingleton().printFormattedNumberedTask(this.unmarkIndex));
         });
     }
 }

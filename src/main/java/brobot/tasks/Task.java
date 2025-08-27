@@ -66,42 +66,48 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
 
         try {
             switch (fileReportLines.length) {
-                case 3: {
-                    final Task ans = new ToDo(fileReportLines[2], fileReportLines[0]);
-                    if (Boolean.parseBoolean(fileReportLines[1])) {
-                        ans.mark();
-                    } else {
-                        ans.unmark();
-                    }
 
-                    return ans;
+            // Fallthrough
+            case 3: {
+                final Task ans = new ToDo(fileReportLines[2], fileReportLines[0]);
+                if (Boolean.parseBoolean(fileReportLines[1])) {
+                    ans.mark();
+                } else {
+                    ans.unmark();
                 }
 
-                case 4: {
-                    final Task ans = new Deadline(fileReportLines[2], fileReportLines[0], fileReportLines[3]);
-                    if (Boolean.parseBoolean(fileReportLines[1])) {
-                        ans.mark();
-                    } else {
-                        ans.unmark();
-                    }
+                return ans;
+            }
 
-                    return ans;
+            // Fallthrough
+            case 4: {
+                final Task ans = new Deadline(fileReportLines[2], fileReportLines[0], fileReportLines[3]);
+                if (Boolean.parseBoolean(fileReportLines[1])) {
+                    ans.mark();
+                } else {
+                    ans.unmark();
                 }
 
-                case 5: {
-                    final Task ans = new Event(fileReportLines[2], fileReportLines[0], fileReportLines[3], fileReportLines[4]);
-                    if (Boolean.parseBoolean(fileReportLines[1])) {
-                        ans.mark();
-                    } else {
-                        ans.unmark();
-                    }
+                return ans;
+            }
 
-                    return ans;
+            // Fallthrough
+            case 5: {
+                final Task ans = new Event(fileReportLines[2], fileReportLines[0], fileReportLines[3], fileReportLines[4]);
+                if (Boolean.parseBoolean(fileReportLines[1])) {
+                    ans.mark();
+                } else {
+                    ans.unmark();
                 }
 
-                default: {
-                    return null;
-                }
+                return ans;
+            }
+
+            // Fallthrough
+            default: {
+                return null;
+            }
+
             }
         } catch (final BrobotDateFormatException brobotDateFormatException) {
             return null;
