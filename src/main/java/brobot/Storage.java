@@ -88,7 +88,7 @@ public final class Storage {
     public void writeToFile() {
         Path path = this.taskSavePath;
         File file = path.toFile();
-        
+
         File parentDir = file.getParentFile();
         if (parentDir != null && !parentDir.exists()) {
             parentDir.mkdirs();
