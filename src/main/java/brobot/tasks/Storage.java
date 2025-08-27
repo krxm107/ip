@@ -1,6 +1,6 @@
 package brobot.tasks;
 
-import brobot.UI;
+import brobot.BroBot;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -90,7 +90,7 @@ public final class Storage {
                 fileSaveWriter.write(TaskList.getSingleton().getTask(i).toFileReport());
             }
         } catch (final IOException ioException) {
-            UI.sendPrintMessage(() -> {
+            BroBot.sendPrintMessage(() -> {
                 System.out.println("Oh no, the system has a problem writing the tasks to the hard disk.");
                 System.out.println("Terminating program immediately.");
             });
