@@ -25,7 +25,7 @@ public final class ByeCommand extends Command {
     }
 
     @Override
-    public Runnable getAction() {
-        return () -> System.out.println("Bye. Hope to see you again soon!");
+    public void run() {
+        System.out.println("Bye. Hope to see you again soon!");
     }
 }

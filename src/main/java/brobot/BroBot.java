@@ -29,10 +29,6 @@ public final class BroBot {
         BroBot.delimit();
     }
 
-    public static void performPrintAction (final Action action) {
-        BroBot.sendPrintMessage(action.getAction());
-    }
-
     private static void greet() {
         BroBot.sendPrintMessage(() -> {
             System.out.printf("Hello, I'm %s! What can I do for you?\n", BroBot.chatBotName);
@@ -53,9 +49,9 @@ public final class BroBot {
 
                 final String inputLine = inputLineReader.get();
                 currCommand = Parser.parseCommand(inputLine);
-                BroBot.performPrintAction(currCommand);
+                BroBot.sendPrintMessage(currCommand);
             } catch (final BrobotCommandFormatException badCommandFormat) {
-                BroBot.performPrintAction(badCommandFormat);
+                BroBot.sendPrintMessage(badCommandFormat);
             }
         }
     }

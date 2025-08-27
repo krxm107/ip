@@ -16,7 +16,7 @@ final class DeleteCommand extends Command {
     }
 
     @Override
-    public Runnable getAction() {
+    public void run() {
         final Runnable orElse = () -> {
             System.out.println("Noted. I've removed this task:");
             System.out.println(BroBot.fourSpacesIndent + TaskList.getSingleton().printFormattedNumberedTask(deleteIndex));
@@ -24,6 +24,6 @@ final class DeleteCommand extends Command {
             System.out.printf("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
         };
 
-        return () -> TaskList.getSingleton().noTaskCheerOrElse(orElse);
+        TaskList.getSingleton().noTaskCheerOrElse(orElse);
     }
 }

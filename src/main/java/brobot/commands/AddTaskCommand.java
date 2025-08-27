@@ -28,18 +28,16 @@ public final class AddTaskCommand extends Command {
     }
 
     @Override
-    public Runnable getAction() {
-        return () -> {
-            try {
-                System.out.println("Got it. I've added this task:");
+    public void run() {
+        try {
+            System.out.println("Got it. I've added this task:");
 
-                TaskList.getSingleton().add(this.makeTask());
-                System.out.println(BroBot.fourSpacesIndent + TaskList.getSingleton().printFormattedNumberedTask(TaskList.getSingleton().size()));
+            TaskList.getSingleton().add(this.makeTask());
+            System.out.println(BroBot.fourSpacesIndent + TaskList.getSingleton().printFormattedNumberedTask(TaskList.getSingleton().size()));
 
-                System.out.printf("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
-            } catch (final BrobotCommandFormatException badTaskCommand) {
-                BroBot.performPrintAction(badTaskCommand);
-            }
-        };
+            System.out.printf("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
+        } catch (final BrobotCommandFormatException badTaskCommand) {
+            BroBot.sendPrintMessage(badTaskCommand);
+        }
     }
 }
