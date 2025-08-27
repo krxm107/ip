@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 import brobot.commands.Parser;
 import brobot.tasks.Storage;
 
+// JAR Ready
 public final class BroBot {
     public static final String fourSpacesIndent = String.valueOf(new char[]{' ', ' ', ' ', ' '});
 
