@@ -9,11 +9,11 @@ import java.util.function.Supplier;
 
 // JAR Ready
 public final class BroBot {
-    public static final String fourSpacesIndent = String.valueOf(new char[]{' ', ' ', ' ', ' '});
+    public static final String FOUR_SPACES_INDENT = String.valueOf(new char[]{' ', ' ', ' ', ' '});
 
     private static final Scanner inputScanner = new Scanner(System.in);
 
-    private static final String chatBotName = "BroBot";
+    private static final String CHAT_BOT_NAME = "BroBot";
 
     private static void delimit() {
         System.out.println("____________________________________________________________");
@@ -29,7 +29,7 @@ public final class BroBot {
 
     private static void greet() {
         BroBot.sendPrintMessage(() -> {
-            System.out.printf("Hello, I'm %s! What can I do for you?\n", BroBot.chatBotName);
+            System.out.printf("Hello, I'm %s! What can I do for you?\n", BroBot.CHAT_BOT_NAME);
             Storage.getSingleton().readFromFile();
         });
     }

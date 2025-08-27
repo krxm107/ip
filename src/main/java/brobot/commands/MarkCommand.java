@@ -21,7 +21,7 @@ public final class MarkCommand extends Command {
         TaskList.getSingleton().noTaskCheerOrElse(() -> {
             TaskList.getSingleton().markTask(this.markIndex);
             System.out.println("Nice! I've marked this task as done:");
-            System.out.println(BroBot.fourSpacesIndent + TaskList.getSingleton().printFormattedNumberedTask(markIndex));
+            System.out.println(BroBot.FOUR_SPACES_INDENT + TaskList.getSingleton().printFormattedNumberedTask(markIndex));
         });
     }
 }

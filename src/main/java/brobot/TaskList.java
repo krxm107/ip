@@ -5,7 +5,7 @@ import brobot.tasks.Task;
 import java.util.ArrayList;
 
 public final class TaskList {
-    private final ArrayList<Task> taskArrayList = new ArrayList<>();
+    private final ArrayList<Task> tasks = new ArrayList<>();
     private TaskList() {
 
     }
@@ -28,26 +28,26 @@ public final class TaskList {
     }
 
     public Task getTask (final int number) {
-        return this.taskArrayList.get(number - 1);
+        return this.tasks.get(number - 1);
     }
 
     public int size() {
-        return this.taskArrayList.size();
+        return this.tasks.size();
     }
 
     public boolean isEmpty() {
-        return this.taskArrayList.isEmpty();
+        return this.tasks.isEmpty();
     }
 
     // TaskList mutator method, need to write to file.
     public void add (final Task task) {
-        this.taskArrayList.add(task);
+        this.tasks.add(task);
         Storage.getSingleton().writeToFile();
     }
 
     // TaskList mutator method, need to write to file.
     public void remove (final int taskNumber) {
-        this.taskArrayList.remove(taskNumber - 1);
+        this.tasks.remove(taskNumber - 1);
         Storage.getSingleton().writeToFile();
     }
 
@@ -77,7 +77,7 @@ public final class TaskList {
 
     @Override
     public String toString() {
-        if (this.taskArrayList.isEmpty()) {
+        if (this.tasks.isEmpty()) {
             return "Enjoy your empty task list!\n";
         } else {
             final StringBuilder ans = new StringBuilder();
