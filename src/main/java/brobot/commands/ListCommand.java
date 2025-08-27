@@ -1,9 +1,9 @@
 package brobot.commands;
 
 import brobot.brobotexceptions.SomeArgsLeftException;
-import brobot.tasks.TaskList;
+import brobot.TaskList;
 
-final class ListCommand extends Command {
+public final class ListCommand extends Command {
     private static ListCommand listCommandSingleton = null;
     private ListCommand () {
         super("list");
@@ -22,7 +22,7 @@ final class ListCommand extends Command {
         return ListCommand.listCommandSingleton;
     }
 
-    static ListCommand makeCommand (final String commandName, final String... commandArgs) throws SomeArgsLeftException {
+    public static ListCommand makeCommand (final String commandName, final String... commandArgs) throws SomeArgsLeftException {
         if (commandArgs.length != 0) {
             throw SomeArgsLeftException.fromCommandName(commandName);
         }

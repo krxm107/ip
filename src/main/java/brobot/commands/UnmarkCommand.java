@@ -2,9 +2,9 @@ package brobot.commands;
 
 
 import brobot.BroBot;
-import brobot.tasks.TaskList;
+import brobot.TaskList;
 
-final class UnmarkCommand extends Command {
+public final class UnmarkCommand extends Command {
 
     private final int unmarkIndex;
     private UnmarkCommand (final int unmarkIndex) {
@@ -12,7 +12,7 @@ final class UnmarkCommand extends Command {
         this.unmarkIndex = unmarkIndex;
     }
 
-    static UnmarkCommand makeCommand (final String commandName, final String... commandArgs) {
+    public static UnmarkCommand makeCommand (final String commandName, final String... commandArgs) {
         final int markIndex = Integer.parseInt(commandArgs[0]);
         return new UnmarkCommand(markIndex);
     }

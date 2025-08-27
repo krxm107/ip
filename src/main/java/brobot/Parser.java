@@ -1,8 +1,9 @@
-package brobot.commands;
+package brobot;
 
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.brobotexceptions.EmptyCommandException;
 import brobot.brobotexceptions.NoSuchCommandNameException;
+import brobot.commands.*;
 
 public final class Parser {
     private Parser() {
@@ -39,6 +40,8 @@ public final class Parser {
                 case "unmark" -> UnmarkCommand.makeCommand(commandName, commandTokens);
 
                 case "delete" -> DeleteCommand.makeCommand(commandName, commandTokens);
+
+                case "find" -> FindCommand.makeCommand(commandTokens);
 
                 default -> throw NoSuchCommandNameException.newInstancefromCommandName(commandName);
             };

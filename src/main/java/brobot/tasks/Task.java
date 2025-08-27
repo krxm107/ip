@@ -4,7 +4,7 @@ import brobot.brobotexceptions.*;
 
 import java.util.function.BiFunction;
 
-public sealed abstract class Task permits ToDo, Deadline, Event  {
+public abstract class Task {
     private static int nextFreeID = 1;
 
     private final String baseObjective;
@@ -31,12 +31,12 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
     private String baseLogMessage = null;
 
     private boolean isDone = false;
-    void mark() {
+    public void mark() {
         this.isDone = true;
         this.baseLogMessage = null;
     }
 
-    void unmark() {
+    public void unmark() {
         this.isDone = false;
         this.baseLogMessage = null;
     }
@@ -53,7 +53,12 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
         return this.baseLogMessage;
     }
 
-    String toFileReport() {
+    public final boolean findKeywordInTaskDescription (final String keyword) {
+        final String taskDescription = this.baseObjective;
+        return taskDescription.contains(keyword);
+    }
+
+    public String toFileReport() {
         return String.format("%s\n%s\n%s\n\n",
                             this.commandName,
                             this.isDone,
@@ -61,7 +66,7 @@ public sealed abstract class Task permits ToDo, Deadline, Event  {
 
     }
 
-    static final Task fromFileReport (final String fileReport) {
+    public static final Task fromFileReport (final String fileReport) {
         final String[] fileReportLines = fileReport.split("\n");
 
         try {

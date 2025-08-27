@@ -3,7 +3,7 @@ package brobot.commands;
 import brobot.BroBot;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.tasks.Task;
-import brobot.tasks.TaskList;
+import brobot.TaskList;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public final class AddTaskCommand extends Command {
         this.commandTokens = List.of(commandTokens);
     }
 
-    static AddTaskCommand makeCommand (final String commandName, final String... commandTokens) {
+    public static AddTaskCommand makeCommand (final String commandName, final String... commandTokens) {
         return new AddTaskCommand(commandName, commandTokens);
     }
 

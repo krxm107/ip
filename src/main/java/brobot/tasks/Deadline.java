@@ -13,13 +13,13 @@ final class Deadline extends Task {
     private String deadlineLogMessage = null;
 
     @Override
-    void mark() {
+    public void mark() {
         super.mark();
         this.deadlineLogMessage = null;
     }
 
     @Override
-    void unmark() {
+    public void unmark() {
         super.unmark();
         this.deadlineLogMessage = null;
     }
@@ -34,7 +34,7 @@ final class Deadline extends Task {
     }
 
     @Override
-    String toFileReport() {
+    public String toFileReport() {
         return String.format("%s\n%s\n\n", super.toFileReport().substring(0, super.toFileReport().length() - 2),
                 this.deadline);
     }

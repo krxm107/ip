@@ -1,5 +1,6 @@
 package brobot.tasks;
 
+import brobot.TaskList;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import org.junit.jupiter.api.Test;
 

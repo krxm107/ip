@@ -1,9 +1,9 @@
 package brobot.commands;
 
 import brobot.BroBot;
-import brobot.tasks.TaskList;
+import brobot.TaskList;
 
-final class MarkCommand extends Command {
+public final class MarkCommand extends Command {
 
     private final int markIndex;
     private MarkCommand (final int markIndex) {
@@ -11,7 +11,7 @@ final class MarkCommand extends Command {
         this.markIndex = markIndex;
     }
 
-    static MarkCommand makeCommand (final String commandName, final String... commandTokens) {
+    public static MarkCommand makeCommand (final String commandName, final String... commandTokens) {
         final int markIndex = Integer.parseInt(commandTokens[0]);
         return new MarkCommand(markIndex);
     }

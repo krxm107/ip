@@ -1,7 +1,6 @@
 package brobot.commands;
 
-public sealed abstract class Command implements Runnable
-    permits ByeCommand, ListCommand, MarkCommand, UnmarkCommand, DeleteCommand, AddTaskCommand {
+public abstract class Command implements Runnable {
 
     private final String commandName;
     Command (final String commandName) {

@@ -1,16 +1,16 @@
 package brobot.commands;
 
 import brobot.BroBot;
-import brobot.tasks.TaskList;
+import brobot.TaskList;
 
-final class DeleteCommand extends Command {
+public final class DeleteCommand extends Command {
     private final int deleteIndex;
     private DeleteCommand (final int deleteIndex) {
         super("delete");
         this.deleteIndex = deleteIndex;
     }
 
-    static DeleteCommand makeCommand (final String commandName, final String... commandArgs) {
+    public static DeleteCommand makeCommand (final String commandName, final String... commandArgs) {
         final int markIndex = Integer.parseInt(commandArgs[0]);
         return new DeleteCommand(markIndex);
     }

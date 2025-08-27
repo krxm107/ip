@@ -6,8 +6,6 @@ import brobot.commands.Command;
 
 import java.util.Scanner;
 import java.util.function.Supplier;
-import brobot.commands.Parser;
-import brobot.tasks.Storage;
 
 // JAR Ready
 public final class BroBot {

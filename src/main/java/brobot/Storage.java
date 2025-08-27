@@ -1,7 +1,8 @@
-package brobot.tasks;
+package brobot;
 
-import brobot.BroBot;
+import brobot.tasks.Task;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -85,6 +86,14 @@ public final class Storage {
     }
 
     public void writeToFile() {
+        Path path = this.taskSavePath;
+        File file = path.toFile();
+        
+        File parentDir = file.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            parentDir.mkdirs();
+        }
+
         try (final FileWriter fileSaveWriter = new FileWriter(this.taskSavePath.toFile())) {
             for (int i = 1; i <= TaskList.getSingleton().size(); i++) {
                 fileSaveWriter.write(TaskList.getSingleton().getTask(i).toFileReport());
