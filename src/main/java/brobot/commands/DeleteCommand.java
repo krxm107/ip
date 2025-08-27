@@ -1,6 +1,6 @@
 package brobot.commands;
 
-import brobot.UI;
+import brobot.BroBot;
 import brobot.tasks.TaskList;
 
 final class DeleteCommand extends Command {
@@ -19,7 +19,7 @@ final class DeleteCommand extends Command {
     public Runnable getAction() {
         final Runnable orElse = () -> {
             System.out.println("Noted. I've removed this task:");
-            System.out.println(UI.fourSpacesIndent + TaskList.getSingleton().printFormattedNumberedTask(deleteIndex));
+            System.out.println(BroBot.fourSpacesIndent + TaskList.getSingleton().printFormattedNumberedTask(deleteIndex));
             TaskList.getSingleton().remove(deleteIndex);
             System.out.printf("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
         };

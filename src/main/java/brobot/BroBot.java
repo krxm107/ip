@@ -8,9 +8,8 @@ import java.util.Scanner;
 import java.util.function.Supplier;
 import brobot.commands.Parser;
 import brobot.tasks.Storage;
-import brobot.tasks.TaskList;
 
-public final class UI {
+public final class BroBot {
     public static final String fourSpacesIndent = String.valueOf(new char[]{' ', ' ', ' ', ' '});
 
     private static final Scanner inputScanner = new Scanner(System.in);
@@ -22,40 +21,40 @@ public final class UI {
     }
 
     public static void sendPrintMessage(final Runnable message) {
-        UI.delimit();
+        BroBot.delimit();
 
         message.run();
 
-        UI.delimit();
+        BroBot.delimit();
     }
 
     public static void performPrintAction (final Action action) {
-        UI.sendPrintMessage(action.getAction());
+        BroBot.sendPrintMessage(action.getAction());
     }
 
     private static void greet() {
-        UI.sendPrintMessage(() -> {
-            System.out.printf("Hello, I'm %s! What can I do for you?\n", UI.chatBotName);
+        BroBot.sendPrintMessage(() -> {
+            System.out.printf("Hello, I'm %s! What can I do for you?\n", BroBot.chatBotName);
             Storage.getSingleton().readFromFile();
         });
     }
 
     public static void main (final String[] args) {
-        UI.greet();
+        BroBot.greet();
 
         Command currCommand = null;
         while (currCommand != ByeCommand.getSingleton()) {
             try {
                 final Supplier<String> inputLineReader = () -> {
-                    final String inputLine = UI.inputScanner.nextLine();
+                    final String inputLine = BroBot.inputScanner.nextLine();
                     return inputLine;
                 };
 
                 final String inputLine = inputLineReader.get();
                 currCommand = Parser.parseCommand(inputLine);
-                UI.performPrintAction(currCommand);
+                BroBot.performPrintAction(currCommand);
             } catch (final BrobotCommandFormatException badCommandFormat) {
-                UI.performPrintAction(badCommandFormat);
+                BroBot.performPrintAction(badCommandFormat);
             }
         }
     }
