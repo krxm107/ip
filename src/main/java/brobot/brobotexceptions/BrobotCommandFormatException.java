@@ -21,8 +21,8 @@ public abstract class BrobotCommandFormatException extends BrobotCheckedExceptio
 
     /**
      * @param mainMessage the core message explaining the invalid command format
-     *
-     * The full {@code BrobotCommandFormatException} message will be formatted as:
+     * <p></p>
+     * Formats the full {@code BrobotCommandFormatException} as
      *
      * <pre>
      * Sorry, this input is invalid!
@@ -36,7 +36,7 @@ public abstract class BrobotCommandFormatException extends BrobotCheckedExceptio
     }
 
     /**
-     * Allows the message to be displayed to the user.
+     * Displays the Exception message to the user.
      */
     public final void run() {
         System.out.println(getMessage());

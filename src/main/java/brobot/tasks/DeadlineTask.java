@@ -20,7 +20,7 @@ final class DeadlineTask extends Task {
      * The deadline of the deadlined task.
      *
      * @throws BrobotDateFormatException
-     * A BrobotDateFormatException is thrown if the user enters a deadline that is not in the 'dd MMM yyyy' format.
+     * Throws a BrobotDateFormatException if the user enters a deadline that is not in the 'dd MMM yyyy' format.
      */
     DeadlineTask(final String description, final String commandName, final String deadline) throws BrobotDateFormatException {
         super(description, commandName);
@@ -49,7 +49,7 @@ final class DeadlineTask extends Task {
 
     /**
      * @return
-     * A user-friendly display of the deadlined task.
+     * Returns a user-friendly display of the deadlined task.
      */
     @Override
     public String toString() {
@@ -62,7 +62,7 @@ final class DeadlineTask extends Task {
 
     /**
      * @return
-     * A serialized version of the task for file IO.
+     * Returns a serialized version of the task for file IO (as per BroBot domain rules)
      */
     @Override
     public String toFileReport() {

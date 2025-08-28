@@ -5,7 +5,7 @@ package brobot.brobotexceptions;
  */
 public abstract class BrobotCheckedException extends Exception {
     /**
-     * Helps to construct a new instance of the BrobotCheckedException.
+     * Constructs a new instance of the BrobotCheckedException.
      *
      * @param fullMessage
      * <pre>
