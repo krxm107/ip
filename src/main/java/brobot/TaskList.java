@@ -29,21 +29,21 @@ public final class TaskList {
     }
 
     /**
-     * Print the task with the given number, labelled with that number.
+     * Returns a string for printing the task with the given number, labelled with that number.
      */
     public String printFormattedNumberedTask(final int number) {
         return TaskList.printFormattedNumberedTask(number, getTask(number));
     }
 
     /**
-     * Print a task with a custom number label.
+     * Returns a string for printing a task with a custom number label.
      */
     public static String printFormattedNumberedTask(final int number, final Task task) {
         return String.format("%d. %s", number, task);
     }
 
     /**
-     * Get the ith task (1-indexed).
+     * Gets the ith task (1-indexed).
      */
     public Task getTask(final int number) {
         return tasks.get(number - 1);

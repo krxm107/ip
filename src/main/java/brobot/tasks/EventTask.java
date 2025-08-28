@@ -67,7 +67,7 @@ final class EventTask extends Task {
 
     /**
      * @return
-     * A serialized version of the task for file IO.
+     * A serialized version of the task for file IO (as per BroBot domain rules)
      */
     @Override
     public String toFileReport() {

@@ -1,17 +1,18 @@
 package brobot.tasks;
 
-import java.io.Serializable;
 import java.util.function.BiFunction;
 
+import brobot.BrobotFileIOSerializable;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.brobotexceptions.BrobotDateFormatException;
 
 /**
  * Abstract Base Class for the Tasks the user creates.
  *
- * Tasks can be serialized and deserialized for File IO.
+ * Tasks can be serialized and deserialized for File IO (custom rules)
+ * because the interface BrobotFileIOSerializable is implemented.
  */
-public abstract class Task implements Serializable {
+public abstract class Task implements BrobotFileIOSerializable {
     private static int nextFreeID = 1;
 
     private final String baseObjective;
@@ -34,7 +35,7 @@ public abstract class Task implements Serializable {
 
     /**
      * @param o
-     * the reference object with which to compare.
+     * The reference object with which to compare.
      *
      * @return
      * Since no two tasks are the same, referential equality suffices here.
@@ -61,7 +62,7 @@ public abstract class Task implements Serializable {
     private boolean isDone = false;
 
     /**
-     * Mark this task as done.
+     * Marks this task as done.
      */
     public void mark() {
         isDone = true;
@@ -69,7 +70,7 @@ public abstract class Task implements Serializable {
     }
 
     /**
-     * Unmark this task to show that it is not done yet.
+     * Unmarks this task to show that it is not done yet.
      */
     public void unmark() {
         isDone = false;
@@ -78,7 +79,7 @@ public abstract class Task implements Serializable {
 
     /**
      * @return
-     * Helps to return a user-friendly display of the task.
+     * Returns a user-friendly display of the task.
      */
     @Override
     public String toString() {
@@ -97,7 +98,7 @@ public abstract class Task implements Serializable {
      * The keyword to search for in the task (literal string).
      *
      * @return
-     * Check whether the task description contains the keyword passed in (literal strings).
+     * A boolean indicating whether the task description contains the keyword passed in (literal strings).
      */
     public final boolean findKeywordInTaskDescription(final String keyword) {
         final String taskDescription = baseObjective;
@@ -106,7 +107,7 @@ public abstract class Task implements Serializable {
 
     /**
      * @return
-     * A serialized version of the task for file IO.
+     * A serialized version of the task for file IO (according to BroBot domain rules).
      */
     public String toFileReport() {
         return String.format("%s\n%s\n%s\n\n",
@@ -118,7 +119,7 @@ public abstract class Task implements Serializable {
 
     /**
      * @param fileReport
-     * The file report in task-serialized format.
+     * The file report in task-serialized format (according to BroBot domain rules).
      *
      * @return
      * A Task instance deserialized from the file report by this factory constructor.
