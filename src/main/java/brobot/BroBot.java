@@ -34,7 +34,7 @@ public final class BroBot {
         });
     }
 
-    public static void main (final String[] args) {
+    public static void main(final String[] args) {
         BroBot.greet();
 
         Command currCommand = null;

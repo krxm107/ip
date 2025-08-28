@@ -7,12 +7,12 @@ import brobot.TaskList;
 public final class UnmarkCommand extends Command {
 
     private final int unmarkIndex;
-    private UnmarkCommand (final int unmarkIndex) {
+    private UnmarkCommand(final int unmarkIndex) {
         super("unmark");
         this.unmarkIndex = unmarkIndex;
     }
 
-    public static UnmarkCommand makeCommand (final String commandName, final String... commandArgs) {
+    public static UnmarkCommand makeCommand(final String commandName, final String... commandArgs) {
         final int markIndex = Integer.parseInt(commandArgs[0]);
         return new UnmarkCommand(markIndex);
     }
@@ -20,9 +20,10 @@ public final class UnmarkCommand extends Command {
     @Override
     public void run() {
         TaskList.getSingleton().noTaskCheerOrElse(() -> {
-            TaskList.getSingleton().unmarkTask(this.unmarkIndex);
+            TaskList.getSingleton().unmarkTask(unmarkIndex);
             System.out.println("OK, I've marked this task as not done yet:");
-            System.out.println(BroBot.FOUR_SPACES_INDENT + TaskList.getSingleton().printFormattedNumberedTask(this.unmarkIndex));
+            System.out.println(BroBot.FOUR_SPACES_INDENT
+                    + TaskList.getSingleton().printFormattedNumberedTask(unmarkIndex));
         });
     }
 }

@@ -5,7 +5,7 @@ import brobot.TaskList;
 
 public final class ListCommand extends Command {
     private static ListCommand listCommandSingleton = null;
-    private ListCommand () {
+    private ListCommand() {
         super("list");
     }
 
@@ -22,7 +22,7 @@ public final class ListCommand extends Command {
         return ListCommand.listCommandSingleton;
     }
 
-    public static ListCommand makeCommand (final String commandName, final String... commandArgs) throws SomeArgsLeftException {
+    public static ListCommand makeCommand(final String commandName, final String... commandArgs) throws SomeArgsLeftException {
         if (commandArgs.length != 0) {
             throw SomeArgsLeftException.fromCommandName(commandName);
         }

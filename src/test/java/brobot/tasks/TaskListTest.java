@@ -16,25 +16,25 @@ public final class TaskListTest {
 
     @Test
     public void testTaskListSingleton() {
-        this.clearTaskList();
+        clearTaskList();
         assertTrue(TaskList.getSingleton() == TaskList.getSingleton());
     }
 
     @Test
     public void testTaskListSingletonEmpty() {
-        this.clearTaskList();
+        clearTaskList();
         assertTrue(TaskList.getSingleton().isEmpty());
     }
 
     @Test
     public void testTaskListSingletonSize0() {
-        this.clearTaskList();
+        clearTaskList();
         assertEquals(TaskList.getSingleton().size(), 0);
     }
 
     @Test
     public void testAddTask() {
-        this.clearTaskList();
+        clearTaskList();
         try {
             TaskList.getSingleton().add(Task.createTask("todo", "add task"));
 
@@ -47,7 +47,7 @@ public final class TaskListTest {
 
     @Test
     public void testRemoveTask() {
-        this.clearTaskList();
+        clearTaskList();
         try {
             TaskList.getSingleton().add(Task.createTask("todo", "task 0"));
             TaskList.getSingleton().add(Task.createTask("todo", "task to remove"));

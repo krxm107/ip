@@ -9,22 +9,24 @@ import java.util.List;
 
 public final class AddTaskCommand extends Command {
     private final List<String> commandTokens;
-    private AddTaskCommand (final String commandName, final String... commandTokens) {
+
+    private AddTaskCommand(final String commandName, final String... commandTokens) {
         super(commandName);
         this.commandTokens = List.of(commandTokens);
     }
 
-    public static AddTaskCommand makeCommand (final String commandName, final String... commandTokens) {
+    public static AddTaskCommand makeCommand(final String commandName, final String... commandTokens) {
         return new AddTaskCommand(commandName, commandTokens);
     }
 
     private Task taskToAdd = null;
+
     private Task makeTask() throws BrobotCommandFormatException {
         if (taskToAdd == null) {
-            this.taskToAdd = Task.createTask(this.getCommandName(), this.commandTokens.toArray(String[]::new));
+            taskToAdd = Task.createTask(getCommandName(), commandTokens.toArray(String[]::new));
         }
 
-        return this.taskToAdd;
+        return taskToAdd;
     }
 
     @Override
@@ -32,8 +34,9 @@ public final class AddTaskCommand extends Command {
         try {
             System.out.println("Got it. I've added this task:");
 
-            TaskList.getSingleton().add(this.makeTask());
-            System.out.println(BroBot.FOUR_SPACES_INDENT + TaskList.getSingleton().printFormattedNumberedTask(TaskList.getSingleton().size()));
+            TaskList.getSingleton().add(makeTask());
+            System.out.println(BroBot.FOUR_SPACES_INDENT
+                    + TaskList.getSingleton().printFormattedNumberedTask(TaskList.getSingleton().size()));
 
 
             System.out.printf("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());

@@ -1,8 +1,9 @@
 package brobot.tasks;
 
-import brobot.brobotexceptions.*;
-
 import java.util.function.BiFunction;
+
+import brobot.brobotexceptions.BrobotCommandFormatException;
+import brobot.brobotexceptions.BrobotDateFormatException;
 
 public abstract class Task {
     private static int nextFreeID = 1;
@@ -11,62 +12,63 @@ public abstract class Task {
     private final int id;
     private final String commandName;
 
-    Task (final String baseObjective, final String commandName) {
-        this.id = Task.nextFreeID;
+    Task(final String baseObjective, final String commandName) {
+        id = Task.nextFreeID;
         this.baseObjective = baseObjective;
         this.commandName = commandName;
         Task.nextFreeID++;
     }
 
     @Override
-    public final boolean equals (final Object o) {
+    public final boolean equals(final Object o) {
         return this == o;
     }
 
     @Override
     public final int hashCode() {
-        return this.id;
+        return id;
     }
 
     private String baseLogMessage = null;
 
     private boolean isDone = false;
+
     public void mark() {
-        this.isDone = true;
-        this.baseLogMessage = null;
+        isDone = true;
+        baseLogMessage = null;
     }
 
     public void unmark() {
-        this.isDone = false;
-        this.baseLogMessage = null;
+        isDone = false;
+        baseLogMessage = null;
     }
 
     @Override
     public String toString() {
-        if (this.baseLogMessage == null) {
-            this.baseLogMessage = String.format("[%c][%c] %s",
-                    Character.toUpperCase(this.commandName.charAt(0)),
-                    (this.isDone ? 'X' : ' '),
-                    this.baseObjective);
+        if (baseLogMessage == null) {
+            baseLogMessage = String.format("[%c][%c] %s",
+                    Character.toUpperCase(commandName.charAt(0)),
+                    ((isDone) ? 'X' : ' '),
+                    baseObjective);
         }
 
-        return this.baseLogMessage;
+        return baseLogMessage;
     }
 
-    public final boolean findKeywordInTaskDescription (final String keyword) {
-        final String taskDescription = this.baseObjective;
+    public final boolean findKeywordInTaskDescription(final String keyword) {
+        final String taskDescription = baseObjective;
         return taskDescription.contains(keyword);
     }
 
     public String toFileReport() {
         return String.format("%s\n%s\n%s\n\n",
-                            this.commandName,
-                            this.isDone,
-                            this.baseObjective);
+                commandName,
+                isDone,
+                baseObjective);
 
     }
 
-    public static final Task fromFileReport (final String fileReport) {
+    public static final Task fromFileReport(final String fileReport) {
         final String[] fileReportLines = fileReport.split("\n");
 
         try {
@@ -98,7 +100,11 @@ public abstract class Task {
 
             // Fallthrough
             case 5: {
-                final Task ans = new Event(fileReportLines[2], fileReportLines[0], fileReportLines[3], fileReportLines[4]);
+                final Task ans = new Event(fileReportLines[2],
+                        fileReportLines[0],
+                        fileReportLines[3],
+                        fileReportLines[4]);
+
                 if (Boolean.parseBoolean(fileReportLines[1])) {
                     ans.mark();
                 } else {
@@ -119,7 +125,7 @@ public abstract class Task {
         }
     }
 
-    public static final Task createTask (final String commandName, final String... commandTokens) throws BrobotCommandFormatException {
+    public static final Task createTask(final String commandName, final String... commandTokens) throws BrobotCommandFormatException {
         final String[] ans = new String[commandTokens.length + 1];
         ans[0] = commandName;
         for (int i = 0; i < commandTokens.length; i++) {
@@ -129,7 +135,7 @@ public abstract class Task {
         return Task.createTask(ans);
     }
 
-    private static final Task createTask (final String... commandTokens) throws BrobotDateFormatException {
+    private static final Task createTask(final String... commandTokens) throws BrobotDateFormatException {
         final BiFunction<Integer, Integer, String> stringJoiner = (final Integer startIdx, final Integer endIdx) -> {
             final String[] slice = new String[endIdx - startIdx];
             for (int i = startIdx; i < endIdx; i++) {

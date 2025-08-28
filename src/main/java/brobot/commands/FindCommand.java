@@ -6,12 +6,12 @@ import brobot.TaskList;
 public final class FindCommand extends Command {
 
     private final String keyword;
-    private FindCommand (final String keyword) {
+    private FindCommand(final String keyword) {
         super("find");
         this.keyword = keyword;
     }
 
-    public static FindCommand makeCommand (final String... commandArgs) {
+    public static FindCommand makeCommand(final String... commandArgs) {
         return new FindCommand(String.join(" ", commandArgs));
     }
 
@@ -19,7 +19,7 @@ public final class FindCommand extends Command {
     public void run() {
         for (int i = 1; i <= TaskList.getSingleton().size(); i++) {
             final Task currTask = TaskList.getSingleton().getTask(i);
-            if (currTask.findKeywordInTaskDescription(this.keyword)) {
+            if (currTask.findKeywordInTaskDescription(keyword)) {
                 System.out.println(TaskList.printFormattedNumberedTask(i, currTask));
             }
         }
