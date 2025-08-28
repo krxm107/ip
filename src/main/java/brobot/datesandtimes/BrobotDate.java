@@ -15,11 +15,11 @@ public final class BrobotDate {
     private static final DateTimeFormatter DATETIME_FORMATTER
             = DateTimeFormatter.ofPattern(BrobotDate.DATE_FORMAT);
 
-    private BrobotDate (final LocalDate javaDate) {
+    private BrobotDate(final LocalDate javaDate) {
         this.javaDate = javaDate;
     }
 
-    public static BrobotDate fromString (final String inputString) throws BrobotDateFormatException {
+    public static BrobotDate fromString(final String inputString) throws BrobotDateFormatException {
         if (inputString == null || inputString.isEmpty()) {
             throw BrobotDateFormatException.newInstance(inputString);
         }
@@ -33,11 +33,11 @@ public final class BrobotDate {
 
     @Override
     public String toString() {
-        return this.javaDate.format(BrobotDate.DATETIME_FORMATTER);
+        return javaDate.format(BrobotDate.DATETIME_FORMATTER);
     }
 
     @Override
-    public boolean equals (final Object other) {
+    public boolean equals(final Object other) {
         if (this == other) {
             return true;
         }
@@ -47,16 +47,16 @@ public final class BrobotDate {
         }
 
         final BrobotDate castedOther = (BrobotDate) (other);
-        return this.javaDate.equals(castedOther.javaDate);
+        return javaDate.equals(castedOther.javaDate);
     }
 
     private Integer hashCodeCache = null;
     @Override
     public int hashCode() {
-        if (this.hashCodeCache == null) {
-            this.hashCodeCache = this.javaDate.hashCode();
+        if (hashCodeCache == null) {
+            hashCodeCache = javaDate.hashCode();
         }
 
-        return this.hashCodeCache;
+        return hashCodeCache;
     }
 }

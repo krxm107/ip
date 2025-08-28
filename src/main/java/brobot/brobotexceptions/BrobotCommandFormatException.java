@@ -4,7 +4,7 @@ public class BrobotCommandFormatException extends BrobotCheckedException impleme
     private static final String INVALID_INPUT_WARNING = String.format("Sorry, this input is invalid!");
     private static final String ANOTHER_CHANCE_OFFERING = String.format("Please enter a different input.\nProgram resumed.");
 
-    private static final String getFullMessage (final String mainMessage) {
+    private static final String getFullMessage(final String mainMessage) {
         return String.join("\n",
                             BrobotCommandFormatException.INVALID_INPUT_WARNING,
                             mainMessage,
@@ -20,6 +20,6 @@ public class BrobotCommandFormatException extends BrobotCheckedException impleme
     }
 
     public final void run() {
-        System.out.println(this.getMessage());
+        System.out.println(getMessage());
     }
 }

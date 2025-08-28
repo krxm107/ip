@@ -3,14 +3,22 @@ package brobot;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.brobotexceptions.EmptyCommandException;
 import brobot.brobotexceptions.NoSuchCommandNameException;
-import brobot.commands.*;
+import brobot.commands.AddTaskCommand;
+import brobot.commands.ByeCommand;
+import brobot.commands.Command;
+import brobot.commands.DeleteCommand;
+import brobot.commands.FindCommand;
+import brobot.commands.ListCommand;
+import brobot.commands.MarkCommand;
+import brobot.commands.UnmarkCommand;
+
 
 public final class Parser {
     private Parser() {
 
     }
 
-    public static Command parseCommand (final String commandInput) throws BrobotCommandFormatException {
+    public static Command parseCommand(final String commandInput) throws BrobotCommandFormatException {
         if (commandInput == null || commandInput.isEmpty()) {
             throw new EmptyCommandException();
         }
@@ -25,7 +33,7 @@ public final class Parser {
         return Parser.parseCommand(parts[0], tokens);
     }
 
-    private static Command parseCommand (final String commandName, final String... commandTokens) throws BrobotCommandFormatException {
+    private static Command parseCommand(final String commandName, final String... commandTokens) throws BrobotCommandFormatException {
         final String cleanedCommandName = commandName.strip().toLowerCase();
         try {
             return switch (cleanedCommandName) {

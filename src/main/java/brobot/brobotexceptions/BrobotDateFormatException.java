@@ -3,11 +3,11 @@ package brobot.brobotexceptions;
 import brobot.datesandtimes.BrobotDate;
 
 public final class BrobotDateFormatException extends BrobotCommandFormatException {
-    private BrobotDateFormatException (final String mainMessage) {
+    private BrobotDateFormatException(final String mainMessage) {
         super(mainMessage);
     }
 
-    public static BrobotDateFormatException newInstance (final String invalidDate) {
+    public static BrobotDateFormatException newInstance(final String invalidDate) {
         final String line1 = String.format("The date you entered, '%s', is in the wrong format.", invalidDate);
 
         final String line2 = String.format("All dates must be in the '%s' format, explained as follows:",

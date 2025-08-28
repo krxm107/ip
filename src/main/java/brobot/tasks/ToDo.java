@@ -1,7 +1,7 @@
 package brobot.tasks;
 
 final class ToDo extends Task {
-    ToDo (final String description, final String commandName) {
+    ToDo(final String description, final String commandName) {
         super(description, commandName);
     }
 

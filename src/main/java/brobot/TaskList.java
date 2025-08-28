@@ -19,70 +19,70 @@ public final class TaskList {
         return TaskList.taskListSingleton;
     }
 
-    public String printFormattedNumberedTask (final int number) {
-        return TaskList.printFormattedNumberedTask(number, this.getTask(number));
+    public String printFormattedNumberedTask(final int number) {
+        return TaskList.printFormattedNumberedTask(number, getTask(number));
     }
 
-    public static String printFormattedNumberedTask (final int number, final Task task) {
+    public static String printFormattedNumberedTask(final int number, final Task task) {
         return String.format("%d. %s", number, task);
     }
 
-    public Task getTask (final int number) {
-        return this.tasks.get(number - 1);
+    public Task getTask(final int number) {
+        return tasks.get(number - 1);
     }
 
     public int size() {
-        return this.tasks.size();
+        return tasks.size();
     }
 
     public boolean isEmpty() {
-        return this.tasks.isEmpty();
+        return tasks.isEmpty();
     }
 
     // TaskList mutator method, need to write to file.
-    public void add (final Task task) {
-        this.tasks.add(task);
+    public void add(final Task task) {
+        tasks.add(task);
         Storage.getSingleton().writeToFile();
     }
 
     // TaskList mutator method, need to write to file.
-    public void remove (final int taskNumber) {
-        this.tasks.remove(taskNumber - 1);
+    public void remove(final int taskNumber) {
+        tasks.remove(taskNumber - 1);
         Storage.getSingleton().writeToFile();
     }
 
     // TaskList mutator method, need to write to file.
-    public void markTask (final int taskNumber) {
-        this.getTask(taskNumber).mark();
+    public void markTask(final int taskNumber) {
+        getTask(taskNumber).mark();
         Storage.getSingleton().writeToFile();
     }
 
     // TaskList mutator method, need to write to file.
-    public void unmarkTask (final int taskNumber) {
-        this.getTask(taskNumber).unmark();
+    public void unmarkTask(final int taskNumber) {
+        getTask(taskNumber).unmark();
         Storage.getSingleton().writeToFile();
     }
 
-    public void displayMessage (final Runnable emptyMessage, final Runnable nonEmptyMessage) {
-        if (this.isEmpty()) {
+    public void displayMessage(final Runnable emptyMessage, final Runnable nonEmptyMessage) {
+        if (isEmpty()) {
             emptyMessage.run();
         } else {
             nonEmptyMessage.run();
         }
     }
 
-    public void noTaskCheerOrElse (final Runnable orElse) {
-        this.displayMessage(() -> System.out.print(this), orElse);
+    public void noTaskCheerOrElse(final Runnable orElse) {
+        displayMessage(() -> System.out.print(this), orElse);
     }
 
     @Override
     public String toString() {
-        if (this.tasks.isEmpty()) {
+        if (tasks.isEmpty()) {
             return "Enjoy your empty task list!\n";
         } else {
             final StringBuilder ans = new StringBuilder();
-            for (int i = 1; i <= this.size(); i++) {
-                ans.append(this.printFormattedNumberedTask(i) + "\n");
+            for (int i = 1; i <= size(); i++) {
+                ans.append(printFormattedNumberedTask(i) + "\n");
             }
 
             return ans.toString();

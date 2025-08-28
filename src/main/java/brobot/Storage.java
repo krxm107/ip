@@ -32,11 +32,11 @@ public final class Storage {
         boolean mustExit = false;
 
         try {
-            if (!Files.exists(this.taskSavePath.getParent())) {
-                Files.createDirectories(this.taskSavePath.getParent());
+            if (!Files.exists(taskSavePath.getParent())) {
+                Files.createDirectories(taskSavePath.getParent());
             }
 
-            fileReader = new Scanner(this.taskSavePath);
+            fileReader = new Scanner(taskSavePath);
 
             final StringBuilder taskStringBuilder = new StringBuilder();
             while (fileReader.hasNextLine()) {
@@ -86,7 +86,7 @@ public final class Storage {
     }
 
     public void writeToFile() {
-        Path path = this.taskSavePath;
+        Path path = taskSavePath;
         File file = path.toFile();
 
         File parentDir = file.getParentFile();
@@ -94,7 +94,7 @@ public final class Storage {
             parentDir.mkdirs();
         }
 
-        try (final FileWriter fileSaveWriter = new FileWriter(this.taskSavePath.toFile())) {
+        try (final FileWriter fileSaveWriter = new FileWriter(taskSavePath.toFile())) {
             for (int i = 1; i <= TaskList.getSingleton().size(); i++) {
                 fileSaveWriter.write(TaskList.getSingleton().getTask(i).toFileReport());
             }

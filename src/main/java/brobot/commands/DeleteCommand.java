@@ -5,12 +5,12 @@ import brobot.TaskList;
 
 public final class DeleteCommand extends Command {
     private final int deleteIndex;
-    private DeleteCommand (final int deleteIndex) {
+    private DeleteCommand(final int deleteIndex) {
         super("delete");
         this.deleteIndex = deleteIndex;
     }
 
-    public static DeleteCommand makeCommand (final String commandName, final String... commandArgs) {
+    public static DeleteCommand makeCommand(final String commandName, final String... commandArgs) {
         final int markIndex = Integer.parseInt(commandArgs[0]);
         return new DeleteCommand(markIndex);
     }
@@ -19,7 +19,10 @@ public final class DeleteCommand extends Command {
     public void run() {
         final Runnable orElse = () -> {
             System.out.println("Noted. I've removed this task:");
-            System.out.println(BroBot.FOUR_SPACES_INDENT + TaskList.getSingleton().printFormattedNumberedTask(deleteIndex));
+
+            System.out.println(BroBot.FOUR_SPACES_INDENT
+                    + TaskList.getSingleton().printFormattedNumberedTask(deleteIndex));
+
             TaskList.getSingleton().remove(deleteIndex);
             System.out.printf("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
         };

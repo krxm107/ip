@@ -5,7 +5,7 @@ import brobot.datesandtimes.BrobotDate;
 
 final class Deadline extends Task {
     private final BrobotDate deadline;
-    Deadline (final String description, final String commandName, final String deadline) throws BrobotDateFormatException {
+    Deadline(final String description, final String commandName, final String deadline) throws BrobotDateFormatException {
         super(description, commandName);
         this.deadline = BrobotDate.fromString(deadline);
     }
@@ -15,27 +15,27 @@ final class Deadline extends Task {
     @Override
     public void mark() {
         super.mark();
-        this.deadlineLogMessage = null;
+        deadlineLogMessage = null;
     }
 
     @Override
     public void unmark() {
         super.unmark();
-        this.deadlineLogMessage = null;
+        deadlineLogMessage = null;
     }
 
     @Override
     public String toString() {
-        if (this.deadlineLogMessage == null) {
-            this.deadlineLogMessage = String.format("%s (by: %s)", super.toString(), this.deadline);
+        if (deadlineLogMessage == null) {
+            deadlineLogMessage = String.format("%s (by: %s)", super.toString(), deadline);
         }
 
-        return this.deadlineLogMessage;
+        return deadlineLogMessage;
     }
 
     @Override
     public String toFileReport() {
         return String.format("%s\n%s\n\n", super.toFileReport().substring(0, super.toFileReport().length() - 2),
-                this.deadline);
+                deadline);
     }
 }
