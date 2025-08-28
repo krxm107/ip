@@ -11,6 +11,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * Specializes in File IO
+ */
 public final class Storage {
 
     private final Path taskSavePath = Paths.get("./data/brobot tasks.txt");
@@ -19,6 +22,11 @@ public final class Storage {
     }
 
     private static Storage storageSingleton = null;
+
+    /**
+     * Lazy factory method constructor
+     * @return The necessary singleton Storage instance
+     */
     public static Storage getSingleton() {
         if (Storage.storageSingleton == null) {
             Storage.storageSingleton = new Storage();
@@ -27,6 +35,9 @@ public final class Storage {
         return Storage.storageSingleton;
     }
 
+    /**
+     * Reads from the "data/brobot tasks.txt" file and adds the saved tasks to the TaskList singleton
+     */
     public void readFromFile() {
         Scanner fileReader = null;
         boolean mustExit = false;
@@ -85,6 +96,12 @@ public final class Storage {
         }
     }
 
+    /**
+     * Writes the Tasks in the TaskList singleton to the "data/brobot tasks.txt" file in the hard disk.
+     * <p>
+     * Please make sure to manually call this method every time the Tasklist singleton is modified
+     * so that the tasks can be saved to the hard disk. This is a safety precaution in the event of program failure.
+     */
     public void writeToFile() {
         Path path = taskSavePath;
         File file = path.toFile();
