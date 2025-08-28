@@ -7,7 +7,9 @@ import brobot.commands.Command;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
-// JAR Ready
+/**
+ * The main BroBot UI class. It is the sole entry point of the system.
+ */
 public final class BroBot {
     public static final String FOUR_SPACES_INDENT = String.valueOf(new char[]{' ', ' ', ' ', ' '});
 
@@ -19,6 +21,10 @@ public final class BroBot {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * @param message
+     * Allows the relavant classes to send messages to the BroBot UI class for messages to be printed out.
+     */
     public static void sendPrintMessage(final Runnable message) {
         BroBot.delimit();
 
@@ -34,6 +40,9 @@ public final class BroBot {
         });
     }
 
+    /**
+     * The entry point of the BroBot program.
+     */
     public static void main(final String[] args) {
         BroBot.greet();
 

@@ -2,11 +2,21 @@ package brobot.brobotexceptions;
 
 import brobot.datesandtimes.BrobotDate;
 
+/**
+ * This exception is thrown when the user enters a date that is not in the 'dd MMM yyyy' format.
+ */
 public final class BrobotDateFormatException extends BrobotCommandFormatException {
     private BrobotDateFormatException(final String mainMessage) {
         super(mainMessage);
     }
 
+    /**
+     * @param invalidDate
+     * The invalid date the user entered.
+     *
+     * @return
+     * A new instance of the BrobotDateFormatException as created by this factory constructor.
+     */
     public static BrobotDateFormatException newInstance(final String invalidDate) {
         final String line1 = String.format("The date you entered, '%s', is in the wrong format.", invalidDate);
 

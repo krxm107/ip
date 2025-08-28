@@ -3,6 +3,7 @@ package brobot;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.brobotexceptions.EmptyCommandException;
 import brobot.brobotexceptions.NoSuchCommandNameException;
+import brobot.brobotexceptions.OtherCommandProblemsException;
 import brobot.commands.AddTaskCommand;
 import brobot.commands.ByeCommand;
 import brobot.commands.Command;
@@ -12,12 +13,24 @@ import brobot.commands.ListCommand;
 import brobot.commands.MarkCommand;
 import brobot.commands.UnmarkCommand;
 
-
+/**
+ * This class specializes in parsing commands entered by the user.
+ */
 public final class Parser {
     private Parser() {
 
     }
 
+    /**
+     * @param commandInput
+     * The user input.
+     *
+     * @return
+     * The relevant command based on the user input.
+     *
+     * @throws BrobotCommandFormatException
+     * This exception is thrown if there is a problem in parsing the command entered by the user.
+     */
     public static Command parseCommand(final String commandInput) throws BrobotCommandFormatException {
         if (commandInput == null || commandInput.isEmpty()) {
             throw new EmptyCommandException();
@@ -54,7 +67,7 @@ public final class Parser {
                 default -> throw NoSuchCommandNameException.newInstancefromCommandName(commandName);
             };
         } catch (final RuntimeException e) {
-            throw BrobotCommandFormatException.newInstance();
+            throw new OtherCommandProblemsException();
         }
     }
 }
