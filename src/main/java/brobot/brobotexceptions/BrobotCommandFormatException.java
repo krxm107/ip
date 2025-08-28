@@ -14,9 +14,9 @@ public abstract class BrobotCommandFormatException extends BrobotCheckedExceptio
 
     private static final String getFullMessage(final String mainMessage) {
         return String.join("\n",
-                            BrobotCommandFormatException.INVALID_INPUT_WARNING,
-                            mainMessage,
-                            BrobotCommandFormatException.ANOTHER_CHANCE_OFFERING);
+                BrobotCommandFormatException.INVALID_INPUT_WARNING,
+                mainMessage,
+                BrobotCommandFormatException.ANOTHER_CHANCE_OFFERING);
     }
 
     /**
