@@ -208,9 +208,7 @@ public abstract class Task implements BrobotFileIoSerializable {
 
         final String[] ans = new String[commandTokens.length + 1];
         ans[0] = commandName;
-        for (int i = 0; i < commandTokens.length; i++) {
-            ans[i + 1] = commandTokens[i];
-        }
+        System.arraycopy(commandTokens, 0, ans, 1, commandTokens.length);
 
         return Task.createTask(ans);
     }
@@ -218,9 +216,7 @@ public abstract class Task implements BrobotFileIoSerializable {
     private static final Task createTask(final String... commandTokens) throws BrobotDateFormatException {
         final BiFunction<Integer, Integer, String> stringJoiner = (final Integer startIdx, final Integer endIdx) -> {
             final String[] slice = new String[endIdx - startIdx];
-            for (int i = startIdx; i < endIdx; i++) {
-                slice[i - startIdx] = commandTokens[i];
-            }
+            System.arraycopy(commandTokens, startIdx, slice, 0, endIdx - startIdx);
 
             return String.join(" ", slice);
         };
