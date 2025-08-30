@@ -6,10 +6,10 @@ package brobot.tasks;
 final class ToDoTask extends Task {
     /**
      * @param description
-     * The description of the ToDoTask.
+     *     The description of the ToDoTask.
      *
      * @param commandName
-     * The command name that generated this task.
+     *     The command name that generated this task.
      */
     ToDoTask(final String description, final String commandName) {
         super(description, commandName);

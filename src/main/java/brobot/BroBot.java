@@ -1,11 +1,11 @@
 package brobot;
 
+import java.util.Scanner;
+import java.util.function.Supplier;
+
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.commands.ByeCommand;
 import brobot.commands.Command;
-
-import java.util.Scanner;
-import java.util.function.Supplier;
 
 /**
  * The main BroBot UI class. Its main method is the sole entry point of the system.
@@ -23,7 +23,7 @@ public final class BroBot {
 
     /**
      * @param message
-     * Allows the relavant classes to send messages to the BroBot UI class for messages to be printed out.
+     *     Allows the relavant classes to send messages to the BroBot UI class for messages to be printed out.
      */
     public static void sendPrintMessage(final Runnable message) {
         BroBot.delimit();

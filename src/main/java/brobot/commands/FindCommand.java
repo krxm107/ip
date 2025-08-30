@@ -1,8 +1,11 @@
 package brobot.commands;
 
-import brobot.tasks.Task;
 import brobot.TaskList;
+import brobot.tasks.Task;
 
+/**
+ * This command is used to find tasks by keyword (literal String)
+ */
 public final class FindCommand extends Command {
 
     private final String keyword;
@@ -11,6 +14,9 @@ public final class FindCommand extends Command {
         this.keyword = keyword;
     }
 
+    /**
+     * Constructs a new instance of FindCommand.
+     */
     public static FindCommand makeCommand(final String... commandArgs) {
         return new FindCommand(String.join(" ", commandArgs));
     }

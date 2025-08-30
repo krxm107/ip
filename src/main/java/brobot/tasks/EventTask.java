@@ -7,23 +7,25 @@ import brobot.datesandtimes.BrobotDate;
  * This class represents an event task.
  */
 final class EventTask extends Task {
-    private final BrobotDate startDate, endDate;
+    private final BrobotDate startDate;
+    private final BrobotDate endDate;
+    private String eventlogMessage = null;
 
     /**
      * @param description
-     * The task description.
+     *     The task description.
      *
      * @param commandName
-     * The command name that generated this task.
+     *     The command name that generated this task.
      *
      * @param startDate
-     * The start date of this event.
+     *     The start date of this event.
      *
      * @param endDate
-     * The end date of this event.
+     *     The end date of this event.
      *
      * @throws BrobotDateFormatException
-     * This exception is thrown if the user entered dates that are not in the 'dd MMM yyyy' format.
+     *     This exception is thrown if the user entered dates that are not in the 'dd MMM yyyy' format.
      */
     EventTask(final String description, final String commandName,
               final String startDate, final String endDate) throws BrobotDateFormatException {
@@ -31,8 +33,6 @@ final class EventTask extends Task {
         this.startDate = BrobotDate.fromString(startDate);
         this.endDate = BrobotDate.fromString(endDate);
     }
-
-    private String eventlogMessage = null;
 
     /**
      * Marks the event task as done.
@@ -54,7 +54,7 @@ final class EventTask extends Task {
 
     /**
      * @return
-     * A user-friendly display of the event task.
+     *     A user-friendly display of the event task.
      */
     @Override
     public String toString() {
@@ -67,7 +67,7 @@ final class EventTask extends Task {
 
     /**
      * @return
-     * A serialized version of the task for file IO (as per BroBot domain rules)
+     *     A serialized version of the task for file IO (as per BroBot domain rules)
      */
     @Override
     public String toFileReport() {

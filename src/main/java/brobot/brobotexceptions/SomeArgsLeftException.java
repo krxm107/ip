@@ -13,12 +13,13 @@ public final class SomeArgsLeftException extends BrobotCommandFormatException {
      * Factory constructor
      *
      * @param commandName
-     * The command name that doesn't take in any arguments.
+     *     The command name that doesn't take in any arguments.
      *
      * @return
-     * A new instance as created by this factory constructor.
+     *     A new instance as created by this factory constructor.
      */
     public static SomeArgsLeftException fromCommandName(final String commandName) {
-        return new SomeArgsLeftException(String.format("The '%s' command does not take in any arguments.", commandName));
+        return new SomeArgsLeftException(
+            String.format("The '%s' command does not take in any arguments.", commandName));
     }
 }

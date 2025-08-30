@@ -1,7 +1,5 @@
 package brobot;
 
-import brobot.tasks.Task;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,17 +9,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import brobot.tasks.Task;
+
 /**
  * Specializes in File IO
  */
 public final class Storage {
 
+    private static Storage storageSingleton = null;
     private final Path taskSavePath = Paths.get("./data/brobot tasks.txt");
+
     private Storage() {
 
     }
-
-    private static Storage storageSingleton = null;
 
     /**
      * Lazy factory method constructor
@@ -63,11 +63,11 @@ public final class Storage {
                 }
             }
 
-            TaskList.getSingleton().displayMessage(() -> System.out.println("You do not have any tasks saved from previous sessions."),
-                    () -> {
+            TaskList.getSingleton().displayMessage(() ->
+                            System.out.println("You do not have any tasks saved from previous sessions."), () -> {
                         System.out.println("Here are the tasks saved from previous sessions.");
                         System.out.print(TaskList.getSingleton());
-                    });
+                });
 
         } catch (final NoSuchFileException noFileYet) {
             TaskList.getSingleton().displayMessage(() -> {
@@ -117,7 +117,9 @@ public final class Storage {
             }
         } catch (final IOException ioException) {
             BroBot.sendPrintMessage(() -> {
-                System.out.println("Oh no, the system has a problem writing the tasks to the hard disk.");
+                System.out.println("Oh no, the system has a problem "
+                        + "writing the tasks to the hard disk.");
+
                 System.out.println("Terminating program immediately.");
             });
 

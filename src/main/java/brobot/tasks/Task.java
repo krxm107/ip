@@ -2,7 +2,7 @@ package brobot.tasks;
 
 import java.util.function.BiFunction;
 
-import brobot.BrobotFileIOSerializable;
+import brobot.BrobotFileIoSerializable;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.brobotexceptions.BrobotDateFormatException;
 
@@ -10,21 +10,26 @@ import brobot.brobotexceptions.BrobotDateFormatException;
  * Abstract Base Class for the Tasks the user creates.
  *
  * Tasks can be serialized and deserialized for File IO (custom rules)
- * because the interface BrobotFileIOSerializable is implemented.
+ * because the interface BrobotFileIoSerializable is implemented.
  */
-public abstract class Task implements BrobotFileIOSerializable {
+public abstract class Task implements BrobotFileIoSerializable {
     private static int nextFreeID = 1;
 
     private final String baseObjective;
     private final int id;
     private final String commandName;
 
+
+    private String baseLogMessage = null;
+
+    private boolean isDone = false;
+
     /**
      * @param baseObjective
-     * The description of the task.
+     *     The description of the task.
      *
      * @param commandName
-     * The name of the command that generated the task.
+     *     The name of the command that generated the task.
      */
     Task(final String baseObjective, final String commandName) {
         id = Task.nextFreeID;
@@ -35,13 +40,13 @@ public abstract class Task implements BrobotFileIOSerializable {
 
     /**
      * @param o
-     * The reference object with which to compare.
+     *     The reference object with which to compare.
      *
      * @return
-     * Since no two tasks are the same, referential equality suffices here.
-     * This will run in O(1) time and require O(1) extra space per call to equals here.
+     *     Since no two tasks are the same, referential equality suffices here.
+     *     This will run in O(1) time and require O(1) extra space per call to equals here.
      *
-     * Checks whether the invocation target is the same object in memory as the other object.
+     *     Checks whether the invocation target is the same object in memory as the other object.
      */
     @Override
     public final boolean equals(final Object o) {
@@ -50,16 +55,12 @@ public abstract class Task implements BrobotFileIOSerializable {
 
     /**
      * @return
-     * A hashCode for this task based on its ID.
+     *     A hashCode for this task based on its ID.
      */
     @Override
     public final int hashCode() {
         return id;
     }
-
-    private String baseLogMessage = null;
-
-    private boolean isDone = false;
 
     /**
      * Marks this task as done.
@@ -79,35 +80,42 @@ public abstract class Task implements BrobotFileIOSerializable {
 
     /**
      * @return
-     * Returns a user-friendly display of the task.
+     *     Returns a user-friendly display of the task.
      */
     @Override
     public String toString() {
         if (baseLogMessage == null) {
             baseLogMessage = String.format("[%c][%c] %s",
-                    Character.toUpperCase(commandName.charAt(0)),
-                    ((isDone) ? 'X' : ' '),
+                    Character.toUpperCase(commandName.charAt(0)), ((isDone) ? 'X' : ' '),
                     baseObjective);
         }
 
         return baseLogMessage;
     }
 
+    private String getBaseObjective() {
+        return baseObjective;
+    }
+
+    private String getTaskDescription() {
+        return getBaseObjective();
+    }
+
     /**
      * @param keyword
-     * The keyword to search for in the task (literal string).
+     *     The keyword to search for in the task (literal string).
      *
      * @return
-     * A boolean indicating whether the task description contains the keyword passed in (literal strings).
+     *     A boolean indicating whether the task description contains the keyword passed in (literal strings).
      */
     public final boolean findKeywordInTaskDescription(final String keyword) {
-        final String taskDescription = baseObjective;
+        final String taskDescription = getTaskDescription();
         return taskDescription.contains(keyword);
     }
 
     /**
      * @return
-     * A serialized version of the task for file IO (according to BroBot domain rules).
+     *     A serialized version of the task for file IO (according to BroBot domain rules).
      */
     public String toFileReport() {
         return String.format("%s\n%s\n%s\n\n",
@@ -119,10 +127,10 @@ public abstract class Task implements BrobotFileIOSerializable {
 
     /**
      * @param fileReport
-     * The file report in task-serialized format (according to BroBot domain rules).
+     *     The file report in task-serialized format (according to BroBot domain rules).
      *
      * @return
-     * A Task instance deserialized from the file report by this factory constructor.
+     *     A Task instance deserialized from the file report by this factory constructor.
      */
     public static final Task fromFileReport(final String fileReport) {
         final String[] fileReportLines = fileReport.split("\n");
@@ -183,18 +191,21 @@ public abstract class Task implements BrobotFileIOSerializable {
 
     /**
      * @param commandName
-     * The name of the command to generate the new task.
+     *     The name of the command to generate the new task.
      *
      * @param commandTokens
-     * The arguments of the command that generates the new task.
+     *     The arguments of the command that generates the new task.
      *
      * @return
-     * The task as generated from the arguments of this function, as per this factory constructor.
+     *     The task as generated from the arguments of this function, as per this factory constructor.
      *
      * @throws BrobotCommandFormatException
-     * A BrobotCommandFormatException is thrown iff there is a problem processing the user command.
+     *     A BrobotCommandFormatException is thrown iff there is a problem processing the user command.
      */
-    public static final Task createTask(final String commandName, final String... commandTokens) throws BrobotCommandFormatException {
+    public static final Task createTask(final String commandName,
+                                        final String... commandTokens)
+            throws BrobotCommandFormatException {
+
         final String[] ans = new String[commandTokens.length + 1];
         ans[0] = commandName;
         for (int i = 0; i < commandTokens.length; i++) {
