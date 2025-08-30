@@ -1,24 +1,35 @@
 package brobot.datesandtimes;
 
-import brobot.brobotexceptions.BrobotDateFormatException;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import brobot.brobotexceptions.BrobotDateFormatException;
+
+/**
+ * Encapsulates an immutable BrobotDate.
+ */
 public final class BrobotDate {
 
-    // This parameter should never be null.
+    public static final String DATE_FORMAT = "dd MMM yyyy";
+    private static final DateTimeFormatter DATETIME_FORMATTER =
+        DateTimeFormatter.ofPattern(BrobotDate.DATE_FORMAT);
+
+    // This field should never be null.
     private final LocalDate javaDate;
 
-    public static final String DATE_FORMAT = "dd MMM yyyy";
-    private static final DateTimeFormatter DATETIME_FORMATTER
-            = DateTimeFormatter.ofPattern(BrobotDate.DATE_FORMAT);
+    private Integer hashCodeCache = null;
 
     private BrobotDate(final LocalDate javaDate) {
         this.javaDate = javaDate;
     }
 
+    /**
+     * Factory constructor for BrobotDate
+     *
+     * @throws BrobotDateFormatException
+     *     The user enters a date not in "dd MMM yyyy" format.
+     */
     public static BrobotDate fromString(final String inputString) throws BrobotDateFormatException {
         if (inputString == null || inputString.isEmpty()) {
             throw BrobotDateFormatException.newInstance(inputString);
@@ -26,7 +37,7 @@ public final class BrobotDate {
 
         try {
             return new BrobotDate(LocalDate.parse(inputString, BrobotDate.DATETIME_FORMATTER));
-        }  catch (final DateTimeParseException wronglyFormattedInputException) {
+        } catch (final DateTimeParseException wronglyFormattedInputException) {
             throw BrobotDateFormatException.newInstance(inputString);
         }
     }
@@ -50,7 +61,6 @@ public final class BrobotDate {
         return javaDate.equals(castedOther.javaDate);
     }
 
-    private Integer hashCodeCache = null;
     @Override
     public int hashCode() {
         if (hashCodeCache == null) {

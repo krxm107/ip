@@ -3,6 +3,9 @@ package brobot.commands;
 import brobot.BroBot;
 import brobot.TaskList;
 
+/**
+ * This command is created whenever the user wants to mask a task as done.
+ */
 public final class MarkCommand extends Command {
 
     private final int markIndex;
@@ -11,6 +14,9 @@ public final class MarkCommand extends Command {
         this.markIndex = markIndex;
     }
 
+    /**
+     * Factory constructor for MarkCommand.
+     */
     public static MarkCommand makeCommand(final String commandName, final String... commandTokens) {
         final int markIndex = Integer.parseInt(commandTokens[0]);
         return new MarkCommand(markIndex);

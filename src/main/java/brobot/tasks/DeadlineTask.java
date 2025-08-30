@@ -8,26 +8,28 @@ import brobot.datesandtimes.BrobotDate;
  */
 final class DeadlineTask extends Task {
     private final BrobotDate deadline;
+    private String deadlineLogMessage = null;
 
     /**
      * @param description
-     * The task description.
+     *     The task description.
      *
      * @param commandName
-     * The name of the command that generated this task.
+     *     The name of the command that generated this task.
      *
      * @param deadline
-     * The deadline of the deadlined task.
+     *     The deadline of the deadlined task.
      *
      * @throws BrobotDateFormatException
-     * Throws a BrobotDateFormatException if the user enters a deadline that is not in the 'dd MMM yyyy' format.
+     *     Throws a BrobotDateFormatException if the user enters a deadline that is not in the 'dd MMM yyyy' format.
      */
-    DeadlineTask(final String description, final String commandName, final String deadline) throws BrobotDateFormatException {
+    DeadlineTask(final String description,
+                 final String commandName,
+                 final String deadline) throws BrobotDateFormatException {
+
         super(description, commandName);
         this.deadline = BrobotDate.fromString(deadline);
     }
-
-    private String deadlineLogMessage = null;
 
     /**
      * Marks the deadlined task as done.
@@ -49,7 +51,7 @@ final class DeadlineTask extends Task {
 
     /**
      * @return
-     * Returns a user-friendly display of the deadlined task.
+     *     Returns a user-friendly display of the deadlined task.
      */
     @Override
     public String toString() {
@@ -62,11 +64,12 @@ final class DeadlineTask extends Task {
 
     /**
      * @return
-     * Returns a serialized version of the task for file IO (as per BroBot domain rules)
+     *     Returns a serialized version of the task for file IO (as per BroBot domain rules)
      */
     @Override
     public String toFileReport() {
-        return String.format("%s\n%s\n\n", super.toFileReport().substring(0, super.toFileReport().length() - 2),
+        return String.format("%s\n%s\n\n",
+                super.toFileReport().substring(0, super.toFileReport().length() - 2),
                 deadline);
     }
 }

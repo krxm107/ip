@@ -23,13 +23,13 @@ public final class Parser {
 
     /**
      * @param commandInput
-     * The user input.
+     *     The user input.
      *
      * @return
-     * The relevant command based on the user input.
+     *     The relevant command based on the user input.
      *
      * @throws BrobotCommandFormatException
-     * This exception is thrown if there is a problem in parsing the command entered by the user.
+     *     This exception is thrown if there is a problem in parsing the command entered by the user.
      */
     public static Command parseCommand(final String commandInput) throws BrobotCommandFormatException {
         if (commandInput == null || commandInput.isEmpty()) {
@@ -46,25 +46,27 @@ public final class Parser {
         return Parser.parseCommand(parts[0], tokens);
     }
 
-    private static Command parseCommand(final String commandName, final String... commandTokens) throws BrobotCommandFormatException {
+    private static Command parseCommand(final String commandName,
+                                        final String... commandTokens) throws BrobotCommandFormatException {
+
         final String cleanedCommandName = commandName.strip().toLowerCase();
         try {
             return switch (cleanedCommandName) {
-                case "todo", "event", "deadline" -> AddTaskCommand.makeCommand(cleanedCommandName, commandTokens);
+            case "todo", "event", "deadline" -> AddTaskCommand.makeCommand(cleanedCommandName, commandTokens);
 
-                case "bye" -> ByeCommand.makeCommand(cleanedCommandName, commandTokens);
+            case "bye" -> ByeCommand.makeCommand(cleanedCommandName, commandTokens);
 
-                case "list" -> ListCommand.makeCommand(cleanedCommandName, commandTokens);
+            case "list" -> ListCommand.makeCommand(cleanedCommandName, commandTokens);
 
-                case "mark" -> MarkCommand.makeCommand(cleanedCommandName, commandTokens);
+            case "mark" -> MarkCommand.makeCommand(cleanedCommandName, commandTokens);
 
-                case "unmark" -> UnmarkCommand.makeCommand(commandName, commandTokens);
+            case "unmark" -> UnmarkCommand.makeCommand(commandName, commandTokens);
 
-                case "delete" -> DeleteCommand.makeCommand(commandName, commandTokens);
+            case "delete" -> DeleteCommand.makeCommand(commandName, commandTokens);
 
-                case "find" -> FindCommand.makeCommand(commandTokens);
+            case "find" -> FindCommand.makeCommand(commandTokens);
 
-                default -> throw NoSuchCommandNameException.newInstancefromCommandName(commandName);
+            default -> throw NoSuchCommandNameException.newInstancefromCommandName(commandName);
             };
         } catch (final RuntimeException e) {
             throw new OtherCommandProblemsException();

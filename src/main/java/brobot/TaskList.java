@@ -1,24 +1,27 @@
 package brobot;
 
-import brobot.tasks.Task;
-
 import java.util.ArrayList;
+
+import brobot.tasks.Task;
 
 /**
  * This class specializes in storing tasks from the user.
  */
 public final class TaskList {
+
+    private static TaskList taskListSingleton = null;
+
     private final ArrayList<Task> tasks = new ArrayList<>();
+
     private TaskList() {
 
     }
 
-    private static TaskList taskListSingleton = null;
     /**
      * Lazy factory constructor.
      *
      * @return
-     * The TaskList singleton instance.
+     *     The TaskList singleton instance.
      */
     public static TaskList getSingleton() {
         if (TaskList.taskListSingleton == null) {
@@ -65,9 +68,9 @@ public final class TaskList {
 
     /**
      * @param task
-     * Task to be added to the end of the TaskList.
+     *     Task to be added to the end of the TaskList.
      *
-     * Once the task is added to the tasklist, the tasks are saved to the hard drive.
+     *     Once the task is added to the tasklist, the tasks are saved to the hard drive.
      */
     public void add(final Task task) {
         tasks.add(task);
@@ -76,7 +79,7 @@ public final class TaskList {
 
     /**
      * @param taskNumber
-     * The number of the task that must be removed (1-indexed).
+     *     The number of the task that must be removed (1-indexed).
      */
     public void remove(final int taskNumber) {
         tasks.remove(taskNumber - 1);
@@ -85,7 +88,7 @@ public final class TaskList {
 
     /**
      * @param taskNumber
-     * The number of the task that must be marked (1-indexed).
+     *     The number of the task that must be marked (1-indexed).
      */
     public void markTask(final int taskNumber) {
         getTask(taskNumber).mark();
@@ -94,7 +97,7 @@ public final class TaskList {
 
     /**
      * @param taskNumber
-     * The number of the task that must be unmarked (1-indexed).
+     *     The number of the task that must be unmarked (1-indexed).
      */
     public void unmarkTask(final int taskNumber) {
         getTask(taskNumber).unmark();
@@ -103,10 +106,10 @@ public final class TaskList {
 
     /**
      * @param emptyMessage
-     * The message to print if the TaskList is empty.
+     *     The message to print if the TaskList is empty.
      *
      * @param nonEmptyMessage
-     * The message to print if the TaskList is not empty.
+     *     The message to print if the TaskList is not empty.
      */
     public void displayMessage(final Runnable emptyMessage, final Runnable nonEmptyMessage) {
         if (isEmpty()) {
@@ -118,7 +121,7 @@ public final class TaskList {
 
     /**
      * @param orElse
-     * The message to print if the tasklist is not empty.
+     *     The message to print if the tasklist is not empty.
      */
     public void noTaskCheerOrElse(final Runnable orElse) {
         displayMessage(() -> System.out.print(this), orElse);
@@ -126,7 +129,7 @@ public final class TaskList {
 
     /**
      * @return
-     * The empty task cheer if the TaskList is empty, or the numbered tasks in the task list otherwise.
+     *     The empty task cheer if the TaskList is empty, or the numbered tasks in the task list otherwise.
      */
     @Override
     public String toString() {

@@ -1,9 +1,10 @@
 package brobot.tasks;
 
-import brobot.brobotexceptions.BrobotCommandFormatException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import brobot.brobotexceptions.BrobotCommandFormatException;
 
 public final class ToDoTest {
     @Test
@@ -19,7 +20,7 @@ public final class ToDoTest {
     }
 
     @Test
-    public void markToDoTest(){
+    public void markToDoTest() {
         try {
             final Task test = Task.createTask("todo", "test dummy");
 

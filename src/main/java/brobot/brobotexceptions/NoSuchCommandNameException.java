@@ -10,11 +10,11 @@ public final class NoSuchCommandNameException extends BrobotCommandFormatExcepti
 
     /**
      * @param commandName
-     * The invalid command name
+     *     The invalid command name
      *
      * @return
-     * A NoSuchCommandNameException telling the user that a command with that name doesn't exist,
-     * as created by this factory constructor.
+     *     A NoSuchCommandNameException telling the user that a command with that name doesn't exist,
+     *     as created by this factory constructor.
      */
     public static NoSuchCommandNameException newInstancefromCommandName(final String commandName) {
         return new NoSuchCommandNameException(String.format("There is no '%s' command.", commandName));

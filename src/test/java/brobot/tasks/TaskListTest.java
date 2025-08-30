@@ -1,11 +1,12 @@
 package brobot.tasks;
 
-import brobot.TaskList;
-import brobot.brobotexceptions.BrobotCommandFormatException;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
+import brobot.TaskList;
+import brobot.brobotexceptions.BrobotCommandFormatException;
 
 public final class TaskListTest {
     private void clearTaskList() {

@@ -12,27 +12,28 @@ public abstract class BrobotCommandFormatException extends BrobotCheckedExceptio
     private static final String INVALID_INPUT_WARNING = "Sorry, this input is invalid!";
     private static final String ANOTHER_CHANCE_OFFERING = "Please enter a different input.\nProgram resumed.";
 
+
+    /**
+     * @param mainMessage the core message explaining the invalid command format
+     *     <p></p>
+     *     Formats the full {@code BrobotCommandFormatException} as
+     *
+     *     <pre>
+     *     Sorry, this input is invalid!
+     *     {mainMessage}
+     *     Please enter a different input.
+     *     Program resumed.
+     *     </pre>
+     */
+    BrobotCommandFormatException(final String mainMessage) {
+        super(BrobotCommandFormatException.getFullMessage(mainMessage));
+    }
+
     private static final String getFullMessage(final String mainMessage) {
         return String.join("\n",
                 BrobotCommandFormatException.INVALID_INPUT_WARNING,
                 mainMessage,
                 BrobotCommandFormatException.ANOTHER_CHANCE_OFFERING);
-    }
-
-    /**
-     * @param mainMessage the core message explaining the invalid command format
-     * <p></p>
-     * Formats the full {@code BrobotCommandFormatException} as
-     *
-     * <pre>
-     * Sorry, this input is invalid!
-     * {mainMessage}
-     * Please enter a different input.
-     * Program resumed.
-     * </pre>
-     */
-    BrobotCommandFormatException(final String mainMessage) {
-        super(BrobotCommandFormatException.getFullMessage(mainMessage));
     }
 
     /**
