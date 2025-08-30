@@ -6,8 +6,13 @@ import org.junit.jupiter.api.Test;
 
 import brobot.brobotexceptions.BrobotCommandFormatException;
 
-// FIXME: Add test standard suppression to the test classes
-public final class ToDoTest {
+/**
+ * Tests The ToDoTask class
+ */
+public final class ToDoTaskTest {
+    /**
+     * Simple unit test of toString for creating a new ToDoTask.
+     */
     @Test
     public void makeNewTaskTest() {
         try {
@@ -20,6 +25,9 @@ public final class ToDoTest {
         }
     }
 
+    /**
+     * Simple test of toString for creating a new ToDoTask, then marking it as done.
+     */
     @Test
     public void markToDoTest() {
         try {

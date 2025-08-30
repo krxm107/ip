@@ -1,41 +1,48 @@
 package brobot.tasks;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import brobot.StatefulTest;
 import brobot.TaskList;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 
-public final class TaskListTest {
-    private void clearTaskList() {
-        while (!TaskList.getSingleton().isEmpty()) {
-            TaskList.getSingleton().remove(TaskList.getSingleton().size());
-        }
-    }
-
+/**
+ * Unit Test Class for TaskList.
+ */
+public final class TaskListTest implements StatefulTest {
+    /**
+     * Simple Unit Test to test that the public TaskList contract only creates a singleton.
+     */
     @Test
     public void testTaskListSingleton() {
-        clearTaskList();
-        assertTrue(TaskList.getSingleton() == TaskList.getSingleton());
+        assertSame(TaskList.getSingleton(), TaskList.getSingleton());
     }
 
+    /**
+     * Check whether the singleton is empty on creation.
+     */
     @Test
     public void testTaskListSingletonEmpty() {
-        clearTaskList();
         assertTrue(TaskList.getSingleton().isEmpty());
     }
 
+    /**
+     * Check whether the singleton's size is 0 on creation.
+     */
     @Test
     public void testTaskListSingletonSize0() {
-        clearTaskList();
-        assertEquals(TaskList.getSingleton().size(), 0);
+        assertEquals(0, TaskList.getSingleton().size());
     }
 
+    /**
+     * Test the toString method when adding a single task to the singleton.
+     */
     @Test
     public void testAddTask() {
-        clearTaskList();
         try {
             TaskList.getSingleton().add(Task.createTask("todo", "add task"));
 
@@ -46,9 +53,11 @@ public final class TaskListTest {
         }
     }
 
+    /**
+     * Test the numbering system when a task is removed from the TaskList, and it's not at the very back.
+     */
     @Test
     public void testRemoveTask() {
-        clearTaskList();
         try {
             TaskList.getSingleton().add(Task.createTask("todo", "task 0"));
             TaskList.getSingleton().add(Task.createTask("todo", "task to remove"));
