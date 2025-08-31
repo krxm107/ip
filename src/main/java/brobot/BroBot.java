@@ -7,6 +7,9 @@ import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.commands.ByeCommand;
 import brobot.commands.Command;
 
+
+// FIXME: Make sure this class and the other classes can fulfil their original roles and have the system working like normal.
+
 /**
  * The main BroBot UI class. Its main method is the sole entry point of the system.
  */
@@ -61,5 +64,12 @@ public final class BroBot {
                 BroBot.sendPrintMessage(badCommandFormat);
             }
         }
+    }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        return "Duke heard: " + input;
     }
 }

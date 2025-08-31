@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  */
 public final class Main extends Application {
 
-    private BrobotFx duke = new BrobotFx();
+    private BroBot duke = new BroBot();
 
     @Override
     public void start(Stage stage) {

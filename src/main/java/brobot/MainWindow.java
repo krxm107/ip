@@ -21,7 +21,7 @@ public final class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-    private BrobotFx duke;
+    private BroBot duke;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
     private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/BroBot Mascot.png"));
@@ -32,7 +32,7 @@ public final class MainWindow extends AnchorPane {
     }
 
     /** Injects the Duke instance */
-    public void setDuke(BrobotFx d) {
+    public void setDuke(BroBot d) {
         duke = d;
     }
 
