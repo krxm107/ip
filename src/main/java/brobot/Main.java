@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 /**
  * A GUI for Duke using FXML.
  */
-public class Main extends Application {
+public final class Main extends Application {
 
     private BrobotFx duke = new BrobotFx();
 
