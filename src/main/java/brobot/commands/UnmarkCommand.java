@@ -24,7 +24,7 @@ public final class UnmarkCommand extends Command {
     }
 
     @Override
-    public void run() {
+    public void performBrobotAction() {
         TaskList.getSingleton().noTaskCheerOrElse(() -> {
             TaskList.getSingleton().unmarkTask(unmarkIndex);
             System.out.println("OK, I've marked this task as not done yet:");

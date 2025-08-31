@@ -44,7 +44,7 @@ public final class ListCommand extends Command {
     }
 
     @Override
-    public void run() {
+    public void performBrobotAction() {
         System.out.print(TaskList.getSingleton());
     }
 }

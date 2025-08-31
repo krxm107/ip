@@ -45,7 +45,7 @@ public final class AddTaskCommand extends Command {
      * Runs the command
      */
     @Override
-    public void run() {
+    public void performBrobotAction() {
         try {
             System.out.println("Got it. I've added this task:");
 

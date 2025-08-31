@@ -23,7 +23,7 @@ public final class MarkCommand extends Command {
     }
 
     @Override
-    public void run() {
+    public void performBrobotAction() {
         TaskList.getSingleton().noTaskCheerOrElse(() -> {
             TaskList.getSingleton().markTask(markIndex);
             System.out.println("Nice! I've marked this task as done:");

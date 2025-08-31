@@ -22,7 +22,7 @@ public final class FindCommand extends Command {
     }
 
     @Override
-    public void run() {
+    public void performBrobotAction() {
         for (int i = 1; i <= TaskList.getSingleton().size(); i++) {
             final Task currTask = TaskList.getSingleton().getTask(i);
             if (currTask.findKeywordInTaskDescription(keyword)) {
