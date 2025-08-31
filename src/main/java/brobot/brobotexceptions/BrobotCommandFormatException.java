@@ -1,5 +1,7 @@
 package brobot.brobotexceptions;
 
+import brobot.BrobotAction;
+
 /**
  * Abstract base class for Brobot domain specific errors that happen when processing a command.
  * <p>
@@ -8,7 +10,7 @@ package brobot.brobotexceptions;
  * they are notified of this error.
  * </pre>
  */
-public abstract class BrobotCommandFormatException extends BrobotCheckedException implements Runnable {
+public abstract class BrobotCommandFormatException extends BrobotCheckedException implements BrobotAction {
     private static final String INVALID_INPUT_WARNING = "Sorry, this input is invalid!";
     private static final String ANOTHER_CHANCE_OFFERING = "Please enter a different input.\nProgram resumed.";
 
@@ -39,7 +41,8 @@ public abstract class BrobotCommandFormatException extends BrobotCheckedExceptio
     /**
      * Displays the Exception message to the user.
      */
-    public final void run() {
+    @Override
+    public final void performBrobotAction() {
         System.out.println(getMessage());
     }
 }

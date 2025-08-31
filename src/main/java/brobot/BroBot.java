@@ -25,10 +25,10 @@ public final class BroBot {
      * @param message
      *     Allows the relevant classes to send messages to the BroBot UI class for messages to be printed out.
      */
-    public static void sendPrintMessage(final Runnable message) {
+    public static void sendPrintMessage(final BrobotAction message) {
         BroBot.delimit();
 
-        message.run();
+        message.performBrobotAction();
 
         BroBot.delimit();
     }

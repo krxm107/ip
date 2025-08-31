@@ -111,11 +111,11 @@ public final class TaskList {
      * @param nonEmptyMessage
      *     The message to print if the TaskList is not empty.
      */
-    public void displayMessage(final Runnable emptyMessage, final Runnable nonEmptyMessage) {
+    public void displayMessage(final BrobotAction emptyMessage, final BrobotAction nonEmptyMessage) {
         if (isEmpty()) {
-            emptyMessage.run();
+            emptyMessage.performBrobotAction();
         } else {
-            nonEmptyMessage.run();
+            nonEmptyMessage.performBrobotAction();
         }
     }
 
@@ -123,7 +123,7 @@ public final class TaskList {
      * @param orElse
      *     The message to print if the tasklist is not empty.
      */
-    public void noTaskCheerOrElse(final Runnable orElse) {
+    public void noTaskCheerOrElse(final BrobotAction orElse) {
         displayMessage(() -> System.out.print(this), orElse);
     }
 

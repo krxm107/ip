@@ -1,6 +1,7 @@
 package brobot.commands;
 
 import brobot.BroBot;
+import brobot.BrobotAction;
 import brobot.TaskList;
 
 /**
@@ -31,8 +32,8 @@ public final class DeleteCommand extends Command {
     }
 
     @Override
-    public void run() {
-        final Runnable orElse = () -> {
+    public void performBrobotAction() {
+        final BrobotAction orElse = () -> {
             System.out.println("Noted. I've removed this task:");
 
             System.out.println(BroBot.FOUR_SPACES_INDENT
