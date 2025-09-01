@@ -23,8 +23,8 @@ public final class MainWindow extends AnchorPane {
 
     private final BroBot broBot;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image broBotImage = new Image(this.getClass().getResourceAsStream("/images/BroBot Mascot.png"));
+    public static final Image USER_IMAGE = new Image(MainWindow.class.getResourceAsStream("/images/DaUser.png"));
+    public static final Image BRO_BOT_IMAGE = new Image(MainWindow.class.getResourceAsStream("/images/BroBot Mascot.png"));
 
     public MainWindow() {
         broBot = BroBot.getSingleton();
@@ -34,8 +34,8 @@ public final class MainWindow extends AnchorPane {
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         dialogContainer.getChildren().addAll(
-            DialogBox.getBroBotDialog("Hello, I'm BroBot! What can I do for you?", broBotImage),
-            DialogBox.getBroBotDialog(broBot.getLoadMessage(), broBotImage)
+            DialogBox.getBroBotDialog("Hello, I'm BroBot! What can I do for you?"),
+            DialogBox.getBroBotDialog(broBot.getLoadMessage())
         );
     }
 
@@ -48,8 +48,8 @@ public final class MainWindow extends AnchorPane {
         String input = userInput.getText();
         String response = broBot.getResponse(input);
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getBroBotDialog(response, broBotImage)
+                DialogBox.getUserDialog(input),
+                DialogBox.getBroBotDialog(response)
         );
         userInput.clear();
     }
