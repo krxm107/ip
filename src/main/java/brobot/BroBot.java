@@ -8,6 +8,26 @@ import javafx.application.Platform;
 
 public final class BroBot {
     public static final String FOUR_SPACES_INDENT = String.valueOf(new char[]{' ', ' ', ' ', ' '});
+
+    private static BroBot singleton = null;
+
+    private final String loadMessage;
+    private BroBot() {
+        this.loadMessage = Storage.getSingleton().readFromFile().toString();
+    }
+
+    public String getLoadMessage() {
+        return loadMessage;
+    }
+
+    public static BroBot getSingleton() {
+        if (BroBot.singleton == null) {
+            BroBot.singleton = new BroBot();
+        }
+
+        return BroBot.singleton;
+    }
+
     public String getResponse(String input) {
         try {
             Command c = Parser.parseCommand(input);
