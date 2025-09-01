@@ -38,7 +38,7 @@ public final class Storage {
     /**
      * Reads from the "data/brobot tasks.txt" file and adds the saved tasks to the TaskList singleton
      */
-    public void readFromFile() {
+    public String readFromFile() {
         Scanner fileReader = null;
         boolean mustExit = false;
 
@@ -63,28 +63,31 @@ public final class Storage {
                 }
             }
 
-            TaskList.getSingleton().displayMessage(() ->
-                            System.out.println("You do not have any tasks saved from previous sessions."), () -> {
-                        System.out.println("Here are the tasks saved from previous sessions.");
-                        System.out.print(TaskList.getSingleton());
+            return TaskList.getSingleton().displayMessage(() ->
+                            "You do not have any tasks saved from previous sessions.", () -> {
+                        final String line1 = "Here are the tasks saved from previous sessions.";
+                        final String line2 = TaskList.getSingleton().toString();
+                        return String.join("\n", line1, line2);
                 });
 
         } catch (final NoSuchFileException noFileYet) {
-            TaskList.getSingleton().displayMessage(() -> {
-                System.out.println("You do not have any tasks saved from previous sessions.");
+            return TaskList.getSingleton().displayMessage(() -> {
+                return "You do not have any tasks saved from previous sessions.";
             }, () -> {
-                System.out.println("You do not have any tasks saved from previous sessions.");
+                return "You do not have any tasks saved from previous sessions.";
             });
         } catch (final IOException ioException) {
-            TaskList.getSingleton().displayMessage(() -> {
-                System.out.println("Oh no, the system had a problem reading the file where your tasks were saved.");
-                System.out.println("Terminating program immediately.");
-            }, () -> {
-                System.out.println("Oh no, the system had a problem reading the file where your tasks were saved.");
-                System.out.println("Terminating program immediately.");
-            });
-
             mustExit = true;
+            return TaskList.getSingleton().displayMessage(() -> {
+                final String line1 = "Oh no, the system had a problem reading the file where your tasks were saved.";
+                final String line2 = "Terminating program immediately.";
+
+                return String.join("\n", line1, line2);
+            }, () -> {
+                final String line1 = "Oh no, the system had a problem reading the file where your tasks were saved.";
+                final String line2 = "Terminating program immediately.";
+                return String.join("\n", line1, line2);
+            });
         } finally {
             if (fileReader != null) {
                 fileReader.close();
@@ -102,7 +105,7 @@ public final class Storage {
      * Please make sure to manually call this method every time the Tasklist singleton is modified
      * so that the tasks can be saved to the hard disk. This is a safety precaution in the event of program failure.
      */
-    public void writeToFile() {
+    public String writeToFile() {
         Path path = taskSavePath;
         File file = path.toFile();
 
@@ -115,15 +118,15 @@ public final class Storage {
             for (int i = 1; i <= TaskList.getSingleton().size(); i++) {
                 fileSaveWriter.write(TaskList.getSingleton().getTask(i).toFileReport());
             }
+
+            return "";
         } catch (final IOException ioException) {
-            BroBot.sendPrintMessage(() -> {
-                System.out.println("Oh no, the system has a problem "
-                        + "writing the tasks to the hard disk.");
+            final String line1 = "Oh no, the system has a problem "
+                        + "writing the tasks to the hard disk.";
 
-                System.out.println("Terminating program immediately.");
-            });
+            final String line2 = "Terminating program immediately.";
 
-            System.exit(1);
+            return String.join("\n", line1, line2);
         }
     }
 }

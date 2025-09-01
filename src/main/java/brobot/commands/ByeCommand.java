@@ -44,7 +44,7 @@ public final class ByeCommand extends Command {
     }
 
     @Override
-    public void performBrobotAction() {
-        System.out.println("Bye. Hope to see you again soon!");
+    public String sendMessage() {
+        return "Bye. Hope to see you again soon!";
     }
 }

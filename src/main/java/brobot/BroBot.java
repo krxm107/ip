@@ -1,75 +1,27 @@
+// BroBot.java
 package brobot;
 
-import java.util.Scanner;
-import java.util.function.Supplier;
-
-import brobot.brobotexceptions.BrobotCommandFormatException;
+import brobot.brobotexceptions.BrobotCheckedException;
 import brobot.commands.ByeCommand;
 import brobot.commands.Command;
+import javafx.application.Platform;
 
-
-// FIXME: Make sure this class and the other classes can fulfil their original roles and have the system working like normal.
-
-/**
- * The main BroBot UI class. Its main method is the sole entry point of the system.
- */
 public final class BroBot {
     public static final String FOUR_SPACES_INDENT = String.valueOf(new char[]{' ', ' ', ' ', ' '});
-
-    private static final Scanner inputScanner = new Scanner(System.in);
-
-    private static final String CHAT_BOT_NAME = "BroBot";
-
-    private static void delimit() {
-        System.out.println("____________________________________________________________");
-    }
-
-    /**
-     * @param message
-     *     Allows the relevant classes to send messages to the BroBot UI class for messages to be printed out.
-     */
-    public static void sendPrintMessage(final BrobotAction message) {
-        BroBot.delimit();
-
-        message.performBrobotAction();
-
-        BroBot.delimit();
-    }
-
-    private static void greet() {
-        BroBot.sendPrintMessage(() -> {
-            System.out.printf("Hello, I'm %s! What can I do for you?\n", BroBot.CHAT_BOT_NAME);
-            Storage.getSingleton().readFromFile();
-        });
-    }
-
-    /**
-     * The sole entry point of the BroBot program.
-     */
-    public static void main(final String[] args) {
-        BroBot.greet();
-
-        Command currCommand = null;
-        while (currCommand != ByeCommand.getSingleton()) {
-            try {
-                final Supplier<String> inputLineReader = () -> {
-                    final String inputLine = BroBot.inputScanner.nextLine();
-                    return inputLine;
-                };
-
-                final String inputLine = inputLineReader.get();
-                currCommand = Parser.parseCommand(inputLine);
-                BroBot.sendPrintMessage(currCommand);
-            } catch (final BrobotCommandFormatException badCommandFormat) {
-                BroBot.sendPrintMessage(badCommandFormat);
-            }
-        }
-    }
-
-    /**
-     * Generates a response for the user's chat message.
-     */
     public String getResponse(String input) {
-        return "Duke heard: " + input;
+        try {
+            Command c = Parser.parseCommand(input);
+            String result = c.sendMessage();
+            if (c instanceof ByeCommand) {
+                // allow GUI to close gracefully after showing the reply
+                Platform.runLater(Platform::exit);
+            }
+            return result;
+        } catch (BrobotCheckedException e) {
+            // Show a friendly message in the dialog instead of crashing
+            return e.getMessage();
+        } catch (Exception e) {
+            return "Oops, something went wrong: " + e.getMessage();
+        }
     }
 }

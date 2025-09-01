@@ -22,12 +22,15 @@ public final class FindCommand extends Command {
     }
 
     @Override
-    public void performBrobotAction() {
+    public String sendMessage() {
+        final StringBuilder ans = new StringBuilder();
         for (int i = 1; i <= TaskList.getSingleton().size(); i++) {
             final Task currTask = TaskList.getSingleton().getTask(i);
             if (currTask.findKeywordInTaskDescription(keyword)) {
-                System.out.println(TaskList.printFormattedNumberedTask(i, currTask));
+                ans.append(TaskList.printFormattedNumberedTask(i, currTask)).append("\n");
             }
         }
+
+        return ans.toString();
     }
 }

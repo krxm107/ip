@@ -111,11 +111,11 @@ public final class TaskList {
      * @param nonEmptyMessage
      *     The message to print if the TaskList is not empty.
      */
-    public void displayMessage(final BrobotAction emptyMessage, final BrobotAction nonEmptyMessage) {
+    public String displayMessage(final BrobotMessenger emptyMessage, final BrobotMessenger nonEmptyMessage) {
         if (isEmpty()) {
-            emptyMessage.performBrobotAction();
+            return emptyMessage.sendMessage();
         } else {
-            nonEmptyMessage.performBrobotAction();
+            return nonEmptyMessage.sendMessage();
         }
     }
 
@@ -123,8 +123,8 @@ public final class TaskList {
      * @param orElse
      *     The message to print if the tasklist is not empty.
      */
-    public void noTaskCheerOrElse(final BrobotAction orElse) {
-        displayMessage(() -> System.out.print(this), orElse);
+    public String noTaskCheerOrElse(final BrobotMessenger orElse) {
+        return displayMessage(this::toString, orElse);
     }
 
     /**
@@ -134,14 +134,14 @@ public final class TaskList {
     @Override
     public String toString() {
         if (tasks.isEmpty()) {
-            return "Enjoy your empty task list!\n";
+            return "Enjoy your empty task list!";
         } else {
             final StringBuilder ans = new StringBuilder();
             for (int i = 1; i <= size(); i++) {
                 ans.append(printFormattedNumberedTask(i)).append("\n");
             }
 
-            return ans.toString();
+            return ans.substring(0, ans.length() - 1);
         }
     }
 }

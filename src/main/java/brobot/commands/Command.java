@@ -1,13 +1,13 @@
 package brobot.commands;
 
-import brobot.BrobotAction;
+import brobot.BrobotMessenger;
 
 /**
  * This class is the Abstract Base Class for BroBot Commands.
  *
  * For safety reasons, all commands are immutable by design.
  */
-public abstract class Command implements BrobotAction {
+public abstract class Command implements BrobotMessenger {
 
     private final String commandName;
     Command(final String commandName) {
@@ -25,6 +25,5 @@ public abstract class Command implements BrobotAction {
     /**
      * Runs the command.
      */
-    @Override
-    public abstract void performBrobotAction();
+    public abstract String sendMessage();
 }
