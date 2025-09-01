@@ -138,7 +138,7 @@ public final class TaskList {
         } else {
             final StringBuilder ans = new StringBuilder();
             for (int i = 1; i <= size(); i++) {
-                ans.append(printFormattedNumberedTask(i) + "\n");
+                ans.append(printFormattedNumberedTask(i)).append("\n");
             }
 
             return ans.toString();
