@@ -49,12 +49,12 @@ public final class DialogBox extends HBox {
         setAlignment(Pos.TOP_LEFT);
     }
 
-    public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+    public static DialogBox getUserDialog(String text) {
+        return new DialogBox(text, MainWindow.USER_IMAGE);
     }
 
-    public static DialogBox getBroBotDialog(String text, Image img) {
-        var db = new DialogBox(text, img);
+    public static DialogBox getBroBotDialog(String text) {
+        DialogBox db = new DialogBox(text, MainWindow.BRO_BOT_IMAGE);
         db.flip();
         return db;
     }
