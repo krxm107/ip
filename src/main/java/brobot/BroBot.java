@@ -39,10 +39,8 @@ public final class BroBot {
 
             if (result.checkIfFailure()) {
                 Platform.runLater(Platform::exit);
-                return result.toString();
-            } else {
-                return c.sendBrobotMessage().toString();
             }
+            return result.toString();
         } catch (BrobotCommandFormatException e) {
             return e.sendBrobotMessage().toString();
         }
