@@ -1,5 +1,6 @@
 package brobot.commands;
 
+import brobot.FileIOStatus;
 import brobot.TaskList;
 import brobot.brobotexceptions.SomeArgsLeftException;
 
@@ -44,7 +45,7 @@ public final class ListCommand extends Command {
     }
 
     @Override
-    public void performBrobotAction() {
-        System.out.print(TaskList.getSingleton());
+    public FileIOStatus sendBrobotMessage() {
+        return FileIOStatus.makeSuccessStatus(TaskList.getSingleton().toString());
     }
 }

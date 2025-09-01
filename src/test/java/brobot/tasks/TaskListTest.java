@@ -6,14 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import brobot.StatefulTest;
+import brobot.StatefulTester;
 import brobot.TaskList;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 
 /**
  * Unit Test Class for TaskList.
  */
-public final class TaskListTest implements StatefulTest {
+public final class TaskListTest implements StatefulTester {
     /**
      * Simple Unit Test to test that the public TaskList contract only creates a singleton.
      */

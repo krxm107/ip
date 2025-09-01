@@ -1,7 +1,8 @@
 package brobot.commands;
 
 import brobot.BroBot;
-import brobot.BrobotAction;
+import brobot.BrobotMessenger;
+import brobot.FileIOStatus;
 import brobot.TaskList;
 
 /**
@@ -32,17 +33,19 @@ public final class DeleteCommand extends Command {
     }
 
     @Override
-    public void performBrobotAction() {
-        final BrobotAction orElse = () -> {
-            System.out.println("Noted. I've removed this task:");
+    public FileIOStatus sendBrobotMessage() {
+        final BrobotMessenger orElse = () -> {
+            final String line1 = "Noted. I've removed this task:";
 
-            System.out.println(BroBot.FOUR_SPACES_INDENT
-                    + TaskList.getSingleton().printFormattedNumberedTask(deleteIndex));
+            final String line2 = BroBot.FOUR_SPACES_INDENT
+                    + TaskList.getSingleton().printFormattedNumberedTask(deleteIndex);
 
             TaskList.getSingleton().remove(deleteIndex);
-            System.out.printf("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
+            final String line3 = String.format("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
+
+            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3));
         };
 
-        TaskList.getSingleton().noTaskCheerOrElse(orElse);
+        return FileIOStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(orElse));
     }
 }

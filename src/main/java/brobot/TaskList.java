@@ -72,36 +72,36 @@ public final class TaskList {
      *
      *     Once the task is added to the tasklist, the tasks are saved to the hard drive.
      */
-    public void add(final Task task) {
+    public FileIOStatus add(final Task task) {
         tasks.add(task);
-        Storage.getSingleton().writeToFile();
+        return Storage.getSingleton().writeToFile();
     }
 
     /**
      * @param taskNumber
      *     The number of the task that must be removed (1-indexed).
      */
-    public void remove(final int taskNumber) {
+    public FileIOStatus remove(final int taskNumber) {
         tasks.remove(taskNumber - 1);
-        Storage.getSingleton().writeToFile();
+        return Storage.getSingleton().writeToFile();
     }
 
     /**
      * @param taskNumber
      *     The number of the task that must be marked (1-indexed).
      */
-    public void markTask(final int taskNumber) {
+    public FileIOStatus markTask(final int taskNumber) {
         getTask(taskNumber).mark();
-        Storage.getSingleton().writeToFile();
+        return Storage.getSingleton().writeToFile();
     }
 
     /**
      * @param taskNumber
      *     The number of the task that must be unmarked (1-indexed).
      */
-    public void unmarkTask(final int taskNumber) {
+    public FileIOStatus unmarkTask(final int taskNumber) {
         getTask(taskNumber).unmark();
-        Storage.getSingleton().writeToFile();
+        return Storage.getSingleton().writeToFile();
     }
 
     /**
@@ -111,11 +111,11 @@ public final class TaskList {
      * @param nonEmptyMessage
      *     The message to print if the TaskList is not empty.
      */
-    public void displayMessage(final BrobotAction emptyMessage, final BrobotAction nonEmptyMessage) {
+    public String displayMessage(final BrobotMessenger emptyMessage, final BrobotMessenger nonEmptyMessage) {
         if (isEmpty()) {
-            emptyMessage.performBrobotAction();
+            return emptyMessage.sendBrobotMessage().toString();
         } else {
-            nonEmptyMessage.performBrobotAction();
+            return nonEmptyMessage.sendBrobotMessage().toString();
         }
     }
 
@@ -123,8 +123,8 @@ public final class TaskList {
      * @param orElse
      *     The message to print if the tasklist is not empty.
      */
-    public void noTaskCheerOrElse(final BrobotAction orElse) {
-        displayMessage(() -> System.out.print(this), orElse);
+    public String noTaskCheerOrElse(final BrobotMessenger orElse) {
+        return displayMessage(() -> FileIOStatus.makeSuccessStatus(toString()), orElse);
     }
 
     /**
@@ -134,14 +134,14 @@ public final class TaskList {
     @Override
     public String toString() {
         if (tasks.isEmpty()) {
-            return "Enjoy your empty task list!\n";
+            return "Enjoy your empty task list!";
         } else {
             final StringBuilder ans = new StringBuilder();
             for (int i = 1; i <= size(); i++) {
-                ans.append(printFormattedNumberedTask(i) + "\n");
+                ans.append(printFormattedNumberedTask(i)).append("\n");
             }
 
-            return ans.toString();
+            return ans.substring(0, ans.length() - 1);
         }
     }
 }

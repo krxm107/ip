@@ -1,6 +1,7 @@
 package brobot.commands;
 
 import brobot.BroBot;
+import brobot.FileIOStatus;
 import brobot.TaskList;
 
 /**
@@ -23,12 +24,14 @@ public final class MarkCommand extends Command {
     }
 
     @Override
-    public void performBrobotAction() {
-        TaskList.getSingleton().noTaskCheerOrElse(() -> {
+    public FileIOStatus sendBrobotMessage() {
+        return FileIOStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(() -> {
             TaskList.getSingleton().markTask(markIndex);
-            System.out.println("Nice! I've marked this task as done:");
-            System.out.println(BroBot.FOUR_SPACES_INDENT
-                    + TaskList.getSingleton().printFormattedNumberedTask(markIndex));
-        });
+            final String line1 = "Nice! I've marked this task as done:";
+            final String line2 = BroBot.FOUR_SPACES_INDENT
+                    + TaskList.getSingleton().printFormattedNumberedTask(markIndex);
+
+            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2));
+        }));
     }
 }

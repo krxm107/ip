@@ -1,5 +1,6 @@
 package brobot.commands;
 
+import brobot.FileIOStatus;
 import brobot.TaskList;
 import brobot.tasks.Task;
 
@@ -22,12 +23,15 @@ public final class FindCommand extends Command {
     }
 
     @Override
-    public void performBrobotAction() {
+    public FileIOStatus sendBrobotMessage() {
+        final StringBuilder ans = new StringBuilder();
         for (int i = 1; i <= TaskList.getSingleton().size(); i++) {
             final Task currTask = TaskList.getSingleton().getTask(i);
             if (currTask.findKeywordInTaskDescription(keyword)) {
-                System.out.println(TaskList.printFormattedNumberedTask(i, currTask));
+                ans.append(TaskList.printFormattedNumberedTask(i, currTask)).append("\n");
             }
         }
+
+        return FileIOStatus.makeSuccessStatus(ans.toString());
     }
 }
