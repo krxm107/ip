@@ -1,5 +1,6 @@
 package brobot.commands;
 
+import brobot.FileIOStatus;
 import brobot.brobotexceptions.SomeArgsLeftException;
 
 /**
@@ -44,7 +45,7 @@ public final class ByeCommand extends Command {
     }
 
     @Override
-    public String sendMessage() {
-        return "Bye. Hope to see you again soon!";
+    public FileIOStatus sendBrobotMessage() {
+        return FileIOStatus.makeSuccessStatus("Bye. Hope to see you again soon!");
     }
 }

@@ -72,36 +72,36 @@ public final class TaskList {
      *
      *     Once the task is added to the tasklist, the tasks are saved to the hard drive.
      */
-    public void add(final Task task) {
+    public FileIOStatus add(final Task task) {
         tasks.add(task);
-        Storage.getSingleton().writeToFile();
+        return Storage.getSingleton().writeToFile();
     }
 
     /**
      * @param taskNumber
      *     The number of the task that must be removed (1-indexed).
      */
-    public void remove(final int taskNumber) {
+    public FileIOStatus remove(final int taskNumber) {
         tasks.remove(taskNumber - 1);
-        Storage.getSingleton().writeToFile();
+        return Storage.getSingleton().writeToFile();
     }
 
     /**
      * @param taskNumber
      *     The number of the task that must be marked (1-indexed).
      */
-    public void markTask(final int taskNumber) {
+    public FileIOStatus markTask(final int taskNumber) {
         getTask(taskNumber).mark();
-        Storage.getSingleton().writeToFile();
+        return Storage.getSingleton().writeToFile();
     }
 
     /**
      * @param taskNumber
      *     The number of the task that must be unmarked (1-indexed).
      */
-    public void unmarkTask(final int taskNumber) {
+    public FileIOStatus unmarkTask(final int taskNumber) {
         getTask(taskNumber).unmark();
-        Storage.getSingleton().writeToFile();
+        return Storage.getSingleton().writeToFile();
     }
 
     /**
@@ -113,9 +113,9 @@ public final class TaskList {
      */
     public String displayMessage(final BrobotMessenger emptyMessage, final BrobotMessenger nonEmptyMessage) {
         if (isEmpty()) {
-            return emptyMessage.sendMessage();
+            return emptyMessage.sendBrobotMessage().toString();
         } else {
-            return nonEmptyMessage.sendMessage();
+            return nonEmptyMessage.sendBrobotMessage().toString();
         }
     }
 
@@ -124,7 +124,7 @@ public final class TaskList {
      *     The message to print if the tasklist is not empty.
      */
     public String noTaskCheerOrElse(final BrobotMessenger orElse) {
-        return displayMessage(this::toString, orElse);
+        return displayMessage(() -> FileIOStatus.makeSuccessStatus(toString()), orElse);
     }
 
     /**

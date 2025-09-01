@@ -1,5 +1,6 @@
 package brobot.commands;
 
+import brobot.FileIOStatus;
 import brobot.TaskList;
 import brobot.tasks.Task;
 
@@ -22,7 +23,7 @@ public final class FindCommand extends Command {
     }
 
     @Override
-    public String sendMessage() {
+    public FileIOStatus sendBrobotMessage() {
         final StringBuilder ans = new StringBuilder();
         for (int i = 1; i <= TaskList.getSingleton().size(); i++) {
             final Task currTask = TaskList.getSingleton().getTask(i);
@@ -31,6 +32,6 @@ public final class FindCommand extends Command {
             }
         }
 
-        return ans.toString();
+        return FileIOStatus.makeSuccessStatus(ans.toString());
     }
 }

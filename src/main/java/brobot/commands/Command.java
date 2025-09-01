@@ -1,6 +1,7 @@
 package brobot.commands;
 
 import brobot.BrobotMessenger;
+import brobot.FileIOStatus;
 
 /**
  * This class is the Abstract Base Class for BroBot Commands.
@@ -25,5 +26,5 @@ public abstract class Command implements BrobotMessenger {
     /**
      * Runs the command.
      */
-    public abstract String sendMessage();
+    public abstract FileIOStatus sendBrobotMessage();
 }

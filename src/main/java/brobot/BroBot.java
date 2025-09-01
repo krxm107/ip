@@ -1,7 +1,7 @@
 // BroBot.java
 package brobot;
 
-import brobot.brobotexceptions.BrobotCheckedException;
+import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.commands.ByeCommand;
 import brobot.commands.Command;
 import javafx.application.Platform;
@@ -11,17 +11,20 @@ public final class BroBot {
     public String getResponse(String input) {
         try {
             Command c = Parser.parseCommand(input);
-            String result = c.sendMessage();
+            final FileIOStatus result = c.sendBrobotMessage();
             if (c instanceof ByeCommand) {
                 // allow GUI to close gracefully after showing the reply
                 Platform.runLater(Platform::exit);
             }
-            return result;
-        } catch (BrobotCheckedException e) {
-            // Show a friendly message in the dialog instead of crashing
-            return e.getMessage();
-        } catch (Exception e) {
-            return "Oops, something went wrong: " + e.getMessage();
+
+            if (result.checkIfFailure()) {
+                Platform.runLater(Platform::exit);
+                return result.toString();
+            } else {
+                return c.sendBrobotMessage().toString();
+            }
+        } catch (BrobotCommandFormatException e) {
+            return e.sendBrobotMessage().toString();
         }
     }
 }

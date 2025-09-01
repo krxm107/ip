@@ -3,6 +3,7 @@ package brobot.commands;
 import java.util.List;
 
 import brobot.BroBot;
+import brobot.FileIOStatus;
 import brobot.TaskList;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.tasks.Task;
@@ -45,7 +46,7 @@ public final class AddTaskCommand extends Command {
      * Runs the command
      */
     @Override
-    public String sendMessage() {
+    public FileIOStatus sendBrobotMessage() {
         try {
             final String line1 = "Got it. I've added this task:";
 
@@ -56,9 +57,9 @@ public final class AddTaskCommand extends Command {
 
             final String line3 = String.format("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
 
-            return String.join("\n", line1, line2, line3);
+            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3));
         } catch (final BrobotCommandFormatException badTaskCommand) {
-            return badTaskCommand.sendMessage();
+            return badTaskCommand.sendBrobotMessage();
         }
     }
 }
