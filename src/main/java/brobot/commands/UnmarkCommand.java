@@ -8,7 +8,7 @@ import brobot.TaskList;
 /**
  * This command is created whenever the user wants to unmark a task to reflect that it is not done yet.
  */
-public final class UnmarkCommand extends Command {
+public final class UnmarkCommand extends FileIOCommand {
 
     private final int unmarkIndex;
     private UnmarkCommand(final int unmarkIndex) {
@@ -32,7 +32,9 @@ public final class UnmarkCommand extends Command {
             final String line2 = BroBot.FOUR_SPACES_INDENT
                     + TaskList.getSingleton().printFormattedNumberedTask(unmarkIndex);
 
-            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2));
+            final String line3 = "Your tasks have successfully been saved to the hard drive.";
+
+            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3));
         }));
     }
 }

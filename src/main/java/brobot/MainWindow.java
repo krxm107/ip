@@ -1,5 +1,7 @@
 package brobot;
 
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -33,10 +35,15 @@ public final class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
-        dialogContainer.getChildren().addAll(
-            DialogBox.getBroBotDialog("Hello, I'm BroBot! What can I do for you?"),
-            DialogBox.getBroBotDialog(broBot.getLoadMessage())
+        dialogContainer.getChildren().add(
+            DialogBox.getBroBotDialog("Hello, I'm BroBot! What can I do for you?")
         );
+
+        for (final FileIOStatus fileIoStatus : BroBot.getSingleton().getLoadMessages()) {
+            dialogContainer.getChildren().add(
+                DialogBox.getBroBotDialog(fileIoStatus.toString())
+            );
+        }
     }
 
     /**
@@ -46,11 +53,13 @@ public final class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = broBot.getResponse(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input),
-                DialogBox.getBroBotDialog(response)
-        );
+        final List<String> responses = broBot.getResponse(input);
+        for (final String response : responses) {
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input),
+                    DialogBox.getBroBotDialog(response)
+            );
+        }
         userInput.clear();
     }
 }

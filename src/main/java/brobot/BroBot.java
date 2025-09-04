@@ -1,6 +1,9 @@
 // BroBot.java
 package brobot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.commands.ByeCommand;
 import brobot.commands.Command;
@@ -11,13 +14,19 @@ public final class BroBot {
 
     private static BroBot singleton = null;
 
-    private final String loadMessage;
+    private final List<FileIOStatus> loadMessages = new ArrayList<>();
     private BroBot() {
-        this.loadMessage = Storage.getSingleton().readFromFile().toString();
+        FileIOStatus currStatus = Storage.getSingleton().readFromFile();
+        loadMessages.add(currStatus);
+
+        while (currStatus.checkIfFailure()) {
+            currStatus = Storage.getSingleton().readFromFile();
+            loadMessages.add(currStatus);
+        }
     }
 
-    public String getLoadMessage() {
-        return loadMessage;
+    public List<FileIOStatus> getLoadMessages() {
+        return List.copyOf(loadMessages);
     }
 
     public static BroBot getSingleton() {
@@ -28,21 +37,27 @@ public final class BroBot {
         return BroBot.singleton;
     }
 
-    public String getResponse(String input) {
+    public List<String> getResponse(String input) {
         try {
             Command c = Parser.parseCommand(input);
-            final FileIOStatus result = c.sendBrobotMessage();
             if (c instanceof ByeCommand) {
                 // allow GUI to close gracefully after showing the reply
                 Platform.runLater(Platform::exit);
             }
 
-            if (result.checkIfFailure()) {
-                Platform.runLater(Platform::exit);
+            FileIOStatus result = c.sendBrobotMessage();
+            final ArrayList<String> ans = new ArrayList<>();
+
+            ans.add(result.toString());
+            while (result.checkIfFailure()) {
+                result = Storage.getSingleton().writeToFile();
+                ans.add(result.toString());
             }
-            return result.toString();
+
+
+            return List.copyOf(ans);
         } catch (BrobotCommandFormatException e) {
-            return e.sendBrobotMessage().toString();
+            return List.of(e.sendBrobotMessage().toString());
         }
     }
 }

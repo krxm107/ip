@@ -9,10 +9,6 @@ public final class FileIOStatus {
         this.isSuccess = isSuccess;
     }
 
-    public static FileIOStatus makeSuccessStatus() {
-        return FileIOStatus.makeSuccessStatus("");
-    }
-
     public static FileIOStatus makeSuccessStatus(final String message) {
         return new FileIOStatus(message, true);
     }

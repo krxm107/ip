@@ -7,7 +7,7 @@ import brobot.TaskList;
 /**
  * This command is created whenever the user wants to mask a task as done.
  */
-public final class MarkCommand extends Command {
+public final class MarkCommand extends FileIOCommand {
 
     private final int markIndex;
     private MarkCommand(final int markIndex) {
@@ -31,7 +31,8 @@ public final class MarkCommand extends Command {
             final String line2 = BroBot.FOUR_SPACES_INDENT
                     + TaskList.getSingleton().printFormattedNumberedTask(markIndex);
 
-            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2));
+            final String line3 = "Your tasks have successfully been saved to the hard drive.";
+            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3));
         }));
     }
 }
