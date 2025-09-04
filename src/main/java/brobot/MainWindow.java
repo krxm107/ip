@@ -53,7 +53,7 @@ public final class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        final List<String> responses = broBot.getResponse(input);
+        final List<String> responses = broBot.getResponses(input);
         for (final String response : responses) {
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input),
