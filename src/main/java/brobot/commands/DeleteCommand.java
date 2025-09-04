@@ -8,7 +8,7 @@ import brobot.TaskList;
 /**
  * This command is used to delete tasks (1-indexed).
  */
-public final class DeleteCommand extends Command {
+public final class DeleteCommand extends FileIOCommand {
     private final int deleteIndex;
     private DeleteCommand(final int deleteIndex) {
         super("delete");
@@ -42,8 +42,9 @@ public final class DeleteCommand extends Command {
 
             TaskList.getSingleton().remove(deleteIndex);
             final String line3 = String.format("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
+            final String line4 = "Your tasks have successfully been saved to the hard drive.";
 
-            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3));
+            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3, line4));
         };
 
         return FileIOStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(orElse));

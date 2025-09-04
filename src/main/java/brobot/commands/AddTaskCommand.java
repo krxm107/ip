@@ -11,7 +11,7 @@ import brobot.tasks.Task;
 /**
  * This command runs iff a user wishes to add a task to the tasklist.
  */
-public final class AddTaskCommand extends Command {
+public final class AddTaskCommand extends FileIOCommand {
     private final List<String> commandTokens;
     private Task taskToAdd = null;
 
@@ -57,7 +57,9 @@ public final class AddTaskCommand extends Command {
 
             final String line3 = String.format("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
 
-            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3));
+            final String line4 = "Your tasks have successfully been saved to the hard drive.";
+
+            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3, line4));
         } catch (final BrobotCommandFormatException badTaskCommand) {
             return badTaskCommand.sendBrobotMessage();
         }
