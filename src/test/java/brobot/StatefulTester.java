@@ -23,7 +23,7 @@ public interface StatefulTester {
      */
     static void clearTaskList() {
         while (!TaskList.getSingleton().isEmpty()) {
-            TaskList.getSingleton().remove(TaskList.getSingleton().size());
+            TaskList.getSingleton().removeFromTaskList(TaskList.getSingleton().getSize());
         }
     }
 }

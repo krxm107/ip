@@ -38,11 +38,7 @@ public final class DialogBox extends HBox {
         displayPicture.setImage(img);
     }
 
-
-    /**
-     * Flips the dialog box such that the ImageView is on the left and text on the right.
-     */
-    private void flip() {
+    private void flipViewForBrobot() {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
@@ -55,7 +51,7 @@ public final class DialogBox extends HBox {
 
     public static DialogBox getBroBotDialog(String text) {
         DialogBox db = new DialogBox(text, MainWindow.BRO_BOT_IMAGE);
-        db.flip();
+        db.flipViewForBrobot();
         return db;
     }
 }

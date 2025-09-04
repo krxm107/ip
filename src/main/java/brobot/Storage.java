@@ -1,12 +1,9 @@
 package brobot;
 
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -59,7 +56,7 @@ public final class Storage {
                 final String taskLine = fileReader.nextLine();
                 if (taskLine.isEmpty()) {
                     final String taskString = taskStringBuilder.deleteCharAt(taskStringBuilder.length() - 1).toString();
-                    TaskList.getSingleton().add(Task.fromFileReport(taskString));
+                    TaskList.getSingleton().addToTaskList(Task.fromFileReport(taskString));
                     while (!taskStringBuilder.isEmpty()) {
                         taskStringBuilder.deleteCharAt(taskStringBuilder.length() - 1);
                     }
@@ -113,7 +110,7 @@ public final class Storage {
                     StandardOpenOption.CREATE,
                     StandardOpenOption.TRUNCATE_EXISTING
             )) {
-                for (int i = 1; i <= TaskList.getSingleton().size(); i++) {
+                for (int i = 1; i <= TaskList.getSingleton().getSize(); i++) {
                     writer.write(TaskList.getSingleton().getTask(i).toFileReport());
                 }
             }

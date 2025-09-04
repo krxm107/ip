@@ -9,7 +9,7 @@ import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.tasks.Task;
 
 /**
- * This command runs iff a user wishes to add a task to the tasklist.
+ * This command runs iff a user wishes to addToTaskList a task to the tasklist.
  */
 public final class AddTaskCommand extends FileIOCommand {
     private final List<String> commandTokens;
@@ -50,12 +50,12 @@ public final class AddTaskCommand extends FileIOCommand {
         try {
             final String line1 = "Got it. I've added this task:";
 
-            TaskList.getSingleton().add(makeTask());
+            TaskList.getSingleton().addToTaskList(makeTask());
             final String line2 = BroBot.FOUR_SPACES_INDENT
-                    + TaskList.getSingleton().printFormattedNumberedTask(TaskList.getSingleton().size());
+                    + TaskList.getSingleton().formatTask(TaskList.getSingleton().getSize());
 
 
-            final String line3 = String.format("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
+            final String line3 = String.format("Now you have %d tasks in the list.\n", TaskList.getSingleton().getSize());
 
             final String line4 = "Your tasks have successfully been saved to the hard drive.";
 
