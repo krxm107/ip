@@ -37,7 +37,7 @@ public final class BroBot {
         return BroBot.singleton;
     }
 
-    public List<String> getResponse(String input) {
+    public List<String> getResponses(String input) {
         try {
             Command c = Parser.parseCommand(input);
             if (c instanceof ByeCommand) {
