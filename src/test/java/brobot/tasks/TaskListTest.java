@@ -31,22 +31,22 @@ public final class TaskListTest implements StatefulTester {
     }
 
     /**
-     * Check whether the singleton's size is 0 on creation.
+     * Check whether the singleton's getSize is 0 on creation.
      */
     @Test
-    public void testTaskListSingletonSize0() {
-        assertEquals(0, TaskList.getSingleton().size());
+    public void testTaskListSingletonGetSize0() {
+        assertEquals(0, TaskList.getSingleton().getSize());
     }
 
     /**
      * Test the toString method when adding a single task to the singleton.
      */
     @Test
-    public void testAddTask() {
+    public void testAddToTaskListTask() {
         try {
-            TaskList.getSingleton().add(Task.createTask("todo", "add task"));
+            TaskList.getSingleton().addToTaskList(Task.createTask("todo", "addToTaskList task"));
 
-            final String expectedToString = "1. [T][ ] add task\n";
+            final String expectedToString = "1. [T][ ] addToTaskList task\n";
             assertEquals(expectedToString, TaskList.getSingleton().toString());
         } catch (final BrobotCommandFormatException brobotCommandFormatException) {
             assert false;
@@ -57,12 +57,12 @@ public final class TaskListTest implements StatefulTester {
      * Test the numbering system when a task is removed from the TaskList, and it's not at the very back.
      */
     @Test
-    public void testRemoveTask() {
+    public void testRemoveFromTaskListTask() {
         try {
-            TaskList.getSingleton().add(Task.createTask("todo", "task 0"));
-            TaskList.getSingleton().add(Task.createTask("todo", "task to remove"));
+            TaskList.getSingleton().addToTaskList(Task.createTask("todo", "task 0"));
+            TaskList.getSingleton().addToTaskList(Task.createTask("todo", "task to removeFromTaskList"));
 
-            TaskList.getSingleton().remove(2);
+            TaskList.getSingleton().removeFromTaskList(2);
 
             final String expectedToString = "1. [T][ ] task 0\n";
             assertEquals(expectedToString, TaskList.getSingleton().toString());

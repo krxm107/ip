@@ -29,7 +29,7 @@ public final class MarkCommand extends FileIOCommand {
             TaskList.getSingleton().markTask(markIndex);
             final String line1 = "Nice! I've marked this task as done:";
             final String line2 = BroBot.FOUR_SPACES_INDENT
-                    + TaskList.getSingleton().printFormattedNumberedTask(markIndex);
+                    + TaskList.getSingleton().formatTask(markIndex);
 
             final String line3 = "Your tasks have successfully been saved to the hard drive.";
             return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3));

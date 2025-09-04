@@ -17,7 +17,13 @@ public final class UnmarkCommand extends FileIOCommand {
     }
 
     /**
-     * Factory constructor for UnmarkCommand.
+     *     Factory constructor for UnmarkCommand.
+     *     @param commandName
+     *     The name of the command that generated this new instance.
+     *     @param commandArgs
+     *     The arguments passed to the command.
+     *     @return
+     *     The new instance of UnmarkCommand.
      */
     public static UnmarkCommand makeCommand(final String commandName, final String... commandArgs) {
         final int markIndex = Integer.parseInt(commandArgs[0]);
@@ -30,7 +36,7 @@ public final class UnmarkCommand extends FileIOCommand {
             TaskList.getSingleton().unmarkTask(unmarkIndex);
             final String line1 = "OK, I've marked this task as not done yet:";
             final String line2 = BroBot.FOUR_SPACES_INDENT
-                    + TaskList.getSingleton().printFormattedNumberedTask(unmarkIndex);
+                    + TaskList.getSingleton().formatTask(unmarkIndex);
 
             final String line3 = "Your tasks have successfully been saved to the hard drive.";
 

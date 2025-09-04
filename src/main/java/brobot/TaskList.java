@@ -34,14 +34,14 @@ public final class TaskList {
     /**
      * Returns a string for printing the task with the given number, labelled with that number.
      */
-    public String printFormattedNumberedTask(final int number) {
-        return TaskList.printFormattedNumberedTask(number, getTask(number));
+    public String formatTask(final int number) {
+        return TaskList.formatTask(number, getTask(number));
     }
 
     /**
      * Returns a string for printing a task with a custom number label.
      */
-    public static String printFormattedNumberedTask(final int number, final Task task) {
+    public static String formatTask(final int number, final Task task) {
         return String.format("%d. %s", number, task);
     }
 
@@ -55,7 +55,7 @@ public final class TaskList {
     /**
      * @return The number of tasks in the TaskList.
      */
-    public int size() {
+    public int getSize() {
         return tasks.size();
     }
 
@@ -72,7 +72,7 @@ public final class TaskList {
      *
      *     Once the task is added to the tasklist, the tasks are saved to the hard drive.
      */
-    public FileIOStatus add(final Task task) {
+    public FileIOStatus addToTaskList(final Task task) {
         tasks.add(task);
         return Storage.getSingleton().writeToFile();
     }
@@ -81,7 +81,7 @@ public final class TaskList {
      * @param taskNumber
      *     The number of the task that must be removed (1-indexed).
      */
-    public FileIOStatus remove(final int taskNumber) {
+    public FileIOStatus removeFromTaskList(final int taskNumber) {
         tasks.remove(taskNumber - 1);
         return Storage.getSingleton().writeToFile();
     }
@@ -137,8 +137,8 @@ public final class TaskList {
             return "Enjoy your empty task list!";
         } else {
             final StringBuilder ans = new StringBuilder();
-            for (int i = 1; i <= size(); i++) {
-                ans.append(printFormattedNumberedTask(i)).append("\n");
+            for (int i = 1; i <= getSize(); i++) {
+                ans.append(formatTask(i)).append("\n");
             }
 
             return ans.substring(0, ans.length() - 1);

@@ -38,10 +38,10 @@ public final class DeleteCommand extends FileIOCommand {
             final String line1 = "Noted. I've removed this task:";
 
             final String line2 = BroBot.FOUR_SPACES_INDENT
-                    + TaskList.getSingleton().printFormattedNumberedTask(deleteIndex);
+                    + TaskList.getSingleton().formatTask(deleteIndex);
 
-            TaskList.getSingleton().remove(deleteIndex);
-            final String line3 = String.format("Now you have %d tasks in the list.\n", TaskList.getSingleton().size());
+            TaskList.getSingleton().removeFromTaskList(deleteIndex);
+            final String line3 = String.format("Now you have %d tasks in the list.\n", TaskList.getSingleton().getSize());
             final String line4 = "Your tasks have successfully been saved to the hard drive.";
 
             return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3, line4));

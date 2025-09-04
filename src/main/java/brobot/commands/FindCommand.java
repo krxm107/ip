@@ -25,10 +25,10 @@ public final class FindCommand extends Command {
     @Override
     public FileIOStatus sendBrobotMessage() {
         final StringBuilder ans = new StringBuilder();
-        for (int i = 1; i <= TaskList.getSingleton().size(); i++) {
+        for (int i = 1; i <= TaskList.getSingleton().getSize(); i++) {
             final Task currTask = TaskList.getSingleton().getTask(i);
             if (currTask.findKeywordInTaskDescription(keyword)) {
-                ans.append(TaskList.printFormattedNumberedTask(i, currTask)).append("\n");
+                ans.append(TaskList.formatTask(i, currTask)).append("\n");
             }
         }
 
