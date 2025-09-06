@@ -138,7 +138,7 @@ public final class TaskList {
         } else {
             final StringBuilder ans = new StringBuilder();
             for (int i = 1; i <= getSize(); i++) {
-                ans.append(formatTask(i)).append("\n");
+                ans.append(formatTask(i)).append(System.lineSeparator());
             }
 
             return ans.substring(0, ans.length() - 1);

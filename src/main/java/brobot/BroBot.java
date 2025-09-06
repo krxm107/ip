@@ -2,6 +2,7 @@
 package brobot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import brobot.brobotexceptions.BrobotCommandFormatException;
@@ -26,7 +27,7 @@ public final class BroBot {
     }
 
     public List<FileIOStatus> getLoadMessages() {
-        return List.copyOf(loadMessages);
+        return Collections.unmodifiableList(loadMessages);
     }
 
     public static BroBot getSingleton() {

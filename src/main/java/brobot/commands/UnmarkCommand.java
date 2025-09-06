@@ -41,7 +41,7 @@ public final class UnmarkCommand extends FileIOCommand {
 
             final String line3 = Storage.SUCCESSFUL_HARD_DRIVE_SAVE;
 
-            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3));
+            return FileIOStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, line3));
         }));
     }
 }
