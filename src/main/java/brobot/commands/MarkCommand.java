@@ -2,6 +2,7 @@ package brobot.commands;
 
 import brobot.BroBot;
 import brobot.FileIOStatus;
+import brobot.Storage;
 import brobot.TaskList;
 
 /**
@@ -31,7 +32,7 @@ public final class MarkCommand extends FileIOCommand {
             final String line2 = BroBot.FOUR_SPACES_INDENT
                     + TaskList.getSingleton().formatTask(markIndex);
 
-            final String line3 = "Your tasks have successfully been saved to the hard drive.";
+            final String line3 = Storage.SUCCESSFUL_HARD_DRIVE_SAVE;
             return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3));
         }));
     }
