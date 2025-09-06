@@ -68,8 +68,10 @@ final class DeadlineTask extends Task {
      */
     @Override
     public String toFileReport() {
-        return String.format("%s\n%s\n\n",
-                super.toFileReport().substring(0, super.toFileReport().length() - 2),
-                deadline);
+        return String.join(System.lineSeparator(),
+                            super.toFileReport().substring(0, super.toFileReport().length() - 2),
+                            deadline.toString(),
+                            "",
+                            "");
     }
 }

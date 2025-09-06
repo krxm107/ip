@@ -1,8 +1,10 @@
 package brobot.commands;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import brobot.FileIOStatus;
 import brobot.TaskList;
-import brobot.tasks.Task;
 
 /**
  * This command is used to find tasks by keyword (literal String)
@@ -24,14 +26,13 @@ public final class FindCommand extends Command {
 
     @Override
     public FileIOStatus sendBrobotMessage() {
-        final StringBuilder ans = new StringBuilder();
-        for (int i = 1; i <= TaskList.getSingleton().getSize(); i++) {
-            final Task currTask = TaskList.getSingleton().getTask(i);
-            if (currTask.findKeywordInTaskDescription(keyword)) {
-                ans.append(TaskList.formatTask(i, currTask)).append("\n");
-            }
-        }
-
-        return FileIOStatus.makeSuccessStatus(ans.toString());
+        return FileIOStatus.makeSuccessStatus(
+                IntStream.rangeClosed(1, TaskList.getSingleton().getSize())
+                         .filter((final int i) -> TaskList.getSingleton()
+                                                          .getTask(i)
+                                                          .findKeywordInTaskDescription(keyword))
+                         .<String>mapToObj((final int i) -> TaskList.formatTask(i, TaskList.getSingleton().getTask(i)))
+                         .collect(Collectors.joining(System.lineSeparator()))
+        );
     }
 }

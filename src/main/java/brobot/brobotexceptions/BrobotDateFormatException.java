@@ -31,6 +31,6 @@ public final class BrobotDateFormatException extends BrobotCommandFormatExceptio
 
         final String line5 = "yyyy: Year must have exactly 4 digits.";
 
-        return new BrobotDateFormatException(String.join("\n", "", line1, line2, line3, line4, line5, ""));
+        return new BrobotDateFormatException(String.join(System.lineSeparator(), "", line1, line2, line3, line4, line5, ""));
     }
 }

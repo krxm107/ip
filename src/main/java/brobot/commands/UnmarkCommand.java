@@ -40,7 +40,7 @@ public final class UnmarkCommand extends FileIOCommand {
 
             final String line3 = "Your tasks have successfully been saved to the hard drive.";
 
-            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3));
+            return FileIOStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, line3));
         }));
     }
 }
