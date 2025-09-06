@@ -61,7 +61,7 @@ public final class Storage {
                         taskStringBuilder.deleteCharAt(taskStringBuilder.length() - 1);
                     }
                 } else {
-                    taskStringBuilder.append(taskLine + "\n");
+                    taskStringBuilder.append(taskLine + System.lineSeparator());
                 }
             }
 
@@ -69,7 +69,7 @@ public final class Storage {
                             FileIOStatus.makeSuccessStatus("You do not have any tasks saved from previous sessions."), () -> {
                         final String line1 = "Here are the tasks saved from previous sessions.";
                         final String line2 = TaskList.getSingleton().toString();
-                        return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2));
+                        return FileIOStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2));
                 }));
 
         } catch (final IOException ioException) {
@@ -77,11 +77,11 @@ public final class Storage {
                 final String line1 = "Oh no, the system had a problem reading the file where your tasks were saved.";
                 final String line2 = "Trying again. Hang in there.";
 
-                return FileIOStatus.makeFailureStatus(String.join("\n", line1, line2));
+                return FileIOStatus.makeFailureStatus(String.join(System.lineSeparator(), line1, line2));
             }, () -> {
                 final String line1 = "Oh no, the system had a problem reading the file where your tasks were saved.";
                 final String line2 = "Trying again. Hang in there.";
-                return FileIOStatus.makeFailureStatus(String.join("\n", line1, line2));
+                return FileIOStatus.makeFailureStatus(String.join(System.lineSeparator(), line1, line2));
             }));
         } finally {
             if (fileReader != null) {
@@ -118,7 +118,9 @@ public final class Storage {
             return FileIOStatus.makeSuccessStatus("Your tasks have successfully been saved to the hard drive.");
         } catch (IOException e) {
             return FileIOStatus.makeFailureStatus(
-                    "Oh no, the system has a problem writing the tasks to the hard disk.\nTrying again. Hang in there."
+                    String.join("Oh no, the system has a problem writing the tasks to the hard disk.",
+                            "Trying again. Hang in there.",
+                                 System.lineSeparator())
             );
         }
     }

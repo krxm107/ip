@@ -118,11 +118,12 @@ public abstract class Task implements BrobotFileIoSerializable {
      *     A serialized version of the task for file IO (according to BroBot domain rules).
      */
     public String toFileReport() {
-        return String.format("%s\n%s\n%s\n\n",
-                commandName,
-                isDone,
-                baseObjective);
-
+        return String.join(System.lineSeparator(),
+                           commandName,
+                            isDone + "",
+                            baseObjective,
+                           "",
+                           "");
     }
 
     /**
@@ -133,7 +134,7 @@ public abstract class Task implements BrobotFileIoSerializable {
      *     A Task instance deserialized from the file report by this factory constructor.
      */
     public static final Task fromFileReport(final String fileReport) {
-        final String[] fileReportLines = fileReport.split("\n");
+        final String[] fileReportLines = fileReport.split(System.lineSeparator());
 
         try {
             switch (fileReportLines.length) {

@@ -13,7 +13,9 @@ import brobot.FileIOStatus;
  */
 public abstract class BrobotCommandFormatException extends BrobotCheckedException implements BrobotMessenger {
     private static final String INVALID_INPUT_WARNING = "Sorry, this input is invalid!";
-    private static final String ANOTHER_CHANCE_OFFERING = "Please enter a different input.\nProgram resumed.";
+    private static final String ANOTHER_CHANCE_OFFERING = String.join(System.lineSeparator(),
+                                                            "Please enter a different input.",
+                                                                      "Program resumed.");
 
 
     /**
@@ -33,7 +35,7 @@ public abstract class BrobotCommandFormatException extends BrobotCheckedExceptio
     }
 
     private static final String getFullMessage(final String mainMessage) {
-        return String.join("\n",
+        return String.join(System.lineSeparator(),
                 BrobotCommandFormatException.INVALID_INPUT_WARNING,
                 mainMessage,
                 BrobotCommandFormatException.ANOTHER_CHANCE_OFFERING);

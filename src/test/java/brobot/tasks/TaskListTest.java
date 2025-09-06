@@ -46,7 +46,7 @@ public final class TaskListTest implements StatefulTester {
         try {
             TaskList.getSingleton().addToTaskList(Task.createTask("todo", "addToTaskList task"));
 
-            final String expectedToString = "1. [T][ ] addToTaskList task\n";
+            final String expectedToString = "1. [T][ ] addToTaskList task" + System.lineSeparator();
             assertEquals(expectedToString, TaskList.getSingleton().toString());
         } catch (final BrobotCommandFormatException brobotCommandFormatException) {
             assert false;
@@ -64,7 +64,7 @@ public final class TaskListTest implements StatefulTester {
 
             TaskList.getSingleton().removeFromTaskList(2);
 
-            final String expectedToString = "1. [T][ ] task 0\n";
+            final String expectedToString = "1. [T][ ] task 0" + System.lineSeparator();
             assertEquals(expectedToString, TaskList.getSingleton().toString());
         } catch (final BrobotCommandFormatException brobotCommandFormatException) {
             assert false;

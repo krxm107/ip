@@ -55,11 +55,12 @@ public final class AddTaskCommand extends FileIOCommand {
                     + TaskList.getSingleton().formatTask(TaskList.getSingleton().getSize());
 
 
-            final String line3 = String.format("Now you have %d tasks in the list.\n", TaskList.getSingleton().getSize());
+            final String line3 = String.format("Now you have %d tasks in the list.", TaskList.getSingleton().getSize())
+                                    + System.lineSeparator();
 
             final String line4 = "Your tasks have successfully been saved to the hard drive.";
 
-            return FileIOStatus.makeSuccessStatus(String.join("\n", line1, line2, line3, line4));
+            return FileIOStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, line3, line4));
         } catch (final BrobotCommandFormatException badTaskCommand) {
             return badTaskCommand.sendBrobotMessage();
         }
