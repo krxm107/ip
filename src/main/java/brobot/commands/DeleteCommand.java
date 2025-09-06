@@ -3,6 +3,7 @@ package brobot.commands;
 import brobot.BroBot;
 import brobot.BrobotMessenger;
 import brobot.FileIOStatus;
+import brobot.Storage;
 import brobot.TaskList;
 
 /**
@@ -41,9 +42,11 @@ public final class DeleteCommand extends FileIOCommand {
                     + TaskList.getSingleton().formatTask(deleteIndex);
 
             TaskList.getSingleton().removeFromTaskList(deleteIndex);
+
             final String line3 = String.format("Now you have %d tasks in the list.", TaskList.getSingleton().getSize())
                                         + System.lineSeparator();
-            final String line4 = "Your tasks have successfully been saved to the hard drive.";
+          
+            final String line4 = Storage.SUCCESSFUL_HARD_DRIVE_SAVE;
 
             return FileIOStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, line3, line4));
         };

@@ -18,6 +18,8 @@ public final class Storage {
     private static Storage storageSingleton = null;
     private final Path taskSavePath = Paths.get("./data/brobot tasks.txt");
 
+    public static final String SUCCESSFUL_HARD_DRIVE_SAVE = "Your tasks have successfully been saved to the hard drive.";
+
     private Storage() {
 
     }
@@ -115,7 +117,7 @@ public final class Storage {
                 }
             }
 
-            return FileIOStatus.makeSuccessStatus("Your tasks have successfully been saved to the hard drive.");
+            return FileIOStatus.makeSuccessStatus(Storage.SUCCESSFUL_HARD_DRIVE_SAVE);
         } catch (IOException e) {
             return FileIOStatus.makeFailureStatus(
                     String.join("Oh no, the system has a problem writing the tasks to the hard disk.",
