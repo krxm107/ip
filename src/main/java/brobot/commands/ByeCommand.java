@@ -10,6 +10,8 @@ public final class ByeCommand extends Command {
     private static ByeCommand byeCommandSingleton = null;
     private ByeCommand() {
         super("bye");
+
+        assert getCommandName().equals("bye") : "Command name should be bye here.";
     }
 
     /**

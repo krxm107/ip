@@ -20,6 +20,8 @@ public final class BrobotDate {
 
     private Integer hashCodeCache = null;
 
+    private String logMessage = null;
+
     private BrobotDate(final LocalDate javaDate) {
         this.javaDate = javaDate;
     }
@@ -44,7 +46,11 @@ public final class BrobotDate {
 
     @Override
     public String toString() {
-        return javaDate.format(BrobotDate.DATETIME_FORMATTER);
+        if (logMessage == null) {
+            logMessage = javaDate.format(BrobotDate.DATETIME_FORMATTER);
+        }
+
+        return logMessage;
     }
 
     @Override
