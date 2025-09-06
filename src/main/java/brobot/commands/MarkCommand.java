@@ -28,6 +28,10 @@ public final class MarkCommand extends FileIOCommand {
     public FileIOStatus sendBrobotMessage() {
         return FileIOStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(() -> {
             TaskList.getSingleton().markTask(markIndex);
+
+            assert 1 <= markIndex && markIndex <= TaskList.getSingleton().getSize()
+                    : "Command shouldn't succeed on out of range index.";
+
             final String line1 = "Nice! I've marked this task as done:";
             final String line2 = BroBot.FOUR_SPACES_INDENT
                     + TaskList.getSingleton().formatTask(markIndex);

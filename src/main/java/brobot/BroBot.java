@@ -55,7 +55,7 @@ public final class BroBot {
                 ans.add(result.toString());
             }
 
-
+            assert List.copyOf(ans) != ans : "Sorry, the list returned should not be mutable.";
             return List.copyOf(ans);
         } catch (BrobotCommandFormatException e) {
             return List.of(e.sendBrobotMessage().toString());
