@@ -141,7 +141,7 @@ public final class TaskList {
                 ans.append(formatTask(i)).append(System.lineSeparator());
             }
 
-            return ans.substring(0, ans.length() - 1);
+            return NewlineFormatter.removeTrailingNewlines(ans, 1);
         }
     }
 }
