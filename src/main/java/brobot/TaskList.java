@@ -35,14 +35,7 @@ public final class TaskList {
      * Returns a string for printing the task with the given number, labelled with that number.
      */
     public String formatTask(final int number) {
-        return TaskList.formatTask(number, getTask(number));
-    }
-
-    /**
-     * Returns a string for printing a task with a custom number label.
-     */
-    public static String formatTask(final int number, final Task task) {
-        return String.format("%d. %s", number, task);
+        return String.format("%d. %s", number, getTask(number));
     }
 
     /**
