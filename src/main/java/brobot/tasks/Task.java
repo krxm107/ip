@@ -108,9 +108,9 @@ public abstract class Task implements BrobotFileIoSerializable {
      * @return
      *     A boolean indicating whether the task description contains the keyword passed in (literal strings).
      */
-    public final boolean findKeywordInTaskDescription(final String keyword) {
+    public final boolean findKeywordInTaskDescriptionIgnoreCase(final String keyword) {
         final String taskDescription = getTaskDescription();
-        return taskDescription.contains(keyword);
+        return taskDescription.toLowerCase().contains(keyword.toLowerCase());
     }
 
     /**

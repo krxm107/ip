@@ -30,7 +30,7 @@ public final class FindCommand extends Command {
                 IntStream.rangeClosed(1, TaskList.getSingleton().getSize())
                          .filter((final int i) -> TaskList.getSingleton()
                                                           .getTask(i)
-                                                          .findKeywordInTaskDescription(keyword))
+                                                          .findKeywordInTaskDescriptionIgnoreCase(keyword))
                          .<String>mapToObj((final int i) -> TaskList.formatTask(i, TaskList.getSingleton().getTask(i)))
                          .collect(Collectors.joining(System.lineSeparator()))
         );
