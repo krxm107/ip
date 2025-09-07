@@ -1,7 +1,7 @@
 package brobot;
 
-public final class NewlineFormatter {
-    private NewlineFormatter() {
+public final class StringNewlineFormatter {
+    private StringNewlineFormatter() {
 
     }
 
