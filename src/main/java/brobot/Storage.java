@@ -57,7 +57,8 @@ public final class Storage {
             while (fileReader.hasNextLine()) {
                 final String taskLine = fileReader.nextLine();
                 if (taskLine.isEmpty()) {
-                    final String taskString = taskStringBuilder.deleteCharAt(taskStringBuilder.length() - 1).toString();
+                    final String taskString = NewlineFormatter.removeTrailingNewlines(taskStringBuilder, 1);
+
                     TaskList.getSingleton().addToTaskList(Task.fromFileReport(taskString));
                     while (!taskStringBuilder.isEmpty()) {
                         taskStringBuilder.deleteCharAt(taskStringBuilder.length() - 1);
