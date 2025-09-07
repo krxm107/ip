@@ -39,7 +39,7 @@ public final class MainWindow extends AnchorPane {
             DialogBox.getBroBotDialog("Hello, I'm BroBot! What can I do for you?")
         );
 
-        for (final FileIOStatus fileIoStatus : BroBot.getSingleton().getLoadMessages()) {
+        for (final FileIoStatus fileIoStatus : BroBot.getSingleton().getLoadMessages()) {
             dialogContainer.getChildren().add(
                 DialogBox.getBroBotDialog(fileIoStatus.toString())
             );

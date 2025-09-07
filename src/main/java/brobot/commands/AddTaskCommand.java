@@ -3,8 +3,7 @@ package brobot.commands;
 import java.util.List;
 
 import brobot.BroBot;
-import brobot.FileIOStatus;
-import brobot.Storage;
+import brobot.FileIoStatus;
 import brobot.TaskList;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.tasks.Task;
@@ -12,7 +11,7 @@ import brobot.tasks.Task;
 /**
  * This command runs iff a user wishes to addToTaskList a task to the tasklist.
  */
-public final class AddTaskCommand extends FileIOCommand {
+public final class AddTaskCommand extends FileIoCommand {
     private final List<String> commandTokens;
     private Task taskToAdd = null;
 
@@ -47,7 +46,7 @@ public final class AddTaskCommand extends FileIOCommand {
      * Runs the command
      */
     @Override
-    public FileIOStatus sendBrobotMessage() {
+    public FileIoStatus sendBrobotMessage() {
         try {
             final String line1 = "Got it. I've added this task:";
 
@@ -56,12 +55,9 @@ public final class AddTaskCommand extends FileIOCommand {
                     + TaskList.getSingleton().formatTask(TaskList.getSingleton().getSize());
 
 
-            final String line3 = String.format("Now you have %d tasks in the list.", TaskList.getSingleton().getSize())
-                                    + System.lineSeparator();
+            final String cheer = FileIoCommand.getSuccessfulFileSaveMessage();
 
-            final String line4 = Storage.SUCCESSFUL_HARD_DRIVE_SAVE;
-
-            return FileIOStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, line3, line4));
+            return FileIoStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, cheer));
         } catch (final BrobotCommandFormatException badTaskCommand) {
             return badTaskCommand.sendBrobotMessage();
         }

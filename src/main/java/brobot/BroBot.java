@@ -15,9 +15,9 @@ public final class BroBot {
 
     private static BroBot singleton = null;
 
-    private final List<FileIOStatus> loadMessages = new ArrayList<>();
+    private final List<FileIoStatus> loadMessages = new ArrayList<>();
     private BroBot() {
-        FileIOStatus currStatus = Storage.getSingleton().readFromFile();
+        FileIoStatus currStatus = Storage.getSingleton().readFromFile();
         loadMessages.add(currStatus);
 
         while (currStatus.checkIfFailure()) {
@@ -26,7 +26,7 @@ public final class BroBot {
         }
     }
 
-    public List<FileIOStatus> getLoadMessages() {
+    public List<FileIoStatus> getLoadMessages() {
         return Collections.unmodifiableList(loadMessages);
     }
 
@@ -46,7 +46,7 @@ public final class BroBot {
                 Platform.runLater(Platform::exit);
             }
 
-            FileIOStatus result = c.sendBrobotMessage();
+            FileIoStatus result = c.sendBrobotMessage();
             final ArrayList<String> ans = new ArrayList<>();
 
             ans.add(result.toString());

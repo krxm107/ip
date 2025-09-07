@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 
+import brobot.commands.FileIoCommand;
 import brobot.tasks.Task;
 
 /**
@@ -17,8 +18,6 @@ import brobot.tasks.Task;
 public final class Storage {
     private static Storage storageSingleton = null;
     private final Path taskSavePath = Paths.get("./data/brobot tasks.txt");
-
-    public static final String SUCCESSFUL_HARD_DRIVE_SAVE = "Your tasks have successfully been saved to the hard drive.";
 
     private Storage() {
 
@@ -39,7 +38,7 @@ public final class Storage {
     /**
      * Reads from the "data/brobot tasks.txt" file and adds the saved tasks to the TaskList singleton
      */
-    public FileIOStatus readFromFile() {
+    public FileIoStatus readFromFile() {
         Scanner fileReader = null;
 
         try {
@@ -57,7 +56,7 @@ public final class Storage {
             while (fileReader.hasNextLine()) {
                 final String taskLine = fileReader.nextLine();
                 if (taskLine.isEmpty()) {
-                    final String taskString = NewlineFormatter.removeTrailingNewlines(taskStringBuilder, 1);
+                    final String taskString = StringNewlineFormatter.removeTrailingNewlines(taskStringBuilder, 1);
 
                     TaskList.getSingleton().addToTaskList(Task.fromFileReport(taskString));
                     while (!taskStringBuilder.isEmpty()) {
@@ -68,23 +67,23 @@ public final class Storage {
                 }
             }
 
-            return FileIOStatus.makeSuccessStatus(TaskList.getSingleton().displayMessage(() ->
-                            FileIOStatus.makeSuccessStatus("You do not have any tasks saved from previous sessions."), () -> {
+            return FileIoStatus.makeSuccessStatus(TaskList.getSingleton().displayMessage(() ->
+                            FileIoStatus.makeSuccessStatus("You do not have any tasks saved from previous sessions."), () -> {
                         final String line1 = "Here are the tasks saved from previous sessions.";
                         final String line2 = TaskList.getSingleton().toString();
-                        return FileIOStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2));
+                        return FileIoStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2));
                 }));
 
         } catch (final IOException ioException) {
-            return FileIOStatus.makeFailureStatus(TaskList.getSingleton().displayMessage(() -> {
+            return FileIoStatus.makeFailureStatus(TaskList.getSingleton().displayMessage(() -> {
                 final String line1 = "Oh no, the system had a problem reading the file where your tasks were saved.";
                 final String line2 = "Trying again. Hang in there.";
 
-                return FileIOStatus.makeFailureStatus(String.join(System.lineSeparator(), line1, line2));
+                return FileIoStatus.makeFailureStatus(String.join(System.lineSeparator(), line1, line2));
             }, () -> {
                 final String line1 = "Oh no, the system had a problem reading the file where your tasks were saved.";
                 final String line2 = "Trying again. Hang in there.";
-                return FileIOStatus.makeFailureStatus(String.join(System.lineSeparator(), line1, line2));
+                return FileIoStatus.makeFailureStatus(String.join(System.lineSeparator(), line1, line2));
             }));
         } finally {
             if (fileReader != null) {
@@ -99,7 +98,7 @@ public final class Storage {
      * Please make sure to manually call this method every time the Tasklist singleton is modified
      * so that the tasks can be saved to the hard disk. This is a safety precaution in the event of program failure.
      */
-    public FileIOStatus writeToFile() {
+    public FileIoStatus writeToFile() {
         try {
             Path path = taskSavePath;
             Path parent = path.getParent();
@@ -118,9 +117,9 @@ public final class Storage {
                 }
             }
 
-            return FileIOStatus.makeSuccessStatus(Storage.SUCCESSFUL_HARD_DRIVE_SAVE);
+            return FileIoStatus.makeSuccessStatus(FileIoCommand.getSuccessfulFileSaveMessage());
         } catch (IOException e) {
-            return FileIOStatus.makeFailureStatus(
+            return FileIoStatus.makeFailureStatus(
                     String.join("Oh no, the system has a problem writing the tasks to the hard disk.",
                             "Trying again. Hang in there.",
                                  System.lineSeparator())

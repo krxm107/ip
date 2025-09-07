@@ -2,14 +2,14 @@ package brobot.commands;
 
 
 import brobot.BroBot;
-import brobot.FileIOStatus;
+import brobot.FileIoStatus;
 import brobot.Storage;
 import brobot.TaskList;
 
 /**
  * This command is created whenever the user wants to unmark a task to reflect that it is not done yet.
  */
-public final class UnmarkCommand extends FileIOCommand {
+public final class UnmarkCommand extends FileIoCommand {
 
     private final int unmarkIndex;
     private UnmarkCommand(final int unmarkIndex) {
@@ -32,16 +32,16 @@ public final class UnmarkCommand extends FileIOCommand {
     }
 
     @Override
-    public FileIOStatus sendBrobotMessage() {
-        return FileIOStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(() -> {
+    public FileIoStatus sendBrobotMessage() {
+        return FileIoStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(() -> {
             TaskList.getSingleton().unmarkTask(unmarkIndex);
             final String line1 = "OK, I've marked this task as not done yet:";
             final String line2 = BroBot.FOUR_SPACES_INDENT
                     + TaskList.getSingleton().formatTask(unmarkIndex);
 
-            final String line3 = Storage.SUCCESSFUL_HARD_DRIVE_SAVE;
+            final String cheer = FileIoCommand.getSuccessfulFileSaveMessage();
 
-            return FileIOStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, line3));
+            return FileIoStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, cheer));
         }));
     }
 }

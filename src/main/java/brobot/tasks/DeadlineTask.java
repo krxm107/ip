@@ -1,6 +1,6 @@
 package brobot.tasks;
 
-import brobot.NewlineFormatter;
+import brobot.StringNewlineFormatter;
 import brobot.brobotexceptions.BrobotDateFormatException;
 import brobot.datesandtimes.BrobotDate;
 
@@ -70,7 +70,7 @@ final class DeadlineTask extends Task {
     @Override
     public String toFileReport() {
         return String.join(System.lineSeparator(),
-                NewlineFormatter.removeTrailingNewlines(super.toFileReport(), 2),
+                StringNewlineFormatter.removeTrailingNewlines(super.toFileReport(), 2),
                             deadline.toString(),
                             "",
                             "");

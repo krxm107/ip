@@ -35,14 +35,7 @@ public final class TaskList {
      * Returns a string for printing the task with the given number, labelled with that number.
      */
     public String formatTask(final int number) {
-        return TaskList.formatTask(number, getTask(number));
-    }
-
-    /**
-     * Returns a string for printing a task with a custom number label.
-     */
-    public static String formatTask(final int number, final Task task) {
-        return String.format("%d. %s", number, task);
+        return String.format("%d. %s", number, getTask(number));
     }
 
     /**
@@ -72,7 +65,7 @@ public final class TaskList {
      *
      *     Once the task is added to the tasklist, the tasks are saved to the hard drive.
      */
-    public FileIOStatus addToTaskList(final Task task) {
+    public FileIoStatus addToTaskList(final Task task) {
         tasks.add(task);
         return Storage.getSingleton().writeToFile();
     }
@@ -81,7 +74,7 @@ public final class TaskList {
      * @param taskNumber
      *     The number of the task that must be removed (1-indexed).
      */
-    public FileIOStatus removeFromTaskList(final int taskNumber) {
+    public FileIoStatus removeFromTaskList(final int taskNumber) {
         tasks.remove(taskNumber - 1);
         return Storage.getSingleton().writeToFile();
     }
@@ -90,7 +83,7 @@ public final class TaskList {
      * @param taskNumber
      *     The number of the task that must be marked (1-indexed).
      */
-    public FileIOStatus markTask(final int taskNumber) {
+    public FileIoStatus markTask(final int taskNumber) {
         getTask(taskNumber).mark();
         return Storage.getSingleton().writeToFile();
     }
@@ -99,7 +92,7 @@ public final class TaskList {
      * @param taskNumber
      *     The number of the task that must be unmarked (1-indexed).
      */
-    public FileIOStatus unmarkTask(final int taskNumber) {
+    public FileIoStatus unmarkTask(final int taskNumber) {
         getTask(taskNumber).unmark();
         return Storage.getSingleton().writeToFile();
     }
@@ -124,7 +117,7 @@ public final class TaskList {
      *     The message to print if the tasklist is not empty.
      */
     public String noTaskCheerOrElse(final BrobotMessenger orElse) {
-        return displayMessage(() -> FileIOStatus.makeSuccessStatus(toString()), orElse);
+        return displayMessage(() -> FileIoStatus.makeSuccessStatus(toString()), orElse);
     }
 
     /**
@@ -141,7 +134,7 @@ public final class TaskList {
                 ans.append(formatTask(i)).append(System.lineSeparator());
             }
 
-            return NewlineFormatter.removeTrailingNewlines(ans, 1);
+            return StringNewlineFormatter.removeTrailingNewlines(ans, 1);
         }
     }
 }

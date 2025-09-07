@@ -1,7 +1,7 @@
 package brobot.brobotexceptions;
 
 import brobot.BrobotMessenger;
-import brobot.FileIOStatus;
+import brobot.FileIoStatus;
 
 /**
  * Abstract base class for Brobot domain specific errors that happen when processing a command.
@@ -45,7 +45,7 @@ public abstract class BrobotCommandFormatException extends BrobotCheckedExceptio
      * Displays the Exception message to the user.
      */
     @Override
-    public final FileIOStatus sendBrobotMessage() {
-        return FileIOStatus.makeSuccessStatus(getMessage());
+    public final FileIoStatus sendBrobotMessage() {
+        return FileIoStatus.makeSuccessStatus(getMessage());
     }
 }

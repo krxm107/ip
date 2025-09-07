@@ -1,20 +1,20 @@
 package brobot;
 
-public final class FileIOStatus {
+public final class FileIoStatus {
 
     private final String message;
     private final boolean isSuccess;
-    private FileIOStatus(final String message, final boolean isSuccess) {
+    private FileIoStatus(final String message, final boolean isSuccess) {
         this.message = message;
         this.isSuccess = isSuccess;
     }
 
-    public static FileIOStatus makeSuccessStatus(final String message) {
-        return new FileIOStatus(message, true);
+    public static FileIoStatus makeSuccessStatus(final String message) {
+        return new FileIoStatus(message, true);
     }
 
-    public static FileIOStatus makeFailureStatus(final String message) {
-        return new FileIOStatus(message, false);
+    public static FileIoStatus makeFailureStatus(final String message) {
+        return new FileIoStatus(message, false);
     }
 
     public boolean checkIfSuccess() {

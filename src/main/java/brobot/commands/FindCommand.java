@@ -3,7 +3,7 @@ package brobot.commands;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import brobot.FileIOStatus;
+import brobot.FileIoStatus;
 import brobot.TaskList;
 
 /**
@@ -25,13 +25,13 @@ public final class FindCommand extends Command {
     }
 
     @Override
-    public FileIOStatus sendBrobotMessage() {
-        return FileIOStatus.makeSuccessStatus(
+    public FileIoStatus sendBrobotMessage() {
+        return FileIoStatus.makeSuccessStatus(
                 IntStream.rangeClosed(1, TaskList.getSingleton().getSize())
                          .filter((final int i) -> TaskList.getSingleton()
                                                           .getTask(i)
                                                           .findKeywordInTaskDescriptionIgnoreCase(keyword))
-                         .<String>mapToObj((final int i) -> TaskList.formatTask(i, TaskList.getSingleton().getTask(i)))
+                         .<String>mapToObj(TaskList.getSingleton()::formatTask)
                          .collect(Collectors.joining(System.lineSeparator()))
         );
     }
