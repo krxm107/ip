@@ -1,14 +1,13 @@
 package brobot.commands;
 
 import brobot.BroBot;
-import brobot.FileIOStatus;
-import brobot.Storage;
+import brobot.FileIoStatus;
 import brobot.TaskList;
 
 /**
  * This command is created whenever the user wants to mask a task as done.
  */
-public final class MarkCommand extends FileIOCommand {
+public final class MarkCommand extends FileIoCommand {
 
     private final int markIndex;
     private MarkCommand(final int markIndex) {
@@ -25,8 +24,8 @@ public final class MarkCommand extends FileIOCommand {
     }
 
     @Override
-    public FileIOStatus sendBrobotMessage() {
-        return FileIOStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(() -> {
+    public FileIoStatus sendBrobotMessage() {
+        return FileIoStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(() -> {
             TaskList.getSingleton().markTask(markIndex);
 
             assert 1 <= markIndex && markIndex <= TaskList.getSingleton().getSize()
@@ -36,8 +35,8 @@ public final class MarkCommand extends FileIOCommand {
             final String line2 = BroBot.FOUR_SPACES_INDENT
                     + TaskList.getSingleton().formatTask(markIndex);
 
-            final String line3 = Storage.SUCCESSFUL_HARD_DRIVE_SAVE;
-            return FileIOStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, line3));
+            final String cheer = FileIoCommand.getSuccessfulFileSaveMessage();
+            return FileIoStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, cheer));
         }));
     }
 }

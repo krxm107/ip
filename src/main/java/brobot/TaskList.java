@@ -65,7 +65,7 @@ public final class TaskList {
      *
      *     Once the task is added to the tasklist, the tasks are saved to the hard drive.
      */
-    public FileIOStatus addToTaskList(final Task task) {
+    public FileIoStatus addToTaskList(final Task task) {
         tasks.add(task);
         return Storage.getSingleton().writeToFile();
     }
@@ -74,7 +74,7 @@ public final class TaskList {
      * @param taskNumber
      *     The number of the task that must be removed (1-indexed).
      */
-    public FileIOStatus removeFromTaskList(final int taskNumber) {
+    public FileIoStatus removeFromTaskList(final int taskNumber) {
         tasks.remove(taskNumber - 1);
         return Storage.getSingleton().writeToFile();
     }
@@ -83,7 +83,7 @@ public final class TaskList {
      * @param taskNumber
      *     The number of the task that must be marked (1-indexed).
      */
-    public FileIOStatus markTask(final int taskNumber) {
+    public FileIoStatus markTask(final int taskNumber) {
         getTask(taskNumber).mark();
         return Storage.getSingleton().writeToFile();
     }
@@ -92,7 +92,7 @@ public final class TaskList {
      * @param taskNumber
      *     The number of the task that must be unmarked (1-indexed).
      */
-    public FileIOStatus unmarkTask(final int taskNumber) {
+    public FileIoStatus unmarkTask(final int taskNumber) {
         getTask(taskNumber).unmark();
         return Storage.getSingleton().writeToFile();
     }
@@ -117,7 +117,7 @@ public final class TaskList {
      *     The message to print if the tasklist is not empty.
      */
     public String noTaskCheerOrElse(final BrobotMessenger orElse) {
-        return displayMessage(() -> FileIOStatus.makeSuccessStatus(toString()), orElse);
+        return displayMessage(() -> FileIoStatus.makeSuccessStatus(toString()), orElse);
     }
 
     /**
