@@ -1,42 +1,60 @@
 package brobot.commands;
 
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 import brobot.BroBot;
 import brobot.FileIoStatus;
 import brobot.TaskList;
 
 /**
- * This command is created whenever the user wants to mask a task as done.
+ * This command is created whenever the user wants to mark tasks as done.
  */
-public final class MarkCommand extends FileIoCommand {
+public final class MarkCommand extends FileIoCommand implements MassOpCommand {
 
-    private final int markIndex;
-    private MarkCommand(final int markIndex) {
+    private final IntStream markIndices;
+    private MarkCommand(final IntStream markIndices) {
         super("mark");
-        this.markIndex = markIndex;
+        this.markIndices = markIndices;
     }
 
     /**
      * Factory constructor for MarkCommand.
      */
     public static MarkCommand makeCommand(final String commandName, final String... commandTokens) {
-        final int markIndex = Integer.parseInt(commandTokens[0]);
-        return new MarkCommand(markIndex);
+        if (commandTokens.length == 0) {
+            return new MarkCommand(IntStream.empty());
+        } else if (commandTokens.length == 1) {
+            if (commandTokens[0].equalsIgnoreCase("all")) {
+                final IntStream markIndices = IntStream.iterate(TaskList.getSingleton().getSize(),
+                        (final int idx) -> idx >= 1,
+                        (final int idx) -> idx - 1);
+                return new MarkCommand(markIndices);
+            } else {
+                final int markIndex = Integer.parseInt(commandTokens[0]);
+                return new MarkCommand(IntStream.of(markIndex));
+            }
+        } else {
+            final IntStream markIndices = Stream.of(commandTokens).mapToInt(Integer::parseInt);
+            return new MarkCommand(markIndices);
+        }
     }
 
     @Override
     public FileIoStatus sendBrobotMessage() {
         return FileIoStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(() -> {
-            TaskList.getSingleton().markTask(markIndex);
+            final StringBuilder ans = new StringBuilder("Nice! I've marked this task as done:");
+            ans.append(System.lineSeparator());
 
-            assert 1 <= markIndex && markIndex <= TaskList.getSingleton().getSize()
-                    : "Command shouldn't succeed on out of range index.";
+            markIndices.forEach((final int markIndex) -> {
+                TaskList.getSingleton().markTask(markIndex);
+                ans.append(BroBot.FOUR_SPACES_INDENT).append(TaskList.getSingleton().formatTask(markIndex));
+                ans.append(System.lineSeparator());
+            });
 
-            final String line1 = "Nice! I've marked this task as done:";
-            final String line2 = BroBot.FOUR_SPACES_INDENT
-                    + TaskList.getSingleton().formatTask(markIndex);
+            ans.append(FileIoCommand.getSuccessfulFileSaveMessage());
 
-            final String cheer = FileIoCommand.getSuccessfulFileSaveMessage();
-            return FileIoStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, cheer));
+            return FileIoStatus.makeSuccessStatus(ans.toString());
         }));
     }
 }
