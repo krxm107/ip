@@ -52,33 +52,22 @@ public final class DeleteCommand extends FileIoCommand implements MassOpCommand 
 
     @Override
     public FileIoStatus sendBrobotMessage() {
-        /* final BrobotMessenger orElse = () -> {
-            final String line1 = "Noted. I've removed this task:";
+        final BrobotMessenger orElse = () -> {
+            final StringBuilder ans = new StringBuilder("Noted. I've removed these tasks:");
+            ans.append(System.lineSeparator());
 
-            final String line2 = BroBot.FOUR_SPACES_INDENT
-                    + TaskList.getSingleton().formatTask(deleteIndex);
+            deleteIndices.forEach((final int deleteIndex) -> {
+                final String formattedTask = TaskList.getSingleton().formatTask(deleteIndex);
+                TaskList.getSingleton().removeFromTaskList(deleteIndex);
 
-            TaskList.getSingleton().removeFromTaskList(deleteIndex);
+                ans.append(formattedTask);
+                ans.append(System.lineSeparator());
+            });
 
-            final String cheer = FileIoCommand.getSuccessfulFileSaveMessage();
-
-            return FileIoStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, cheer));
+            ans.append(FileIoCommand.getSuccessfulFileSaveMessage());
+            return FileIoStatus.makeSuccessStatus(ans.toString());
         };
 
-        return FileIoStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(orElse)); */
-
-        final StringBuilder ans = new StringBuilder("Noted. I've removed these tasks:");
-        ans.append(System.lineSeparator());
-
-        deleteIndices.forEach((final int deleteIndex) -> {
-            final String formattedTask = TaskList.getSingleton().formatTask(deleteIndex);
-            TaskList.getSingleton().removeFromTaskList(deleteIndex);
-
-            ans.append(formattedTask);
-            ans.append(System.lineSeparator());
-        });
-
-        ans.append(FileIoCommand.getSuccessfulFileSaveMessage());
-        return FileIoStatus.makeSuccessStatus(ans.toString());
+        return FileIoStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(orElse));
     }
 }
