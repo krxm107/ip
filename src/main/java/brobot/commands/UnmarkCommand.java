@@ -1,20 +1,21 @@
 package brobot.commands;
 
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import brobot.BroBot;
 import brobot.FileIoStatus;
-import brobot.Storage;
 import brobot.TaskList;
 
 /**
- * This command is created whenever the user wants to unmark a task to reflect that it is not done yet.
+ * This command is created whenever the user wants to unmark tasks to reflect that they are not done yet.
  */
-public final class UnmarkCommand extends FileIoCommand {
+public final class UnmarkCommand extends FileIoCommand implements MassOpCommand {
 
-    private final int unmarkIndex;
-    private UnmarkCommand(final int unmarkIndex) {
+    private final IntStream unmarkIndices;
+    private UnmarkCommand(final IntStream unmarkIndices) {
         super("unmark");
-        this.unmarkIndex = unmarkIndex;
+        this.unmarkIndices = unmarkIndices;
     }
 
     /**
@@ -27,21 +28,39 @@ public final class UnmarkCommand extends FileIoCommand {
      *     The new instance of UnmarkCommand.
      */
     public static UnmarkCommand makeCommand(final String commandName, final String... commandArgs) {
-        final int markIndex = Integer.parseInt(commandArgs[0]);
-        return new UnmarkCommand(markIndex);
+        if (commandArgs.length == 0) {
+            return new UnmarkCommand(IntStream.empty());
+        } else if (commandArgs.length == 1) {
+            if (commandArgs[0].equalsIgnoreCase("all")) {
+                final IntStream unmarkIndices = IntStream.iterate(TaskList.getSingleton().getSize(),
+                                                                    (final int idx) -> idx >= 1,
+                                                                    (final int idx) -> idx - 1);
+                return new UnmarkCommand(unmarkIndices);
+            } else {
+                final int unmarkIndex = Integer.parseInt(commandArgs[0]);
+                return new UnmarkCommand(IntStream.of(unmarkIndex));
+            }
+        } else {
+            final IntStream unmarkIndices = Stream.of(commandArgs).mapToInt(Integer::parseInt);
+            return new UnmarkCommand(unmarkIndices);
+        }
     }
 
     @Override
     public FileIoStatus sendBrobotMessage() {
         return FileIoStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(() -> {
-            TaskList.getSingleton().unmarkTask(unmarkIndex);
-            final String line1 = "OK, I've marked this task as not done yet:";
-            final String line2 = BroBot.FOUR_SPACES_INDENT
-                    + TaskList.getSingleton().formatTask(unmarkIndex);
+            final StringBuilder ans = new StringBuilder("OK, I've marked these tasks as not done yet:");
+            ans.append(System.lineSeparator());
 
-            final String cheer = FileIoCommand.getSuccessfulFileSaveMessage();
+            unmarkIndices.forEach((final int unmarkIndex) -> {
+                TaskList.getSingleton().unmarkTask(unmarkIndex);
+                ans.append(BroBot.FOUR_SPACES_INDENT).append(TaskList.getSingleton().formatTask(unmarkIndex));
+                ans.append(System.lineSeparator());
+            });
 
-            return FileIoStatus.makeSuccessStatus(String.join(System.lineSeparator(), line1, line2, cheer));
+            ans.append(FileIoCommand.getSuccessfulFileSaveMessage());
+
+            return FileIoStatus.makeSuccessStatus(ans.toString());
         }));
     }
 }

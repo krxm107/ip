@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import brobot.brobotexceptions.BrobotCommandFormatException;
+import brobot.brobotexceptions.OtherCommandProblemsException;
 import brobot.commands.ByeCommand;
 import brobot.commands.Command;
 import javafx.application.Platform;
@@ -16,6 +17,9 @@ public final class BroBot {
     private static BroBot singleton = null;
 
     private final List<FileIoStatus> loadMessages = new ArrayList<>();
+
+    private boolean mustExit = false;
+
     private BroBot() {
         FileIoStatus currStatus = Storage.getSingleton().readFromFile();
         loadMessages.add(currStatus);
@@ -23,6 +27,15 @@ public final class BroBot {
         while (currStatus.checkIfFailure()) {
             currStatus = Storage.getSingleton().readFromFile();
             loadMessages.add(currStatus);
+        }
+    }
+
+    /**
+     * Exits Brobot if possible.
+     */
+    public void tryToExit() {
+        if (mustExit) {
+            Platform.runLater(Platform::exit);
         }
     }
 
@@ -42,8 +55,7 @@ public final class BroBot {
         try {
             Command c = Parser.parseCommand(input);
             if (c instanceof ByeCommand) {
-                // allow GUI to close gracefully after showing the reply
-                Platform.runLater(Platform::exit);
+                mustExit = true;
             }
 
             FileIoStatus result = c.sendBrobotMessage();
@@ -57,8 +69,10 @@ public final class BroBot {
 
             assert List.copyOf(ans) != ans : "Sorry, the list returned should not be mutable.";
             return List.copyOf(ans);
-        } catch (BrobotCommandFormatException e) {
+        } catch (final BrobotCommandFormatException e) {
             return List.of(e.sendBrobotMessage().toString());
+        } catch (final RuntimeException e) {
+            return List.of((new OtherCommandProblemsException()).getMessage());
         }
     }
 }

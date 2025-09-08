@@ -61,5 +61,7 @@ public final class MainWindow extends AnchorPane {
             );
         }
         userInput.clear();
+
+        BroBot.getSingleton().tryToExit();
     }
 }
