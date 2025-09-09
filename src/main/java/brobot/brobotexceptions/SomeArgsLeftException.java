@@ -1,5 +1,7 @@
 package brobot.brobotexceptions;
 
+import brobot.BroBot;
+
 /**
  * This exception is thrown iff the command entered by the user is not supposed to take any arguments,
  * but the user supplied arguments anyway.
@@ -20,6 +22,6 @@ public final class SomeArgsLeftException extends BrobotCommandFormatException {
      */
     public static SomeArgsLeftException fromCommandName(final String commandName) {
         return new SomeArgsLeftException(
-            String.format("The '%s' command does not take in any arguments.", commandName));
+            String.format(BroBot.ENGLISH_LANGUAGE, "The '%s' command does not take in any arguments.", commandName));
     }
 }

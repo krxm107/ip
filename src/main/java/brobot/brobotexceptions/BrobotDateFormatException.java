@@ -1,5 +1,6 @@
 package brobot.brobotexceptions;
 
+import brobot.BroBot;
 import brobot.datesandtimes.BrobotDate;
 
 /**
@@ -18,9 +19,10 @@ public final class BrobotDateFormatException extends BrobotCommandFormatExceptio
      *     A new instance of the BrobotDateFormatException as created by this factory constructor.
      */
     public static BrobotDateFormatException newInstance(final String invalidDate) {
-        final String line1 = String.format("The date you entered, '%s', is in the wrong format.", invalidDate);
+        final String line1 = String.format(BroBot.ENGLISH_LANGUAGE, "The date you entered, '%s', is in the wrong format.",
+                                            invalidDate);
 
-        final String line2 = String.format("All dates must be in the '%s' format, explained as follows:",
+        final String line2 = String.format(BroBot.ENGLISH_LANGUAGE, "All dates must be in the '%s' format, explained as follows:",
                                             BrobotDate.DATE_FORMAT);
 
         final String line3 = "dd: Day must be a day in the month, with exactly 2 digits, starting with 0 if necessary.";

@@ -1,5 +1,6 @@
 package brobot.tasks;
 
+import brobot.BroBot;
 import brobot.StringNewlineFormatter;
 import brobot.brobotexceptions.BrobotDateFormatException;
 import brobot.datesandtimes.BrobotDate;
@@ -57,7 +58,7 @@ final class DeadlineTask extends Task {
     @Override
     public String toString() {
         if (deadlineLogMessage == null) {
-            deadlineLogMessage = String.format("%s (by: %s)", super.toString(), deadline);
+            deadlineLogMessage = String.format(BroBot.ENGLISH_LANGUAGE, "%s (by: %s)", super.toString(), deadline);
         }
 
         return deadlineLogMessage;

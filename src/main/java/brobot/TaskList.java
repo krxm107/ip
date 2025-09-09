@@ -35,7 +35,7 @@ public final class TaskList {
      * Returns a string for printing the task with the given number, labelled with that number.
      */
     public String formatTask(final int number) {
-        return String.format("%d. %s", number, getTask(number));
+        return String.format(BroBot.ENGLISH_LANGUAGE, "%d. %s", number, getTask(number));
     }
 
     /**

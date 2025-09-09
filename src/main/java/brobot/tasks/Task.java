@@ -2,6 +2,7 @@ package brobot.tasks;
 
 import java.util.function.BiFunction;
 
+import brobot.BroBot;
 import brobot.BrobotFileIoSerializable;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.brobotexceptions.BrobotDateFormatException;
@@ -85,7 +86,8 @@ public abstract class Task implements BrobotFileIoSerializable {
     @Override
     public String toString() {
         if (baseLogMessage == null) {
-            baseLogMessage = String.format("[%c][%c] %s",
+            baseLogMessage = String.format(BroBot.ENGLISH_LANGUAGE,
+                    "[%c][%c] %s",
                     Character.toUpperCase(commandName.charAt(0)), ((isDone) ? 'X' : ' '),
                     baseObjective);
         }
@@ -110,7 +112,7 @@ public abstract class Task implements BrobotFileIoSerializable {
      */
     public final boolean findKeywordInTaskDescriptionIgnoreCase(final String keyword) {
         final String taskDescription = getTaskDescription();
-        return taskDescription.toLowerCase().contains(keyword.toLowerCase());
+        return taskDescription.toLowerCase(BroBot.ENGLISH_LANGUAGE).contains(keyword.toLowerCase(BroBot.ENGLISH_LANGUAGE));
     }
 
     /**

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import brobot.BroBot;
 import brobot.brobotexceptions.BrobotDateFormatException;
 
 /**
@@ -13,7 +14,7 @@ public final class BrobotDate {
 
     public static final String DATE_FORMAT = "dd MMM yyyy";
     private static final DateTimeFormatter DATETIME_FORMATTER =
-        DateTimeFormatter.ofPattern(BrobotDate.DATE_FORMAT);
+        DateTimeFormatter.ofPattern(BrobotDate.DATE_FORMAT, BroBot.ENGLISH_LANGUAGE);
 
     // This field should never be null.
     private final LocalDate javaDate;

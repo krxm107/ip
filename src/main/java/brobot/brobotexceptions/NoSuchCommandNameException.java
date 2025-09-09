@@ -1,5 +1,7 @@
 package brobot.brobotexceptions;
 
+import brobot.BroBot;
+
 /**
  * This exception is thrown if the user entered an invalid command name.
  */
@@ -17,6 +19,6 @@ public final class NoSuchCommandNameException extends BrobotCommandFormatExcepti
      *     as created by this factory constructor.
      */
     public static NoSuchCommandNameException newInstancefromCommandName(final String commandName) {
-        return new NoSuchCommandNameException(String.format("There is no '%s' command.", commandName));
+        return new NoSuchCommandNameException(String.format(BroBot.ENGLISH_LANGUAGE, "There is no '%s' command.", commandName));
     }
 }
