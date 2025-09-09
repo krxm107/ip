@@ -4,6 +4,7 @@ package brobot;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import brobot.brobotexceptions.BrobotCommandFormatException;
 import brobot.brobotexceptions.OtherCommandProblemsException;
@@ -13,6 +14,7 @@ import javafx.application.Platform;
 
 public final class BroBot {
     public static final String FOUR_SPACES_INDENT = String.valueOf(new char[]{' ', ' ', ' ', ' '});
+    public static final Locale ENGLISH_LANGUAGE = Locale.ENGLISH;
 
     private static BroBot singleton = null;
 

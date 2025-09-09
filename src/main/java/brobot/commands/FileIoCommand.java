@@ -1,5 +1,6 @@
 package brobot.commands;
 
+import brobot.BroBot;
 import brobot.FileIoStatus;
 import brobot.TaskList;
 
@@ -10,7 +11,8 @@ public abstract class FileIoCommand extends Command {
 
     public static final String getSuccessfulFileSaveMessage() {
         final String successfulHardDriveSave = "Your tasks have successfully been saved to the hard drive.";
-        final String numberOfTasksLeft = String.format("Now you have %d tasks in the list.",
+        final String numberOfTasksLeft = String.format(BroBot.ENGLISH_LANGUAGE,
+                                        "Now you have %d tasks in the list.",
                                             TaskList.getSingleton().getSize());
 
         return String.join(System.lineSeparator(), successfulHardDriveSave, numberOfTasksLeft);

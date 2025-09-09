@@ -1,5 +1,6 @@
 package brobot.tasks;
 
+import brobot.BroBot;
 import brobot.StringNewlineFormatter;
 import brobot.brobotexceptions.BrobotDateFormatException;
 import brobot.datesandtimes.BrobotDate;
@@ -60,7 +61,8 @@ final class EventTask extends Task {
     @Override
     public String toString() {
         if (eventlogMessage == null) {
-            eventlogMessage = String.format("%s (from: %s to: %s)", super.toString(), startDate, endDate);
+            eventlogMessage = String.format(BroBot.ENGLISH_LANGUAGE,
+                                        "%s (from: %s to: %s)", super.toString(), startDate, endDate);
         }
 
         return eventlogMessage;

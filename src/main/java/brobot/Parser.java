@@ -49,7 +49,7 @@ public final class Parser {
     private static Command parseCommand(final String commandName,
                                         final String... commandTokens) throws BrobotCommandFormatException {
 
-        final String cleanedCommandName = commandName.strip().toLowerCase();
+        final String cleanedCommandName = commandName.strip().toLowerCase(BroBot.ENGLISH_LANGUAGE);
         try {
             return switch (cleanedCommandName) {
             case "todo", "event", "deadline" -> AddTaskCommand.makeCommand(cleanedCommandName, commandTokens);

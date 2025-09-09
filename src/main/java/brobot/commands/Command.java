@@ -1,5 +1,6 @@
 package brobot.commands;
 
+import brobot.BroBot;
 import brobot.BrobotMessenger;
 import brobot.FileIoStatus;
 
@@ -12,7 +13,7 @@ public abstract class Command implements BrobotMessenger {
 
     private final String commandName;
     Command(final String commandName) {
-        this.commandName = commandName.strip().toLowerCase();
+        this.commandName = commandName.strip().toLowerCase(BroBot.ENGLISH_LANGUAGE);
     }
 
     /**
