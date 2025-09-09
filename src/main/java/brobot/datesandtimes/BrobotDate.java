@@ -13,12 +13,14 @@ import brobot.brobotexceptions.BrobotDateFormatException;
  * Encapsulates an immutable BrobotDate.
  */
 public final class BrobotDate {
+    // Date formatter for months like 'Sep'.
     private static final DateTimeFormatter SHORT_MONTH_DATE_TIME_INPUT_FORMATTER = (new DateTimeFormatterBuilder())
                                                                                     .parseCaseInsensitive()
                                                                                     .appendPattern("d MMM uuuu")
                                                                                     .toFormatter(Locale.ENGLISH)
                                                                                     .withResolverStyle(ResolverStyle.STRICT);
 
+    // Date formatter for months like 'September'.
     private static final DateTimeFormatter FULL_MONTH_DATE_TIME_INPUT_FORMATTER = (new DateTimeFormatterBuilder())
                                                                                     .parseCaseInsensitive()
                                                                                     .appendPattern("d MMMM uuuu")
