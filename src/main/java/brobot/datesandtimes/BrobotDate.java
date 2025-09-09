@@ -13,19 +13,17 @@ import brobot.brobotexceptions.BrobotDateFormatException;
  * Encapsulates an immutable BrobotDate.
  */
 public final class BrobotDate {
-    private static final DateTimeFormatter SHORT_MONTH_DATE_TIME_INPUT_FORMATTER =
-                new DateTimeFormatterBuilder()
-                    .parseCaseInsensitive()
-                    .appendPattern("d MMM uuuu")
-                    .toFormatter(Locale.ENGLISH)
-                    .withResolverStyle(ResolverStyle.STRICT);
+    private static final DateTimeFormatter SHORT_MONTH_DATE_TIME_INPUT_FORMATTER = (new DateTimeFormatterBuilder())
+                                                                                    .parseCaseInsensitive()
+                                                                                    .appendPattern("d MMM uuuu")
+                                                                                    .toFormatter(Locale.ENGLISH)
+                                                                                    .withResolverStyle(ResolverStyle.STRICT);
 
-    private static final DateTimeFormatter FULL_MONTH_DATE_TIME_INPUT_FORMATTER =
-            new DateTimeFormatterBuilder()
-                    .parseCaseInsensitive()
-                    .appendPattern("d MMMM uuuu")
-                    .toFormatter(Locale.ENGLISH)
-                    .withResolverStyle(ResolverStyle.STRICT);
+    private static final DateTimeFormatter FULL_MONTH_DATE_TIME_INPUT_FORMATTER = (new DateTimeFormatterBuilder())
+                                                                                    .parseCaseInsensitive()
+                                                                                    .appendPattern("d MMMM uuuu")
+                                                                                    .toFormatter(Locale.ENGLISH)
+                                                                                    .withResolverStyle(ResolverStyle.STRICT);
 
     private static final DateTimeFormatter DATE_TIME_OUTPUT_FORMATTER =
             DateTimeFormatter.ofPattern("d MMM uuuu", Locale.ENGLISH);
