@@ -1,5 +1,6 @@
 package brobot.commands;
 
+import java.util.Comparator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -56,7 +57,7 @@ public final class DeleteCommand extends FileIoCommand implements MassOpCommand 
             final StringBuilder ans = new StringBuilder("Noted. I've removed these tasks:");
             ans.append(System.lineSeparator());
 
-            deleteIndices.forEach((final int deleteIndex) -> {
+            deleteIndices.boxed().sorted(Comparator.reverseOrder()).forEach((final Integer deleteIndex) -> {
                 final String formattedTask = TaskList.getSingleton().formatTask(deleteIndex);
                 TaskList.getSingleton().removeFromTaskList(deleteIndex);
 

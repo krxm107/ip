@@ -1,5 +1,6 @@
 package brobot.commands;
 
+import java.util.Comparator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -52,7 +53,7 @@ public final class UnmarkCommand extends FileIoCommand implements MassOpCommand 
             final StringBuilder ans = new StringBuilder("OK, I've marked these tasks as not done yet:");
             ans.append(System.lineSeparator());
 
-            unmarkIndices.forEach((final int unmarkIndex) -> {
+            unmarkIndices.boxed().sorted(Comparator.reverseOrder()).forEach((final Integer unmarkIndex) -> {
                 TaskList.getSingleton().unmarkTask(unmarkIndex);
                 ans.append(BroBot.FOUR_SPACES_INDENT).append(TaskList.getSingleton().formatTask(unmarkIndex));
                 ans.append(System.lineSeparator());
