@@ -6,14 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import brobot.StatefulTester;
+import brobot.StatefulTest;
 import brobot.TaskList;
 import brobot.brobotexceptions.BrobotCommandFormatException;
 
 /**
  * Unit Test Class for TaskList.
  */
-public final class TaskListTest implements StatefulTester {
+public final class TaskListTest implements StatefulTest {
     /**
      * Simple Unit Test to test that the public TaskList contract only creates a singleton.
      */
@@ -46,7 +46,7 @@ public final class TaskListTest implements StatefulTester {
         try {
             TaskList.getSingleton().addToTaskList(Task.createTask("todo", "addToTaskList task"));
 
-            final String expectedToString = "1. [T][ ] addToTaskList task" + System.lineSeparator();
+            final String expectedToString = "1. [T][ ] addToTaskList task";
             assertEquals(expectedToString, TaskList.getSingleton().toString());
         } catch (final BrobotCommandFormatException brobotCommandFormatException) {
             assert false;
@@ -64,7 +64,7 @@ public final class TaskListTest implements StatefulTester {
 
             TaskList.getSingleton().removeFromTaskList(2);
 
-            final String expectedToString = "1. [T][ ] task 0" + System.lineSeparator();
+            final String expectedToString = "1. [T][ ] task 0";
             assertEquals(expectedToString, TaskList.getSingleton().toString());
         } catch (final BrobotCommandFormatException brobotCommandFormatException) {
             assert false;
