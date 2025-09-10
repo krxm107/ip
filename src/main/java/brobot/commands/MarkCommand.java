@@ -1,5 +1,6 @@
 package brobot.commands;
 
+import java.util.Comparator;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -46,7 +47,7 @@ public final class MarkCommand extends FileIoCommand implements MassOpCommand {
             final StringBuilder ans = new StringBuilder("Nice! I've marked this task as done:");
             ans.append(System.lineSeparator());
 
-            markIndices.forEach((final int markIndex) -> {
+            markIndices.boxed().sorted(Comparator.reverseOrder()).forEach((final Integer markIndex) -> {
                 TaskList.getSingleton().markTask(markIndex);
                 ans.append(BroBot.FOUR_SPACES_INDENT).append(TaskList.getSingleton().formatTask(markIndex));
                 ans.append(System.lineSeparator());
