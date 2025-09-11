@@ -20,6 +20,13 @@ public final class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+
+            //Give the window a clear title and identity.
+            stage.setTitle("BroBot");
+
+            // Make sure it's resizable (not perfect, sanity feature).
+            stage.setResizable(true);
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
