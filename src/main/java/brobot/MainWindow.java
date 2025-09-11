@@ -37,8 +37,9 @@ public final class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         dialogContainer.getChildren().add(
                 DialogBox.getBroBotDialog(String.join(System.lineSeparator(),
-                        "Hello, I'm BroBot! What can I do for you?",
-                        "I can be your Bro BroBot if you let me!"))
+                        "Hello, I'm BroBot, your personal task manager!",
+                        "I can be your Bro BroBot if you let me!",
+                        "What can I do for you?"))
         );
 
         for (final FileIoStatus fileIoStatus : BroBot.getSingleton().getLoadMessages()) {
