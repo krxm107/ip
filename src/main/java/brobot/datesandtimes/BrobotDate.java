@@ -24,7 +24,6 @@ public final class BrobotDate {
 
     // I used ChatGPT AI to help me write this code to improve date input flexibility. This deals with full-name months.
     // Date formatter for months like 'September'.
-    // I used ChatGPT AI to help me write this code to improve date input flexibility. This deals with full-name months.
     private static final DateTimeFormatter FULL_MONTH_DATE_TIME_INPUT_FORMATTER = (new DateTimeFormatterBuilder())
                                                                                     .parseCaseInsensitive()
                                                                                     .appendPattern("d MMMM uuuu")
