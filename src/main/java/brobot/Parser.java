@@ -18,7 +18,7 @@ import brobot.commands.UnmarkCommand;
  */
 public final class Parser {
     private Parser() {
-
+        throw new UnsupportedOperationException("Cannot initialize Parser class.");
     }
 
     /**
