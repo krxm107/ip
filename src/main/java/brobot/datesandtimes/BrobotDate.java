@@ -13,6 +13,8 @@ import brobot.brobotexceptions.BrobotDateFormatException;
  * Encapsulates an immutable BrobotDate.
  */
 public final class BrobotDate {
+
+    // I used ChatGPT AI to help me write this code to improve date input flexibility. This deals with 3-letter months.
     // Date formatter for months like 'Sep'.
     private static final DateTimeFormatter SHORT_MONTH_DATE_TIME_INPUT_FORMATTER = (new DateTimeFormatterBuilder())
                                                                                     .parseCaseInsensitive()
@@ -20,6 +22,7 @@ public final class BrobotDate {
                                                                                     .toFormatter(Locale.ENGLISH)
                                                                                     .withResolverStyle(ResolverStyle.STRICT);
 
+    // I used ChatGPT AI to help me write this code to improve date input flexibility. This deals with full-name months.
     // Date formatter for months like 'September'.
     private static final DateTimeFormatter FULL_MONTH_DATE_TIME_INPUT_FORMATTER = (new DateTimeFormatterBuilder())
                                                                                     .parseCaseInsensitive()
