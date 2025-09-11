@@ -52,6 +52,7 @@ application {
 
 shadowJar {
     archiveBaseName = "brobot"
+    archiveFileName = 'brobot.jar'
     archiveClassifier = null
 }
 
