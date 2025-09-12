@@ -95,9 +95,11 @@ Example command formats:
     Deletes ALL the tasks in the list.
     ```
     Noted. I've removed these tasks:
-    3. [T][ ] math homework
-    2. [T][ ] science homework
-    1. [D][ ] CS Project (by: 18 Oct 2025)
+    1. [T][ ] CS1234 Lab 1
     Your tasks have successfully been saved to the hard drive.
     Now you have 0 tasks in the list.
     ```
+
+## Find tasks by keyword
+Find tasks whose task description contains the given keyword. The keyword can be in uppercase or lowercase.
+
