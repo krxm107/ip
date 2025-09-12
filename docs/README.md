@@ -1,6 +1,6 @@
 # BroBot User Guide
 
-![BroBot Sample Run](Ui.png)
+![BroBot Sample Run](./Ui.png)
 
 BroBot is a task manager app for those who prefer typing and do not like digging through deep menus.
 
