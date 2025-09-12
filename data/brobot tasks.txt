@@ -1,11 +1,20 @@
-EventTask
+ToDoTask
 false
-go toilet
-15 Sep 2025
-15 Sep 2025
+CS1234 lab 1
 
 DeadlineTask
 false
-improve gui
-19 Sep 2025
+CS Project
+18 Oct 2025
+
+DeadlineTask
+false
+CS Project
+18 Oct 2025
+
+EventTask
+false
+project meeting
+17 Nov 2025
+24 Nov 2025
 
