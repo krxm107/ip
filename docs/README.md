@@ -85,6 +85,7 @@ Example command formats:
 
     For example, "delete 1 2 4" deletes the 1st, 2nd and 4th tasks
     ```
+    Noted. I've removed these tasks:
     4. [E][ ] Project Meeting (from: 17 Nov 2025 to: 24 Nov 2025)
     2. [D][ ] CS Project (by: 18 Oct 2025)
     1. [T][ ] CS1234 Lab 1
@@ -140,3 +141,7 @@ An example output is
 2. [D][ ] chemistry meEting (by: 15 Jun 2026)
 3. [E][ ] physics meeting (from: 17 Jul 2026 to: 19 Jul 2026)
 ```
+
+## Mark tasks as done
+
+Similar to the delete command ...
