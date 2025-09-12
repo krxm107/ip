@@ -126,3 +126,17 @@ The output will be as follows
 2. [D][ ] chemistry meEting (by: 15 Jun 2026)
 3. [E][ ] physics meeting (from: 17 Jul 2026 to: 19 Jul 2026)
 ```
+
+## Inspect the task list
+
+To inspect the task list at a current point in time, enter the following command:
+```
+list
+```
+
+An example output is
+```
+1. [T][ ] biology MEETING at 3pm
+2. [D][ ] chemistry meEting (by: 15 Jun 2026)
+3. [E][ ] physics meeting (from: 17 Jul 2026 to: 19 Jul 2026)
+```
