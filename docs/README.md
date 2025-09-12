@@ -61,3 +61,43 @@ Your tasks have successfully been saved to the hard drive.
 Now you have 4 tasks in the list.
 ```
 
+## Deleting tasks
+Deletes selected tasks by position. Note that this works like a command line form of the "select items" menu in GUI apps.
+
+Note that all indices and positions in BroBot are 1-indexed for ease of use.
+
+Example command formats:
+
+1. delete
+
+    No tasks are deleted.
+    ```
+    Noted. I've removed these tasks:
+    Your tasks have successfully been saved to the hard drive.
+    Now you have 4 tasks in the list.
+    ```
+   
+2. delete TASK_INDEX_1 TASK_INDEX_2 ... TASK_INDEX_N
+    
+    Deletes the tasks with the selected indices in the input (1-indexed).
+
+    For example, "delete 1 2 4" deletes the 1st, 2nd and 4th tasks
+    ```
+    4. [E][ ] Project Meeting (from: 17 Nov 2025 to: 24 Nov 2025)
+    2. [D][ ] CS Project (by: 18 Oct 2025)
+    1. [T][ ] CS1234 Lab 1
+    Your tasks have successfully been saved to the hard drive.
+    Now you have 1 tasks in the list.
+    ```
+
+3. delete all
+
+    Deletes ALL the tasks in the list.
+    ```
+    Noted. I've removed these tasks:
+    3. [T][ ] math homework
+    2. [T][ ] science homework
+    1. [D][ ] CS Project (by: 18 Oct 2025)
+    Your tasks have successfully been saved to the hard drive.
+    Now you have 0 tasks in the list.
+    ```
