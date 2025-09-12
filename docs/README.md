@@ -4,6 +4,8 @@
 
 BroBot is a task manager app for those who prefer typing and do not like digging through deep menus.
 
+They can be your Bro BroBot if you let them!
+
 ## Adding Tasks
 
 ### Adding ToDo Tasks
@@ -56,7 +58,7 @@ Example: `event project meeting from 17 November 2025 to 24 Nov 2025`
 
 ```
 Got it. I've added this task:
-    4. [E][ ] project meeting (from: 17 Nove 2025 to: 24 Nov 2025)
+    4. [E][ ] project meeting (from: 17 Nov 2025 to: 24 Nov 2025)
 Your tasks have successfully been saved to the hard drive.
 Now you have 4 tasks in the list.
 ```
@@ -103,3 +105,24 @@ Example command formats:
 ## Find tasks by keyword
 Find tasks whose task description contains the given keyword. The keyword can be in uppercase or lowercase.
 
+Command Format: find KEYWORD
+
+As a demonstration, populate the tasklist with tasks by entering the following commands:
+```
+todo biology MEETING at 3pm
+deadline chemistry meEting by 15 Jun 2026
+event physics meeting from 17 Jul 2026 to 19 Jul 2026
+todo biology homework at 9pm
+```
+
+Then enter the following command
+```
+find meeting
+```
+
+The output will be as follows
+```
+1. [T][ ] biology MEETING at 3pm
+2. [D][ ] chemistry meEting (by: 15 Jun 2026)
+3. [E][ ] physics meeting (from: 17 Jul 2026 to: 19 Jul 2026)
+```
