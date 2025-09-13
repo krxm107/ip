@@ -8,7 +8,7 @@ chemistry meEting
 15 Jun 2026
 
 EventTask
-true
+false
 physics meeting
 17 Jul 2026
 19 Jul 2026
