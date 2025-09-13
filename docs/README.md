@@ -174,9 +174,9 @@ Example command formats:
    For example, "mark 1 2 4" marks the 1st, 2nd and 4th tasks
     ```
     Nice! I've marked these tasks as done:
-        4. [T][ ] biology homework at 9pm
-        2. [D][ ] chemistry meEting (by: 15 Jun 2026)
-        1. [T][ ] biology MEETING at 3pm
+        4. [T][X] biology homework at 9pm
+        2. [D][X] chemistry meEting (by: 15 Jun 2026)
+        1. [T][X] biology MEETING at 3pm
     Your tasks have successfully been saved to the hard drive.
     Now you have 4 tasks in the list.
     ```
@@ -193,3 +193,63 @@ Example command formats:
     Your tasks have successfully been saved to the hard drive.
     Now you have 4 tasks in the list.
     ```
+
+## Unmark tasks as not done yet
+
+Unmarks selected tasks as not done yet by position. Note that this works like a command line form of the "select items" menu in GUI apps.
+
+Note that all indices and positions in BroBot are 1-indexed for ease of use.
+
+Example command formats:
+
+1. unmark
+
+   No tasks are unmarked as not done yet.
+    ```
+    OK, I've unmarked these tasks as not done yet:
+    Your tasks have successfully been saved to the hard drive.
+    Now you have 4 tasks in the list.
+    ```
+
+2. unmark TASK_INDEX_1 TASK_INDEX_2 ... TASK_INDEX_N
+
+   unmarks the tasks with the selected indices in the input (1-indexed).
+
+   For example, "unmark 1 2 4" unmarks the 1st, 2nd and 4th tasks
+    ```
+    Nice! I've unmarked these tasks as not done yet:
+        4. [T][ ] biology homework at 9pm
+        2. [D][ ] chemistry meEting (by: 15 Jun 2026)
+        1. [T][ ] biology MEETING at 3pm
+    Your tasks have successfully been saved to the hard drive.
+    Now you have 4 tasks in the list.
+    ```
+
+3. unmark all
+
+   unmarks ALL the tasks in the list.
+    ```
+    Nice! I've unmarked these tasks as not done yet:
+        4. [T][ ] biology homework at 9pm
+        3. [E][ ] physics meeting (from: 17 Jul 2026 to: 19 Jul 2026)
+        2. [D][ ] chemistry meEting (by: 15 Jun 2026)
+        1. [T][ ] biology MEETING at 3pm
+    Your tasks have successfully been saved to the hard drive.
+    Now you have 4 tasks in the list.
+   
+## Wrapping up
+
+Ok, that's all the commands of BroBot. It's time to close the app.
+
+To do so, either close the app window, or key in the command "bye" into BroBot.
+
+You may see the following message
+```
+Bye. Hope to see you again soon!
+```
+
+If you're planning to come back and see your tasks, don't worry. The tasks are saved to the hard drive every time your task list is modified.
+
+This is BroBot, signing out.
+
+![](../src/main/resources/images/Mascot.png)

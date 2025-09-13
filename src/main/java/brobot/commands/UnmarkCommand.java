@@ -50,7 +50,7 @@ public final class UnmarkCommand extends FileIoCommand implements MassOpCommand 
     @Override
     public FileIoStatus sendBrobotMessage() {
         return FileIoStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(() -> {
-            final StringBuilder ans = new StringBuilder("OK, I've marked these tasks as not done yet:");
+            final StringBuilder ans = new StringBuilder("OK, I've unmarked these tasks as not done yet:");
             ans.append(System.lineSeparator());
 
             unmarkIndices.boxed().sorted(Comparator.reverseOrder()).forEach((final Integer unmarkIndex) -> {

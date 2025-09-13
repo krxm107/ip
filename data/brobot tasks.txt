@@ -1,9 +1,9 @@
 ToDoTask
-true
+false
 biology MEETING at 3pm
 
 DeadlineTask
-true
+false
 chemistry meEting
 15 Jun 2026
 
@@ -14,6 +14,6 @@ physics meeting
 19 Jul 2026
 
 ToDoTask
-true
+false
 biology homework at 9pm
 
