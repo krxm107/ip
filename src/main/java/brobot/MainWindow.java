@@ -26,7 +26,7 @@ public final class MainWindow extends AnchorPane {
     private final BroBot broBot;
 
     public static final Image USER_IMAGE = new Image(MainWindow.class.getResourceAsStream("/images/DaUser.png"));
-    public static final Image BRO_BOT_IMAGE = new Image(MainWindow.class.getResourceAsStream("/images/BroBot Mascot.png"));
+    public static final Image BRO_BOT_IMAGE = new Image(MainWindow.class.getResourceAsStream("/images/Mascot.png"));
 
     public MainWindow() {
         broBot = BroBot.getSingleton();
