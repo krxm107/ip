@@ -44,7 +44,7 @@ public final class MarkCommand extends FileIoCommand implements MassOpCommand {
     @Override
     public FileIoStatus sendBrobotMessage() {
         return FileIoStatus.makeSuccessStatus(TaskList.getSingleton().noTaskCheerOrElse(() -> {
-            final StringBuilder ans = new StringBuilder("Nice! I've marked this task as done:");
+            final StringBuilder ans = new StringBuilder("Nice! I've marked these tasks as done:");
             ans.append(System.lineSeparator());
 
             markIndices.boxed().sorted(Comparator.reverseOrder()).forEach((final Integer markIndex) -> {
