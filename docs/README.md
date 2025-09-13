@@ -1,10 +1,17 @@
 # BroBot User Guide
 
-![](Ui.png)
+Hello, welcome to the BroBot user guide, where BroBot (pictured below) will tell you all about them!
+
+![](../src/main/resources/images/Mascot.png)
 
 BroBot is a task manager app for those who prefer typing and do not like digging through deep menus.
 
 They can be your Bro BroBot if you let them!
+
+Below is an example of how the BroBot UI looks like.
+
+![](Ui.png)
+
 
 ## Adding Tasks
 
