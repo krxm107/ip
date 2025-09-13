@@ -46,7 +46,7 @@ Example (Full-name month): `deadline CS Project by 18 October 2025`
 ```
 Got it. I've added this task:
     3. [D][] CS Project (by: 18 Oct 2025)
-Your tasks have been successfully saved to the hard drive.
+Your tasks have successfully been saved to the hard drive.
 Now you have 3 tasks in the list. 
 ```
 
@@ -71,7 +71,7 @@ Now you have 4 tasks in the list.
 ```
 
 ## Deleting tasks
-Deletes selected tasks by position. Note that this works like a command line form of the "select items" menu in GUI apps.
+Deletes selected tasks by position. Note that this works like a command line form of the "select items to delete" menu in GUI apps.
 
 Note that all indices and positions in BroBot are 1-indexed for ease of use.
 
@@ -105,7 +105,7 @@ Example command formats:
     Deletes ALL the tasks in the list.
     ```
     Noted. I've removed these tasks:
-    1. [T][ ] CS1234 Lab 1
+    1. [D][ ] CS Project (by: 18 Oct 2025)
     Your tasks have successfully been saved to the hard drive.
     Now you have 0 tasks in the list.
     ```
@@ -152,7 +152,7 @@ An example output is
 
 ## Mark tasks as done
 
-Marks selected tasks as done by position. Note that this works like a command line form of the "select items" menu in GUI apps.
+Marks selected tasks as done by position. Note that this works like a command line form of the "select items to mark" menu in GUI apps.
 
 Note that all indices and positions in BroBot are 1-indexed for ease of use.
 
@@ -217,7 +217,7 @@ Example command formats:
 
    For example, "unmark 1 2 4" unmarks the 1st, 2nd and 4th tasks
     ```
-    Nice! I've unmarked these tasks as not done yet:
+    OK, I've unmarked these tasks as not done yet:
         4. [T][ ] biology homework at 9pm
         2. [D][ ] chemistry meEting (by: 15 Jun 2026)
         1. [T][ ] biology MEETING at 3pm
@@ -229,13 +229,14 @@ Example command formats:
 
    unmarks ALL the tasks in the list.
     ```
-    Nice! I've unmarked these tasks as not done yet:
+    OK, I've unmarked these tasks as not done yet:
         4. [T][ ] biology homework at 9pm
         3. [E][ ] physics meeting (from: 17 Jul 2026 to: 19 Jul 2026)
         2. [D][ ] chemistry meEting (by: 15 Jun 2026)
         1. [T][ ] biology MEETING at 3pm
     Your tasks have successfully been saved to the hard drive.
     Now you have 4 tasks in the list.
+    ```
    
 ## Wrapping up
 
