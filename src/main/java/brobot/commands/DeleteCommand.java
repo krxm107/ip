@@ -61,7 +61,7 @@ public final class DeleteCommand extends FileIoCommand implements MassOpCommand 
                 final String formattedTask = TaskList.getSingleton().formatTask(deleteIndex);
                 TaskList.getSingleton().removeFromTaskList(deleteIndex);
 
-                ans.append(formattedTask);
+                ans.append(BroBot.FOUR_SPACES_INDENT + formattedTask);
                 ans.append(System.lineSeparator());
             });
 

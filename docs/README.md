@@ -93,9 +93,9 @@ Example command formats:
     For example, "delete 1 2 4" deletes the 1st, 2nd and 4th tasks
     ```
     Noted. I've removed these tasks:
-    4. [E][ ] Project Meeting (from: 17 Nov 2025 to: 24 Nov 2025)
-    2. [D][ ] CS Project (by: 18 Oct 2025)
-    1. [T][ ] CS1234 Lab 1
+        4. [E][ ] Project Meeting (from: 17 Nov 2025 to: 24 Nov 2025)
+        2. [D][ ] CS Project (by: 18 Oct 2025)
+        1. [T][ ] CS1234 Lab 1
     Your tasks have successfully been saved to the hard drive.
     Now you have 1 tasks in the list.
     ```
@@ -105,7 +105,7 @@ Example command formats:
     Deletes ALL the tasks in the list.
     ```
     Noted. I've removed these tasks:
-    1. [D][ ] CS Project (by: 18 Oct 2025)
+        1. [D][ ] CS Project (by: 18 Oct 2025)
     Your tasks have successfully been saved to the hard drive.
     Now you have 0 tasks in the list.
     ```
