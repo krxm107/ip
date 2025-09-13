@@ -5,14 +5,14 @@ package brobot.brobotexceptions;
  */
 public final class OtherCommandProblemsException extends BrobotCommandFormatException {
     /**
-     * A main message is not required for this command.
+     * Exception thrown when the user enters a command that does not match
+     * any of the anticipated commands.
+     *
      * <p>
-     * The full message is as follows.
-     * <pre>
-     * Sorry, this input is invalid!
-     * Please enter a different input.
-     * Program resumed.
-     * </pre>
+     * This acts as a general catch-all for unexpected or invalid inputs
+     * beyond the explicitly handled cases. Thus, no specific exception main message
+     * can be made, so it was left as an empty String.
+     * </p>
      */
     public OtherCommandProblemsException() {
         super("");
